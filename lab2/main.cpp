@@ -5,18 +5,37 @@
 #include "MenuItem.h"
 #include "MenuItemFactory.h"
 #include "Menu.h"
+#include "math.h"
 
 int main() {
     Menu *menu = new Menu("Menu title");
 
     MenuItemFactory *menuItemFactory = new MenuItemFactory{};
 
-
     Cashier *cashier = new Cashier();
 
     Ticket* ticket;
 
     Viewer *viewer;
+
+     menu->append(menuItemFactory->create("Вычеслить корень 25", []() {
+        std::cout << "Полезная логика!!!!!!!!" << std::endl;
+        std::cout << sqrt(25) << std::endl;
+    }));
+
+    menu->append(menuItemFactory->create("Поздороваться", []() {
+        std::cout << "Вжжжжжжжжжжжж, Hello there! General Kenobi!" << std::endl;
+    }));
+
+    menu->append(menuItemFactory->create("Изобразить картинку псевдографикой!", []() {
+        std::cout <<
+        "██╗  ██╗██████╗  ██████╗ ███╗   ██╗ ██████╗ ███████╗" << "\n"
+        "██║  ██║██╔══██╗██╔═══██╗████╗  ██║██╔═══██╗╚══███╔╝" << "\n" <<
+        "███████║██████╔╝██║   ██║██╔██╗ ██║██║   ██║  ███╔╝ " << "\n" <<
+        "██╔══██║██╔══██╗██║   ██║██║╚██╗██║██║   ██║ ███╔╝  " << "\n" <<
+        "██║  ██║██║  ██║╚██████╔╝██║ ╚████║╚██████╔╝███████╗" << "\n" <<
+        "╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝" << std::endl;
+    }));
 
     menu->append(menuItemFactory->create("╰─Провести транзакцию билета от касира к зрителю", [&ticket, &cashier, &viewer]() {
         ticket = cashier->ticketTransaction();
