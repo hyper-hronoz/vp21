@@ -1,7 +1,8 @@
 #pragma once
 #include "iostream"
 #include "vector"
-#include "../Menu/MenuItem.h"
+#include "MenuItem.h"
+#include "MenuItemFactory.h"
 
 class Menu {
  private:

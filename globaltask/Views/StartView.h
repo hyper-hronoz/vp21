@@ -1,5 +1,5 @@
+#pragma once
 #include "iostream"
-#include "Menu/MenuItemFactory.h"
 #include "Menu/Menu.h"
 #include "AView.h"
 
@@ -8,7 +8,7 @@ class StartView : public AView {
     MenuItemFactory* menuItemFactory = new MenuItemFactory();
 
  public:
-    explicit StartView();
+    explicit StartView(IController* controller);
 
     ~StartView() {
         delete this->menuItemFactory;

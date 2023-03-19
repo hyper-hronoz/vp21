@@ -1,1 +1,1 @@
-g++ index.cpp ./Controllers/Menu/MenuItemFactory.cpp ./Controllers/Menu/Menu.cpp ./Controllers/Menu/MenuItem.cpp ./Controllers/AuthenticationController.cpp ./Storage/AUser.cpp ./Storage/Model.cpp ./Storage/Session.cpp ./Storage/Storage.cpp && ./a.out
+g++ index.cpp ./Views/Menu/MenuItemFactory.cpp ./Views/Menu/Menu.cpp ./Views/Menu/MenuItem.cpp ./Controllers/StartController.cpp ./Models/Storage/AUser.cpp ./Models/Storage/Model.cpp ./Models/Storage/Session.cpp ./Models/Storage/Storage.cpp ./Views/StartView.cpp && ./a.out
