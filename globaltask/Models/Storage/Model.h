@@ -1,11 +1,11 @@
 #include "vector"
+#include <typeinfo>
 
 template<class T>
 class Model {
  private:
-    const char* type;
+    const char* type = typeid(T).name();
  protected:
-
     Model();
 
     virtual T* findOne(T *t);

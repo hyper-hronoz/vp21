@@ -1,7 +1,7 @@
 #include "../Menu/MenuItemFactory.h"
 
 MenuItem* MenuItemFactory::create(std::string title, std::function<void()> callback) {
-    MenuItem *menuItem = new MenuItem{id, title, callback};
     id++;
+    MenuItem *menuItem = new MenuItem{id, title, callback};
     return menuItem;
 }

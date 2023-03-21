@@ -9,13 +9,6 @@ Menu::Menu(std::string name) {
     menuItems = {};
 }
 
-Menu::~Menu() {
-    for (auto item : this->menuItems) {
-       delete item;
-    }
-    menuItems.clear();
-}
-
 void Menu::append(MenuItem* menuItem) {
     menuItems.push_back(menuItem);
 }

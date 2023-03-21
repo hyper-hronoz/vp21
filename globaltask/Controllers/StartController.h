@@ -4,20 +4,11 @@
 #include "EmployerController.h"
 #include "ProviderController.h"
 
-class StartController : public IController {
- private:
-    StartView *startView = new StartView(this); 
-
+class StartController : public IController<StartView> {
  public:
     void run() override;
 
-    StartController() {
-        this->run();
-    }
-
-    ~StartController() {
-        delete startView;
-    }
+    StartController();
 
     void onSelectProvider();
 

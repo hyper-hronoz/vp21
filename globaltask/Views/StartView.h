@@ -1,21 +1,14 @@
 #pragma once
 #include "iostream"
-#include "Menu/Menu.h"
 #include "AView.h"
 
-class StartView : public AView {
- private:
-    MenuItemFactory* menuItemFactory = new MenuItemFactory();
-
+class StartView : public AView<StartView> {
  public:
-    explicit StartView(IController* controller);
+    explicit StartView(IController<StartView>* controller)
+        : AView<StartView>(controller) {}
 
-    ~StartView() {
-        delete this->menuItemFactory;
-    };
-    
     void display() override;
 
  private:
-    Menu* createStartMenu();
+    void createStartMenu();
 };

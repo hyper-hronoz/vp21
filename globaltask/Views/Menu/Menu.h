@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "iostream"
 #include "vector"
 #include "MenuItem.h"
@@ -12,9 +13,14 @@ class Menu {
  public:
     explicit Menu();
 
-    Menu(std::string name);
+    explicit Menu(std::string name);
 
-    ~Menu();
+    ~Menu() {
+        // for (auto item : this->menuItems) {
+        //    delete item;
+        // }
+        // menuItems.clear();
+    }
 
     void append(MenuItem* menuItem);
 
