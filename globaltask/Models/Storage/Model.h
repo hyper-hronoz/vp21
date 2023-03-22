@@ -6,15 +6,23 @@
 
 template<class T>
 class Model {
-    // Storage *storage = new Storage();
+    Storage *storage;
 
-    Model();
+ public:
+    Model() {
 
-    virtual T* findOne(T *t);
+    };
 
-    virtual std::vector<T*> getAll();
+    virtual T* findOne(T *t) {
+        return {};
+    }
 
-    virtual void save();
+    virtual std::vector<T*> getAll() {
+        return {};
+    }
+
+    virtual void save() {
+    }
 
     T getType();
 };

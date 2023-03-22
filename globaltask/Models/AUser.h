@@ -36,4 +36,3 @@ class AUser : public Model<T> {
         return this;
     }
 };
-

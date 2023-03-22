@@ -1,6 +1,7 @@
 #include "EmployerModel.h"
+#include "Storage/Storage.h"
 
 void EmployerModel::signUp() {
-    // this->storage->save(this);
+    // Storage::getInstance().save(this);
 }
 
