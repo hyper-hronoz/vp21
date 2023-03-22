@@ -1,5 +1,7 @@
 #include "EmployerView.h"
+
 #include "../Controllers/AuthenticationController.h"
+#include "../Controllers/EmployerController.h"
 
 void EmployerView::display() {
     this->createEmployerMenu();
@@ -13,5 +15,6 @@ void EmployerView::createEmployerMenu() {
     }));
 
     menu->append(menuItemFactory->create("Вернуться в клавное меню", [this]() {
+        this->controller->getInstance<EmployerController>()->goMain();
     }));
 }

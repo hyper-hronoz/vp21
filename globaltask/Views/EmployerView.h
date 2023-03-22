@@ -1,5 +1,6 @@
-#include "./Menu/Menu.h"
+#pragma once
 #include "AView.h"
+#include "./Menu/Menu.h"
 
 class EmployerView : public AView<EmployerView> {
  public:

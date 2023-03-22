@@ -2,8 +2,6 @@
 
 #include "IController.h"
 #include "../Views/EmployerView.h"
-#include "AuthenticationController.h"
-#include "StartController.h"
 
 class EmployerController : public IController<EmployerView> {
  public:
@@ -11,13 +9,7 @@ class EmployerController : public IController<EmployerView> {
 
     void run() override;
 
-    void goMain() {
-        StartController *startController = new StartController();
-        delete startController;
-    }
+    void goMain();
 
-    void goAuthentication() {
-        AuthenticationController* authenticationController = new AuthenticationController();
-        delete authenticationController;
-    }
+    void goAuthentication();
 };

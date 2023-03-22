@@ -1,7 +1,7 @@
 #include "ProviderView.h"
+
 #include "../Controllers/AuthenticationController.h"
 #include "../Controllers/StartController.h"
-#include "../Controllers/ProviderController.h"
 
 void ProviderView::display() {
     this->createProviderMenu();
@@ -12,9 +12,9 @@ void ProviderView::createProviderMenu() {
     this->menu->setTitle("--Меню поставщика--");
 
     menu->append(menuItemFactory->create("Войти как поставщик", [this]() {
-        this->controller->getInstance<ProviderController>()->goMain();
     }));
 
     menu->append(menuItemFactory->create("Вернуться в клавное меню", [this]() {
+        this->controller->getInstance<ProviderController>()->goMain();
     }));
 }

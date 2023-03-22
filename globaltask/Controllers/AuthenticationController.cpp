@@ -15,4 +15,3 @@ void AuthenticationController::signUp(T data) {
     
     delete providerModel;
 }
-
