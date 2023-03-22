@@ -1,12 +1,5 @@
 #include "Model.h"
 #include "fstream"
-#include "Storage.h"
-
-template<class T>
-Model<T>::Model() {
-    Storage *storage = Storage::GetInstance();
-    this->type = typeid(T).name();
-}
 
 template<class T>
 T* Model<T>::findOne(T *t) {

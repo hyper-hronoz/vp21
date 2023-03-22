@@ -1,6 +1,6 @@
 #include "EmployerModel.h"
 
-void EmployerModel::registrate() {
-   
+void EmployerModel::signUp() {
+    // this->storage->save(this);
 }
 

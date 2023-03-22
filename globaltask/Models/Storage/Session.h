@@ -1,3 +1,4 @@
+#pragma once
 #include "UserAccess.h"
 
 class Session {

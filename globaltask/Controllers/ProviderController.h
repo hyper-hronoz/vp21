@@ -11,5 +11,5 @@ class ProviderController : public IController<ProviderView> {
 
     void goMain();
 
-    void goAuthentication();
+    void goSignUp();
 };

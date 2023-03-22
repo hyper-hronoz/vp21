@@ -1,6 +1,6 @@
 #include "AUser.h"
 
 class ProviderModel : public AUser<ProviderModel> {
- public:    
+ public:
      void signUp() override;
 };

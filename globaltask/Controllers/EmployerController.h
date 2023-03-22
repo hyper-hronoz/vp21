@@ -11,5 +11,5 @@ class EmployerController : public IController<EmployerView> {
 
     void goMain();
 
-    void goAuthentication();
+    void goSignUp();
 };

@@ -1,6 +1,7 @@
 #include "ProviderController.h"
 #include "StartController.h"
-#include "AuthenticationController.h"
+
+#include "../Models/ProviderModel.h"
 
 ProviderController::ProviderController() {
     this->view = new ProviderView(this);
@@ -16,7 +17,13 @@ void ProviderController::goMain() {
     delete startController;
 }
 
-void ProviderController::goAuthentication() {
-    AuthenticationController* authenticationController = new AuthenticationController();
-    delete authenticationController;
+void ProviderController::goSignUp() {
+
+    // ProviderModel* providerModel = new ProviderModel();
+    //
+    // providerModel->setLogin("hronoz")->setName("Vladislav")->setSername("Moryakov")->setPassword("77884488");
+    //
+    // providerModel->signUp();
+
+    // delete providerModel;
 }

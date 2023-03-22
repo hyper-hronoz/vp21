@@ -1,11 +1,13 @@
+#pragma once
+
 #include "vector"
+#include "Storage.h"
 #include <typeinfo>
 
 template<class T>
 class Model {
- private:
-    const char* type = typeid(T).name();
- protected:
+    // Storage *storage = new Storage();
+
     Model();
 
     virtual T* findOne(T *t);

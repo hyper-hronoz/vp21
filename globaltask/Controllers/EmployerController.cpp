@@ -1,6 +1,5 @@
 #include "EmployerController.h"
 #include "StartController.h"
-#include "AuthenticationController.h"
 
 EmployerController::EmployerController() {
     this->view = new EmployerView(this);
@@ -16,7 +15,5 @@ void EmployerController::goMain() {
     delete startController;
 }
 
-void EmployerController::goAuthentication() {
-    AuthenticationController* authenticationController = new AuthenticationController();
-    delete authenticationController;
+void EmployerController::goSignUp() {
 }
