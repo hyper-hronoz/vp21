@@ -14,13 +14,13 @@ class ProviderController : public IController<ProviderView> {
     void run() override;
 
     void goMain() {
-        // StartController* startController = new StartController();
-        // startController->run();
-        // delete startController;
+        StartController* startController = new StartController();
+        startController->run();
+        delete startController;
     }
 
     void goAuthentication() {
-        // AuthenticationController* authenticationController = new AuthenticationController();
-        // delete authenticationController;
+        AuthenticationController* authenticationController = new AuthenticationController();
+        delete authenticationController;
     }
 };

@@ -1,20 +1,20 @@
 #include "ProviderView.h"
 #include "../Controllers/AuthenticationController.h"
 #include "../Controllers/StartController.h"
+#include "../Controllers/ProviderController.h"
 
 void ProviderView::display() {
+    this->createProviderMenu();
     this->menu->awaitUserInput();
 }
 
 void ProviderView::createProviderMenu() {
-    this->menu = new Menu("---Меню поставщика---");
+    this->menu->setTitle("--Меню поставщика--");
 
     menu->append(menuItemFactory->create("Войти как поставщик", [this]() {
-        this->controller->run();
-        // dynamic_cast<AuthenticationController*>(this->controller);
+        this->controller->getInstance<ProviderController>()->goMain();
     }));
 
     menu->append(menuItemFactory->create("Вернуться в клавное меню", [this]() {
-        // dynamic_cast<StartController*>(this->controller)->run();
     }));
 }

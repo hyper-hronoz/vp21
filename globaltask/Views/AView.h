@@ -6,7 +6,7 @@
 template<class VIEW>
 class AView {
  protected:
-     Menu *menu;
+     Menu *menu = new Menu();
      IController<VIEW> *controller;
      MenuItemFactory* menuItemFactory = new MenuItemFactory();
 

@@ -16,10 +16,10 @@ class Menu {
     explicit Menu(std::string name);
 
     ~Menu() {
-        // for (auto item : this->menuItems) {
-        //    delete item;
-        // }
-        // menuItems.clear();
+        for (auto item : this->menuItems) {
+           delete item;
+        }
+        menuItems.clear();
     }
 
     void append(MenuItem* menuItem);
@@ -31,5 +31,9 @@ class Menu {
     std::string getName();
 
     void awaitUserInput();
+
+    void setTitle(std::string title) {
+        this->title = title;
+    }
 };
 
