@@ -6,12 +6,8 @@
 
 template<class T>
 class Model {
-    Storage *storage;
-
  public:
-    Model() {
-
-    };
+    Model() {}
 
     virtual T* findOne(T *t) {
         return {};
@@ -21,8 +17,7 @@ class Model {
         return {};
     }
 
-    virtual void save() {
-    }
+    virtual void save() {}
 
     T getType();
 };

@@ -20,9 +20,10 @@ void ProviderController::goMain() {
 void ProviderController::goSignUp() {
     ProviderModel* providerModel = new ProviderModel();
 
-    providerModel->setLogin("hronoz")->setName("Vladislav")->setSername("Moryakov")->setPassword("77884488");
+    providerModel->setLogin("hronoz")->setName("Vladislav")->
+        setSername("Moryakov")->setPassword("77884488");
 
-    providerModel->signUp();
+    providerModel->save();
 
     delete providerModel;
 }
