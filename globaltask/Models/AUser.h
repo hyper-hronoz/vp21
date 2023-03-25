@@ -5,10 +5,10 @@
 #include "./Storage/BinaryModel.h"
 #include "./Storage/Model.h"
 #include "./Storage/Storage.h"
-#include "./Storage/ASaveStorageCallback.h"
+#include "./Storage/StorageCallback.h"
 
-template<class T>
-class AUser : public Model<T> {
+template<class MODEL>
+class AUser : public Model<MODEL> {
  protected:
     std::string name;
     std::string sername;
@@ -19,22 +19,22 @@ class AUser : public Model<T> {
     std::string password;
 
  public:
-    virtual AUser<T>* setName(std::string name) {
+    virtual AUser<MODEL>* setName(std::string name) {
         this->name = name;
         return this;
     }
 
-    virtual AUser<T>* setSername(std::string sername) {
+    virtual AUser<MODEL>* setSername(std::string sername) {
         this->sername = sername;
         return this;
     }
 
-    virtual AUser<T>* setLogin(std::string login) {
+    virtual AUser<MODEL>* setLogin(std::string login) {
         this->login = login;
         return this;
     }
 
-    virtual AUser<T>* setPassword(std::string password) {
+    virtual AUser<MODEL>* setPassword(std::string password) {
         this->password = password;
         return this;
     }
@@ -51,19 +51,48 @@ class AUser : public Model<T> {
         return this->age;
     }
 
-    class Savier : public ASaveStorageCallback<AUser<T>> {
+    class Savier : public StorageCallback<AUser<MODEL>> {
      public:
-        Savier(T* t, std::ofstream stream) :
-            ASaveStorageCallback<AUser<T>>(t, stream) {}
+        Savier(AUser<MODEL>* model, std::fstream* stream) :
+            StorageCallback<AUser<MODEL>>(model, stream) {}
+
 
         void exec() override {
-            size_t size = this->getModel().getLogin().size();
-            this->getStrem().write(&this->getModel().getLogin, sizeof(size));
-            this->getStrem().write(&this->getModel.getLogin()[0], size);
+            std::cout << "Writing to storage" << std::endl;
+            this->writeLogin();
+        }
+
+     private:
+        void writeLogin() {
+            std::string loginString = (this->getModel()->getLogin());
+
+            size_t size = loginString.size();
+            this->getStream()->write((char*)(&size), sizeof(size));
+            this->getStream()->write((char*)(loginString.c_str()), size);
+        }
+    };
+
+    class Getter : public StorageCallback<AUser<MODEL>> {
+     public:
+        Getter(AUser<MODEL>* model, std::fstream* stream) :
+            StorageCallback<AUser<MODEL>>(model, stream) {
+
+            }
+
+        void exec() override {
+            this->readLogin();
+        }
+
+     private:
+        void readLogin() {
+            std::string loginString;;
+            size_t size;
+            this->getStream()->read(&size, sizeof(size));
         }
     };
 
     void save() override {
-        Storage::getInstance().save<AUser<T>>(this, Savier);
+        Storage::getInstance().save<AUser<MODEL>, Savier>(this);
+        // Storage::getInstance().get<AUser<MODEL>, Savier>(this);
     }
 };
