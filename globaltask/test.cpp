@@ -133,12 +133,22 @@ class Storage {
       return instance;
   }
 
+  void get(AFieldORM* model) {
+    ofstream file(DB_FOLDER +
+    static_cast<std::string>(typeid(model).name()),
+    std::ios::out | ios::binary | std::ios_base::app);
+
+    model->save(file);
+
+    file.close();
+  }
+
   void save(AFieldORM *model) {
     system("mkdir -p ./database");
 
     ofstream file(DB_FOLDER +
-    static_cast<std::string> (typeid(model).name()),
-    std::ios::out | std::ios::binary);
+    static_cast<std::string>(typeid(model).name()),
+    std::ios::out | ios::binary | std::ios_base::app);
 
     model->save(file);
 
@@ -236,6 +246,9 @@ class StringFieldORM : public BaseFuild<string> {
     BaseFuild(key, value) {}
 
   void save(ofstream &stream) override {
+    int size = this->value.length();
+    stream.write(reinterpret_cast<char*>(&size), sizeof(int));
+    stream.write(this->value.c_str(), size);
   };
 
   void get(ifstream &stream) override{
@@ -248,6 +261,7 @@ class IntFieldORM : public BaseFuild<int> {
     BaseFuild(key, value) {}
 
   void save(ofstream &stream) override {
+    stream.write(reinterpret_cast<char*>(&this->value), sizeof(this->value));
   };
 
   void get(ifstream &stream) override {
@@ -260,6 +274,7 @@ class BoolFieldORM : public BaseFuild<bool> {
     BaseFuild(key, value) {}
 
   void save(ofstream &stream) override {
+    stream.write(reinterpret_cast<char*>(&this->value), sizeof(this->value));
   };
 
   void get(ifstream &stream) override {
