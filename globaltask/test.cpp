@@ -134,11 +134,11 @@ class Storage {
   }
 
   void get(AFieldORM* model) {
-    ofstream file(DB_FOLDER +
+    ifstream file(DB_FOLDER +
     static_cast<std::string>(typeid(model).name()),
-    std::ios::out | ios::binary | std::ios_base::app);
+    std::ios::in | ios::binary);
 
-    model->save(file);
+    model->get(file);
 
     file.close();
   }
@@ -233,10 +233,12 @@ class BaseORM {
     }
   }
 
-  virtual void get() {
-    // for (auto &f : fields) {
-    //   f->get();
-    // }
+  vector<AFieldORM*> findOne(AFieldORM* fuild) {
+    vector<AFieldORM*> tempFields = this->fields;
+    for (auto &f : tempFields) {
+      Storage::getInstance().get(f);
+    }
+    return tempFields;
   }
 };
 
@@ -261,10 +263,11 @@ class IntFieldORM : public BaseFuild<int> {
     BaseFuild(key, value) {}
 
   void save(ofstream &stream) override {
-    stream.write(reinterpret_cast<char*>(&this->value), sizeof(this->value));
+    stream.write(reinterpret_cast<char*>(&this->value), sizeof(int));
   };
 
   void get(ifstream &stream) override {
+    stream.read(reinterpret_cast<char*>(&this->value), sizeof(int));
   };
 };
 
@@ -274,10 +277,11 @@ class BoolFieldORM : public BaseFuild<bool> {
     BaseFuild(key, value) {}
 
   void save(ofstream &stream) override {
-    stream.write(reinterpret_cast<char*>(&this->value), sizeof(this->value));
+    stream.write(reinterpret_cast<char*>(&this->value), sizeof(bool));
   };
 
   void get(ifstream &stream) override {
+    stream.read(reinterpret_cast<char*>(&this->value), sizeof(bool));
   };
 };
 
@@ -288,20 +292,21 @@ class UserProfile: public BaseORM {
 
 int main() {
   Schema userSchema({
-    (new SchemaFuild<string>)->name("id")->required(true)->unique(true),
-    (new SchemaFuild<string>)->name("email")->required(true)->unique(true),
-    (new SchemaFuild<string>)->name("password")->required(true),
+    (new SchemaFuild<int>)->name("id")->required(true),
+    (new SchemaFuild<int>)->name("email")->required(true)->unique(true),
     (new SchemaFuild<bool>)->name("isEmailConfirmed")->required(true)
   });
 
-  UserProfile user(userSchema);
+  UserProfile userModel(userSchema);
 
-  user.create({
-    new StringFieldORM("id", "that is id"),
-    new StringFieldORM("email", "that is email"),
-    new StringFieldORM("password", "that is password"),
-    new BoolFieldORM("isEmailConfirmed", false)
+  userModel.create({
+    new IntFieldORM("id", 1000),
+    new IntFieldORM("email", 8),
+    new BoolFieldORM("isEmailConfirmed", false),
   });
+
+  vector<AFieldORM*> fuilds = userModel.findOne(new IntFieldORM("email", 8));
+  cout << dynamic_cast<IntFieldORM*>(fuilds[0])->getValue() << endl;
 
   return 0;
 }
