@@ -109,6 +109,7 @@ class AFieldORM {
   virtual void get(ifstream &stream) = 0;
 
   AFieldORM(const string& key, const char *type) : key(key), type(type) {}
+  explicit AFieldORM(const string& key) : key(key) {}
 
   string getKey() {
     return this->key;
@@ -164,6 +165,8 @@ class BaseFuild : public AFieldORM {
  public:
   BaseFuild(const string& key, const T& value) :
     AFieldORM(key, typeid(T).name()), value(value) {}
+
+  explicit BaseFuild(const string& key) : AFieldORM(key) {}
 
   T getValue() {
     return this->value;
@@ -233,8 +236,8 @@ class BaseORM {
     }
   }
 
-  vector<AFieldORM*> findOne(AFieldORM* fuild) {
-    vector<AFieldORM*> tempFields = this->fields;
+  vector<AFieldORM*> findOne(initializer_list<AFieldORM*> list) {
+    vector<AFieldORM*> tempFields = list;
     for (auto &f : tempFields) {
       Storage::getInstance().get(f);
     }
@@ -246,6 +249,8 @@ class StringFieldORM : public BaseFuild<string> {
  public:
   explicit StringFieldORM(const string &key, const string &value) :
     BaseFuild(key, value) {}
+
+  explicit StringFieldORM(const string &key) : BaseFuild(key) {}
 
   void save(ofstream &stream) override {
     int size = this->value.length();
@@ -269,6 +274,8 @@ class IntFieldORM : public BaseFuild<int> {
   void get(ifstream &stream) override {
     stream.read(reinterpret_cast<char*>(&this->value), sizeof(int));
   };
+
+  explicit IntFieldORM(const string &key) : BaseFuild(key) {}
 };
 
 class BoolFieldORM : public BaseFuild<bool> {
@@ -283,6 +290,8 @@ class BoolFieldORM : public BaseFuild<bool> {
   void get(ifstream &stream) override {
     stream.read(reinterpret_cast<char*>(&this->value), sizeof(bool));
   };
+
+  explicit BoolFieldORM(const string &key) : BaseFuild(key) {}
 };
 
 class UserProfile: public BaseORM {
@@ -299,13 +308,18 @@ int main() {
 
   UserProfile userModel(userSchema);
 
-  userModel.create({
-    new IntFieldORM("id", 1000),
-    new IntFieldORM("email", 8),
-    new BoolFieldORM("isEmailConfirmed", false),
+  // userModel.create({
+  //   new IntFieldORM("id", 1000),
+  //   new IntFieldORM("email", 8),
+  //   new BoolFieldORM("isEmailConfirmed", false),
+  // });
+
+  vector<AFieldORM*> fuilds = userModel.findOne({
+    new IntFieldORM("id"),
+    new IntFieldORM("email"),
+    new BoolFieldORM("isEmailConfirmed"),
   });
 
-  vector<AFieldORM*> fuilds = userModel.findOne(new IntFieldORM("email", 8));
   cout << dynamic_cast<IntFieldORM*>(fuilds[0])->getValue() << endl;
 
   return 0;
