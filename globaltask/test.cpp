@@ -7,98 +7,6 @@
 using namespace std;
 
 
-class ASchemaFuild {
- protected:
-  string _name;
-  bool _isRequired;
-  bool _isUnique;
-  const char* _type;
-
- public:
-  virtual void print() = 0;
-  virtual string getName() = 0;
-  virtual bool getRequired() = 0;
-  virtual bool getUnique() = 0;
-  virtual const char* getType() = 0;
-
-  virtual ~ASchemaFuild() {}
-};
-
-template<class T>
-class SchemaFuild : public ASchemaFuild {
- public:
-  SchemaFuild() {
-      this->_type = typeid(T).name();
-  }
-
-  SchemaFuild* name(string name) {
-      this->_name = name;
-      return this;
-  }
-
-  SchemaFuild* required(bool value = false) {
-      this->_isRequired = value;
-      return this;
-  }
-
-  SchemaFuild* unique(bool value = false) {
-      this->_isUnique = value;
-      return this;
-  }
-
-  void print() override {
-      cout << "{" << "\n" <<
-         "     " << "name: " << this->_name << ","  << "\n" <<
-         "     " << "unique: " << this->_isUnique << ","  << "\n" <<
-         "     " << "required: " << this->_isRequired << ","  << "\n" <<
-         "     " << "type: " << this->_type << "\n" <<
-      "}" << ',' << endl;
-  }
-
-  const char* getType() override {
-      return this->_type;
-  }
-
-  string getName() override {
-      return this->_name;
-  }
-
-  bool getUnique() override {
-      return this->_isUnique;
-  }
-
-  bool getRequired() override {
-      return this->_isRequired;
-  }
-};
-
-class Schema{
- private:
-  vector<ASchemaFuild*> schemaFuilds;
-
- public:
-  explicit Schema(initializer_list<ASchemaFuild*> list)
-      : schemaFuilds(list) {}
-
-  void print() {
-    for (ASchemaFuild* item : this->schemaFuilds) {
-        item->print();
-    }
-  }
-
-  virtual ~Schema() {
-    for (auto &item : this->schemaFuilds) {
-      delete item;
-    }
-    this->schemaFuilds.clear();
-  }
-
-  vector<ASchemaFuild*> getSchemaFuilds() const {
-      return this->schemaFuilds;
-  }
-};
-
-
 class AFieldORM {
  protected:
   string key;
@@ -109,7 +17,6 @@ class AFieldORM {
   virtual void get(ifstream &stream) = 0;
 
   AFieldORM(const string& key, const char *type) : key(key), type(type) {}
-  explicit AFieldORM(const string& key) : key(key) {}
 
   string getKey() {
     return this->key;
@@ -132,6 +39,15 @@ class Storage {
   static Storage& getInstance() {
       static Storage instance;
       return instance;
+  }
+
+  void get(initializer_list<AFieldORM*> fuilds) {
+    ifstream file(DB_FOLDER +
+    static_cast<std::string>(typeid(model).name()),
+    std::ios::in | ios::binary);
+
+
+    file.close();
   }
 
   void get(AFieldORM* model) {
@@ -163,10 +79,11 @@ class BaseFuild : public AFieldORM {
   T value;
 
  public:
-  BaseFuild(const string& key, const T& value) :
-    AFieldORM(key, typeid(T).name()), value(value) {}
+  BaseFuild(const string& key, const T& value, const char* type) :
+    AFieldORM(key, type), value(value) {}
 
-  explicit BaseFuild(const string& key) : AFieldORM(key) {}
+  explicit BaseFuild(const string& key, const char* type) :
+    AFieldORM(key, type) {}
 
   T getValue() {
     return this->value;
@@ -175,6 +92,59 @@ class BaseFuild : public AFieldORM {
   virtual void save(ofstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
 };
+
+class ASchemaFuild {
+ protected:
+  string _name;
+  bool _isRequired;
+  bool _isUnique;
+  const char* _type;
+
+ public:
+  virtual void print() = 0;
+  virtual bool getRequired() = 0;
+  virtual bool getUnique() = 0;
+
+  ASchemaFuild(string name, const char* type) : _name(name), _type(type) {}
+  virtual ~ASchemaFuild() {}
+
+  virtual const char* getType() {
+      return this->_type;
+  }
+
+  virtual AFieldORM* getPureFuild() = 0;
+
+  virtual string getName() {
+      return this->_name; }
+};
+
+class Schema{
+ private:
+  vector<ASchemaFuild*> schemaFuilds;
+
+ public:
+  explicit Schema(initializer_list<ASchemaFuild*> list)
+      : schemaFuilds(list) {}
+
+  void print() {
+    for (ASchemaFuild* item : this->schemaFuilds) {
+        item->print();
+    }
+  }
+
+  virtual ~Schema() {
+    for (auto &item : this->schemaFuilds) {
+      delete item;
+    }
+    this->schemaFuilds.clear();
+  }
+
+  vector<ASchemaFuild*> getSchemaFuilds() const {
+      return this->schemaFuilds;
+  }
+};
+
+
 
 class BaseORM {
  protected:
@@ -217,6 +187,12 @@ class BaseORM {
  public:
   explicit BaseORM(const Schema &schema) : schema(schema) {}
 
+  virtual ~BaseORM() {
+    for (auto &f : fields) {
+      delete f;
+    }
+  }
+
   void create(initializer_list<AFieldORM*> list) {
     vector<string> errors{};
     this->fields = list;
@@ -230,27 +206,26 @@ class BaseORM {
     }
   }
 
-  virtual ~BaseORM() {
-    for (auto &f : fields) {
-      delete f;
+  template<class T> vector<AFieldORM*> findOne(AFieldORM *model) {
+    for (auto &schemaFeild : this->schema.getSchemaFuilds()) {
+      AFieldORM* fuild = schemaFeild->getPureFuild();
+      Storage::getInstance().get(fuild);
+      T* newFuild = dynamic_cast<T*>(fuild);
+      if (newFuild) {
+        cout << newFuild->getValue() << endl;
+      }
     }
-  }
-
-  vector<AFieldORM*> findOne(initializer_list<AFieldORM*> list) {
-    vector<AFieldORM*> tempFields = list;
-    for (auto &f : tempFields) {
-      Storage::getInstance().get(f);
-    }
-    return tempFields;
+    return {};
   }
 };
 
 class StringFieldORM : public BaseFuild<string> {
  public:
   explicit StringFieldORM(const string &key, const string &value) :
-    BaseFuild(key, value) {}
+    BaseFuild(key, value, typeid(*this).name()) {}
 
-  explicit StringFieldORM(const string &key) : BaseFuild(key) {}
+  explicit StringFieldORM(const string &key) :
+    BaseFuild(key, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
     int size = this->value.length();
@@ -265,7 +240,7 @@ class StringFieldORM : public BaseFuild<string> {
 class IntFieldORM : public BaseFuild<int> {
  public:
   explicit IntFieldORM(const string &key, const int &value) :
-    BaseFuild(key, value) {}
+    BaseFuild(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
     stream.write(reinterpret_cast<char*>(&this->value), sizeof(int));
@@ -275,13 +250,14 @@ class IntFieldORM : public BaseFuild<int> {
     stream.read(reinterpret_cast<char*>(&this->value), sizeof(int));
   };
 
-  explicit IntFieldORM(const string &key) : BaseFuild(key) {}
+  explicit IntFieldORM(const string &key) :
+    BaseFuild(key, typeid(*this).name()) {}
 };
 
 class BoolFieldORM : public BaseFuild<bool> {
  public:
   explicit BoolFieldORM(const string &key, const bool &value) :
-    BaseFuild(key, value) {}
+    BaseFuild(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
     stream.write(reinterpret_cast<char*>(&this->value), sizeof(bool));
@@ -291,7 +267,8 @@ class BoolFieldORM : public BaseFuild<bool> {
     stream.read(reinterpret_cast<char*>(&this->value), sizeof(bool));
   };
 
-  explicit BoolFieldORM(const string &key) : BaseFuild(key) {}
+  explicit BoolFieldORM(const string &key) :
+    BaseFuild(key, typeid(*this).name()) {}
 };
 
 class UserProfile: public BaseORM {
@@ -299,28 +276,60 @@ class UserProfile: public BaseORM {
   explicit UserProfile(const Schema &schema) : BaseORM(schema) {}
 };
 
+template<class T>
+class SchemaFuild : public ASchemaFuild {
+ public:
+  explicit SchemaFuild(string name) : ASchemaFuild(name, typeid(T).name()) {}
+
+  SchemaFuild* required(bool value = false) {
+      this->_isRequired = value;
+      return this;
+  }
+
+  SchemaFuild* unique(bool value = false) {
+      this->_isUnique = value;
+      return this;
+  }
+
+  void print() override {
+      cout << "{" << "\n" <<
+         "     " << "name: " << this->_name << ","  << "\n" <<
+         "     " << "unique: " << this->_isUnique << ","  << "\n" <<
+         "     " << "required: " << this->_isRequired << ","  << "\n" <<
+         "     " << "type: " << this->_type << "\n" <<
+      "}" << ',' << endl;
+  }
+
+  bool getUnique() override {
+      return this->_isUnique;
+  }
+
+  bool getRequired() override {
+      return this->_isRequired;
+  }
+
+  AFieldORM* getPureFuild() override {
+    return new T(this->getName());
+  }
+};
+
+
 int main() {
   Schema userSchema({
-    (new SchemaFuild<int>)->name("id")->required(true),
-    (new SchemaFuild<int>)->name("email")->required(true)->unique(true),
-    (new SchemaFuild<bool>)->name("isEmailConfirmed")->required(true)
+    (new SchemaFuild<IntFieldORM>("id"))->required(true),
+    (new SchemaFuild<IntFieldORM>("email"))->required(true)->unique(true),
+    (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true)
   });
 
   UserProfile userModel(userSchema);
 
-  // userModel.create({
-  //   new IntFieldORM("id", 1000),
-  //   new IntFieldORM("email", 8),
-  //   new BoolFieldORM("isEmailConfirmed", false),
-  // });
-
-  vector<AFieldORM*> fuilds = userModel.findOne({
-    new IntFieldORM("id"),
-    new IntFieldORM("email"),
-    new BoolFieldORM("isEmailConfirmed"),
+  userModel.create({
+    new IntFieldORM("id", 1000),
+    new IntFieldORM("email", 8),
+    new BoolFieldORM("isEmailConfirmed", false),
   });
 
-  cout << dynamic_cast<IntFieldORM*>(fuilds[0])->getValue() << endl;
+  userModel.findOne<IntFieldORM>(new IntFieldORM("email", 8));
 
   return 0;
 }
