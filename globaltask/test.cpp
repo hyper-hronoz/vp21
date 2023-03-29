@@ -99,6 +99,7 @@ class BaseFuild : public AFieldORM {
 
   virtual void save(ofstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
+
 };
 
 class ASchemaFuild {
@@ -220,7 +221,12 @@ class BaseORM {
     }
   }
 
+
   template<class T> vector<AFieldORM*> findOne(AFieldORM *model) {
+    auto castedModel = dynamic_cast<T*>(model);
+    if (!castedModel) {
+      return {};
+    }
     // getting schema fuilds
     vector<AFieldORM*> list{};
     for (auto &schemaFeild : this->schema.getSchemaFuilds()) {
@@ -229,11 +235,19 @@ class BaseORM {
 
     int position = 0;
 
-    while(position >= 0) {
+    while (position >= 0) {
       this->storage->get(list, position);
+      for (auto &item : list) {
+        auto casted = dynamic_cast<T*>(item);
+        if (!casted) {
+          continue;
+        }
+        if (casted->getValue() == castedModel->getValue()) {
+          return list;
+        }
+      }
     }
-
-    return list;
+    return {};
   }
 };
 
@@ -260,7 +274,7 @@ class StringFieldORM : public BaseFuild<string> {
     this->size += _size;
     this->size += sizeof(int);
     // cout << "Size: " << this->size << endl;
-    // cout << "Value: " << this->value << endl;
+    cout << "Value: " << this->value << endl;
   };
 };
 
@@ -323,6 +337,7 @@ class SchemaFuild : public ASchemaFuild {
       return this;
   }
 
+
   void print() override {
       cout << "{" << "\n" <<
          "     " << "name: " << this->_name << ","  << "\n" <<
@@ -345,24 +360,37 @@ class SchemaFuild : public ASchemaFuild {
   }
 };
 
+template<class T>
+T* HardCast(vector<AFieldORM*> newUser, string key) {
+  for (auto &userFuild : newUser) {
+    if (userFuild->getKey() == key) {
+      return dynamic_cast<T*>(userFuild);
+    }
+  }
+  return {};
+}
+
 int main() {
-
-
   Schema userSchema({
-    (new SchemaFuild<StringFieldORM>("id"))->required(true),
+    (new SchemaFuild<IntFieldORM>("id"))->required(true)->unique(true),
+    (new SchemaFuild<StringFieldORM>("email"))->required(true)->unique(true),
+    (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true),
   });
-
-  // Schema providerSchema(userSchema, {
-  //   new SchemaFuild<StringFieldORM>("product"),
-  // });
 
   UserProfile userModel(userSchema);
 
   userModel.create({
-    new StringFieldORM("id", "hello"),
+    new IntFieldORM("id", 12),
+    new StringFieldORM("email", "vladilenzia227@mail.ru"),
+    new BoolFieldORM("isEmailConfirmed", false),
   });
 
-  userModel.findOne<StringFieldORM>(new StringFieldORM("email", "hello"));
+
+  vector<AFieldORM*> newUser = userModel.findOne<StringFieldORM>
+    (new StringFieldORM("email", "vladilenzia227@mail.ru"));
+
+  IntFieldORM *newIntField = HardCast<IntFieldORM>(newUser, "id");
+  cout << "Final: " << newIntField->getValue() << endl;
 
   return 0;
 }
