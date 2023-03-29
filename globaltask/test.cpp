@@ -6,11 +6,11 @@
 
 using namespace std;
 
-
 class AFieldORM {
  protected:
   string key;
   const char* type;
+  int size;
  public:
   virtual ~AFieldORM() {}
   virtual void save(ofstream &stream) = 0;
@@ -25,37 +25,45 @@ class AFieldORM {
   const char* getType() {
     return this->type;
   }
+
+  void setSize(int size) {
+    this->size = size;
+  }
+
+  int getSize() {
+    return this->size;
+  }
 };
 
 class Storage {
-  const std::string DB_FOLDER = "./database/";
-
  private:
-  Storage() {}
-  Storage(const Storage&);
-  Storage& operator=(Storage&);
+  const std::string DB_FOLDER = "./database/";
+  const char* name;
 
  public:
-  static Storage& getInstance() {
-      static Storage instance;
-      return instance;
-  }
+  explicit Storage(const char* name) : name(name) {}
 
-  void get(initializer_list<AFieldORM*> fuilds) {
+  void get(vector<AFieldORM*> fuilds, int &position) {
     ifstream file(DB_FOLDER +
-    static_cast<std::string>(typeid(model).name()),
+    static_cast<std::string>(this->name),
     std::ios::in | ios::binary);
 
+    long fileSize;
+    file.seekg(0, ios::end);
+    fileSize = file.tellg();
+    file.seekg(position, ios::beg);
+    // cout << "File size: " << fileSize << endl;
 
-    file.close();
-  }
-
-  void get(AFieldORM* model) {
-    ifstream file(DB_FOLDER +
-    static_cast<std::string>(typeid(model).name()),
-    std::ios::in | ios::binary);
-
-    model->get(file);
+    for (auto &fuild : fuilds) {
+      fuild->setSize(0);
+      if (file.tellg() >= fileSize) {
+        // cout << "Current position: " << file.tellg() <<  endl;
+        position = -1;
+        break;
+      }
+      fuild->get(file);
+      position += fuild->getSize();
+    }
 
     file.close();
   }
@@ -64,7 +72,7 @@ class Storage {
     system("mkdir -p ./database");
 
     ofstream file(DB_FOLDER +
-    static_cast<std::string>(typeid(model).name()),
+    static_cast<std::string>(this->name),
     std::ios::out | ios::binary | std::ios_base::app);
 
     model->save(file);
@@ -114,11 +122,11 @@ class ASchemaFuild {
 
   virtual AFieldORM* getPureFuild() = 0;
 
-  virtual string getName() {
+  virtual string getName() const {
       return this->_name; }
 };
 
-class Schema{
+class Schema {
  private:
   vector<ASchemaFuild*> schemaFuilds;
 
@@ -126,35 +134,39 @@ class Schema{
   explicit Schema(initializer_list<ASchemaFuild*> list)
       : schemaFuilds(list) {}
 
-  void print() {
-    for (ASchemaFuild* item : this->schemaFuilds) {
-        item->print();
+  explicit Schema(Schema schema, initializer_list<ASchemaFuild*> list) {
+    for (auto &extendedItem : list) {
+      for (auto &item : this->schemaFuilds) {
+        if (item->getName() == extendedItem->getName()) {
+          cout << "Тревога, у нас одинаковое имя при наследовании!" << endl;
+          return;
+        }
+      }
+      this->schemaFuilds.push_back(extendedItem);
     }
   }
 
-  virtual ~Schema() {
+  void print() {
     for (auto &item : this->schemaFuilds) {
-      delete item;
+      item->print();
     }
-    this->schemaFuilds.clear();
   }
 
   vector<ASchemaFuild*> getSchemaFuilds() const {
-      return this->schemaFuilds;
+    return this->schemaFuilds;
   }
 };
-
-
 
 class BaseORM {
  protected:
   vector<AFieldORM*> fields;
   const Schema &schema;
+  Storage *storage;
 
  private:
   virtual void save() {
     for (auto &f : fields) {
-      Storage::getInstance().save(f);
+      this->storage->save(f);
     }
   }
 
@@ -185,12 +197,14 @@ class BaseORM {
   }
 
  public:
-  explicit BaseORM(const Schema &schema) : schema(schema) {}
+  explicit BaseORM(const Schema &schema, const char* DBName)
+    : schema(schema), storage(new Storage(DBName)) {}
 
   virtual ~BaseORM() {
     for (auto &f : fields) {
       delete f;
     }
+    delete this->storage;
   }
 
   void create(initializer_list<AFieldORM*> list) {
@@ -207,15 +221,19 @@ class BaseORM {
   }
 
   template<class T> vector<AFieldORM*> findOne(AFieldORM *model) {
+    // getting schema fuilds
+    vector<AFieldORM*> list{};
     for (auto &schemaFeild : this->schema.getSchemaFuilds()) {
-      AFieldORM* fuild = schemaFeild->getPureFuild();
-      Storage::getInstance().get(fuild);
-      T* newFuild = dynamic_cast<T*>(fuild);
-      if (newFuild) {
-        cout << newFuild->getValue() << endl;
-      }
+      list.push_back(schemaFeild->getPureFuild());
     }
-    return {};
+
+    int position = 0;
+
+    while(position >= 0) {
+      this->storage->get(list, position);
+    }
+
+    return list;
   }
 };
 
@@ -228,12 +246,21 @@ class StringFieldORM : public BaseFuild<string> {
     BaseFuild(key, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
-    int size = this->value.length();
-    stream.write(reinterpret_cast<char*>(&size), sizeof(int));
-    stream.write(this->value.c_str(), size);
+    int _size = this->value.length();
+    stream.write(reinterpret_cast<char*>(&_size), sizeof(int));
+    stream.write(this->value.c_str(), _size);
   };
 
-  void get(ifstream &stream) override{
+  void get(ifstream &stream) override {
+    int _size;
+    stream.read(reinterpret_cast<char *>(&_size), sizeof(int));
+    char *buf = new char[_size];
+    stream.read(buf, _size);
+    this->value = buf;
+    this->size += _size;
+    this->size += sizeof(int);
+    // cout << "Size: " << this->size << endl;
+    // cout << "Value: " << this->value << endl;
   };
 };
 
@@ -247,7 +274,9 @@ class IntFieldORM : public BaseFuild<int> {
   };
 
   void get(ifstream &stream) override {
-    stream.read(reinterpret_cast<char*>(&this->value), sizeof(int));
+    this->size = sizeof(int);
+    stream.read(reinterpret_cast<char*>(&this->value), this->size);
+    cout << this->value << endl;
   };
 
   explicit IntFieldORM(const string &key) :
@@ -264,7 +293,9 @@ class BoolFieldORM : public BaseFuild<bool> {
   };
 
   void get(ifstream &stream) override {
+    this->size = sizeof(bool);
     stream.read(reinterpret_cast<char*>(&this->value), sizeof(bool));
+    cout << this->value << endl;
   };
 
   explicit BoolFieldORM(const string &key) :
@@ -273,7 +304,8 @@ class BoolFieldORM : public BaseFuild<bool> {
 
 class UserProfile: public BaseORM {
  public:
-  explicit UserProfile(const Schema &schema) : BaseORM(schema) {}
+  explicit UserProfile(const Schema &schema) :
+    BaseORM(schema, typeid(this).name()) {}
 };
 
 template<class T>
@@ -313,23 +345,24 @@ class SchemaFuild : public ASchemaFuild {
   }
 };
 
-
 int main() {
+
+
   Schema userSchema({
-    (new SchemaFuild<IntFieldORM>("id"))->required(true),
-    (new SchemaFuild<IntFieldORM>("email"))->required(true)->unique(true),
-    (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true)
+    (new SchemaFuild<StringFieldORM>("id"))->required(true),
   });
+
+  // Schema providerSchema(userSchema, {
+  //   new SchemaFuild<StringFieldORM>("product"),
+  // });
 
   UserProfile userModel(userSchema);
 
   userModel.create({
-    new IntFieldORM("id", 1000),
-    new IntFieldORM("email", 8),
-    new BoolFieldORM("isEmailConfirmed", false),
+    new StringFieldORM("id", "hello"),
   });
 
-  userModel.findOne<IntFieldORM>(new IntFieldORM("email", 8));
+  userModel.findOne<StringFieldORM>(new StringFieldORM("email", "hello"));
 
   return 0;
 }

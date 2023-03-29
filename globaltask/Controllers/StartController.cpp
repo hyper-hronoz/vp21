@@ -1,6 +1,7 @@
 #include "StartController.h"
 #include "ProviderController.h"
 #include "EmployerController.h"
+#include "FirstLabController.h"
 
 StartController::StartController() {
     this->view = new StartView(this);
@@ -23,3 +24,9 @@ void StartController::onSelectEmployer() {
     delete employerController;
 }
 
+
+void StartController::onSelectFirstLab() {
+    FirstLabController *firstLabController = new FirstLabController();
+    firstLabController->run();
+    delete firstLabController;
+}

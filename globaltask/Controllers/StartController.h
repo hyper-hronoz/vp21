@@ -14,4 +14,6 @@ class StartController : public IController<StartView> {
     void onSelectProvider();
 
     void onSelectEmployer();
+
+    void onSelectFirstLab();
 };

@@ -17,4 +17,8 @@ void StartView::createStartMenu() {
     menu->append(menuItemFactory->create("Сотрудник", [this]() {
         this->controller->getInstance<StartController>()->onSelectEmployer();
     }));
+
+    menu->append(menuItemFactory->create("Первая лаба", [this]() {
+        this->controller->getInstance<StartController>()->onSelectFirstLab();
+    }));
 }
