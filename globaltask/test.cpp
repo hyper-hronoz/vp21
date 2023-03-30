@@ -15,6 +15,7 @@ class AFieldORM {
   virtual ~AFieldORM() {}
   virtual void save(ofstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
+  virtual bool isEntryExists(ifstream &stream) = 0;
 
   AFieldORM(const string& key, const char *type) : key(key), type(type) {}
 
@@ -52,12 +53,10 @@ class Storage {
     file.seekg(0, ios::end);
     fileSize = file.tellg();
     file.seekg(position, ios::beg);
-    // cout << "File size: " << fileSize << endl;
 
     for (auto &fuild : fuilds) {
       fuild->setSize(0);
       if (file.tellg() >= fileSize) {
-        // cout << "Current position: " << file.tellg() <<  endl;
         position = -1;
         break;
       }
@@ -78,6 +77,37 @@ class Storage {
     model->save(file);
 
     file.close();
+  }
+
+  bool isEntryExists(vector<AFieldORM*> fuilds, AFieldORM *target) {
+    ifstream file(DB_FOLDER +
+    static_cast<std::string>(this->name),
+    std::ios::in | ios::binary);
+
+    long fileSize;
+    file.seekg(0, ios::end);
+    fileSize = file.tellg();
+
+    int position = 0;
+    file.seekg(position, ios::beg);
+
+    while (position >= 0) {
+      bool isExists = false;
+      for (auto &fuild : fuilds) {
+        // cout << position << " " << fileSize << endl;
+        fuild->setSize(0);
+        if (file.tellg() >= fileSize) {
+          position = -1;
+          break;
+        }
+        isExists = fuild->isEntryExists(file);
+        position += fuild->getSize();
+      }
+      if (isExists) return true;
+    }
+
+    file.close();
+    return false;
   }
 };
 
@@ -100,6 +130,20 @@ class BaseFuild : public AFieldORM {
   virtual void save(ofstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
 
+  virtual bool isEntryExists(ifstream &stream) {
+    T constValue = this->value;
+    this->get(stream);
+    T gottedValue = this->value;
+    this->value = constValue;
+    // cout << "Gotted value: " << gottedValue << " Current value: " << constValue << endl;
+    // cout << &constValue << " " << &this->value << endl;
+    if (gottedValue == constValue) {
+      // cout << "Found same" << endl;
+      // cout << this->value << " " << constValue << endl;
+      return true;
+    }
+    return false;
+  }
 };
 
 class ASchemaFuild {
@@ -153,7 +197,7 @@ class Schema {
     }
   }
 
-  vector<ASchemaFuild*> getSchemaFuilds() const {
+  vector<ASchemaFuild*> getSchemaFields() const {
     return this->schemaFuilds;
   }
 };
@@ -166,33 +210,46 @@ class BaseORM {
 
  private:
   virtual void save() {
-    for (auto &f : fields) {
-      this->storage->save(f);
+    for (auto &field : fields) {
+      this->storage->save(field);
     }
   }
 
   void checkData(vector<string> &errors) {
-    for (auto &schemaFeild : this->schema.getSchemaFuilds()) {
+    for (auto &schemaField : this->schema.getSchemaFields()) {
       bool isMatchNames = false;
       for (auto &field : this->fields) {
-        if (schemaFeild->getName() == field->getKey()) {
+        if (schemaField->getName() == field->getKey()) {
           isMatchNames = true;
         }
       }
 
       bool isMatchTypes = false;
       for (auto &field : this->fields) {
-        if (schemaFeild->getType() == field->getType() && isMatchNames) {
+        if (schemaField->getType() == field->getType() && isMatchNames) {
           isMatchTypes = true;
         }
       }
 
-      if (!isMatchNames && schemaFeild->getRequired() == true) {
-        errors.push_back("No such field: " + schemaFeild->getName());
+      bool isEntryExists = false;
+      for (auto &target : this->fields) {
+        if (schemaField->getUnique() && target->getKey() == schemaField->getName()) {
+          // cout << "Schema fuild: " << schemaField->getName() << endl;
+          isEntryExists = this->storage->isEntryExists(fields, target);
+        }
+      }
+
+      if (!isMatchNames && schemaField->getRequired() == true) {
+        errors.push_back("No such field: " + schemaField->getName());
       }
 
       if (!isMatchTypes) {
-        errors.push_back("No such type: " + schemaFeild->getName());
+        errors.push_back("No such type: " + schemaField->getName());
+      }
+
+      if (isEntryExists) {
+        errors.push_back("This entry already exists: "
+                + schemaField->getName());
       }
     }
   }
@@ -221,7 +278,6 @@ class BaseORM {
     }
   }
 
-
   template<class T> vector<AFieldORM*> findOne(AFieldORM *model) {
     auto castedModel = dynamic_cast<T*>(model);
     if (!castedModel) {
@@ -229,7 +285,7 @@ class BaseORM {
     }
     // getting schema fuilds
     vector<AFieldORM*> list{};
-    for (auto &schemaFeild : this->schema.getSchemaFuilds()) {
+    for (auto &schemaFeild : this->schema.getSchemaFields()) {
       list.push_back(schemaFeild->getPureFuild());
     }
 
@@ -274,7 +330,7 @@ class StringFieldORM : public BaseFuild<string> {
     this->size += _size;
     this->size += sizeof(int);
     // cout << "Size: " << this->size << endl;
-    cout << "Value: " << this->value << endl;
+    // cout << "Value: " << this->value << endl;
   };
 };
 
@@ -290,7 +346,6 @@ class IntFieldORM : public BaseFuild<int> {
   void get(ifstream &stream) override {
     this->size = sizeof(int);
     stream.read(reinterpret_cast<char*>(&this->value), this->size);
-    cout << this->value << endl;
   };
 
   explicit IntFieldORM(const string &key) :
@@ -309,7 +364,6 @@ class BoolFieldORM : public BaseFuild<bool> {
   void get(ifstream &stream) override {
     this->size = sizeof(bool);
     stream.read(reinterpret_cast<char*>(&this->value), sizeof(bool));
-    cout << this->value << endl;
   };
 
   explicit BoolFieldORM(const string &key) :
@@ -372,25 +426,25 @@ T* HardCast(vector<AFieldORM*> newUser, string key) {
 
 int main() {
   Schema userSchema({
-    (new SchemaFuild<IntFieldORM>("id"))->required(true)->unique(true),
-    (new SchemaFuild<StringFieldORM>("email"))->required(true)->unique(true),
-    (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true),
+    // (new SchemaFuild<IntFieldORM>("id"))->required(true)->unique(true),
+    (new SchemaFuild<StringFieldORM>("email"))->required(true)->unique(false),
+    // (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true),
   });
 
   UserProfile userModel(userSchema);
 
   userModel.create({
-    new IntFieldORM("id", 12),
+    // new IntFieldORM("id", 32),
     new StringFieldORM("email", "vladilenzia227@mail.ru"),
-    new BoolFieldORM("isEmailConfirmed", false),
+    // new BoolFieldORM("isEmailConfirmed", false),
   });
 
 
-  vector<AFieldORM*> newUser = userModel.findOne<StringFieldORM>
-    (new StringFieldORM("email", "vladilenzia227@mail.ru"));
-
-  IntFieldORM *newIntField = HardCast<IntFieldORM>(newUser, "id");
-  cout << "Final: " << newIntField->getValue() << endl;
+  // vector<AFieldORM*> newUser = userModel.findOne<StringFieldORM>
+  //   (new StringFieldORM("email", "vladilenzia227@mail.ru"));
+  //
+  // IntFieldORM *newIntField = HardCast<IntFieldORM>(newUser, "id");
+  // cout << "Final: " << newIntField->getValue() << endl;
 
   return 0;
 }
