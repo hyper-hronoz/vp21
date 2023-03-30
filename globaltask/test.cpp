@@ -94,16 +94,18 @@ class Storage {
     while (position >= 0) {
       bool isExists = false;
       for (auto &fuild : fuilds) {
-        // cout << position << " " << fileSize << endl;
+        // cout << "Position: " << position << " " << fileSize << endl;
         fuild->setSize(0);
         if (file.tellg() >= fileSize) {
           position = -1;
           break;
         }
-        isExists = fuild->isEntryExists(file);
+        if (fuild->isEntryExists(file) && fuild->getKey() == target->getKey()) {
+          isExists = true;
+        }
         position += fuild->getSize();
       }
-      if (isExists) return true;
+      if (isExists) return isExists;
     }
 
     file.close();
@@ -131,6 +133,7 @@ class BaseFuild : public AFieldORM {
   virtual void get(ifstream &stream) = 0;
 
   virtual bool isEntryExists(ifstream &stream) {
+    // cout << "Type: " << typeid(T).name() << endl;
     T constValue = this->value;
     this->get(stream);
     T gottedValue = this->value;
@@ -212,9 +215,7 @@ class BaseORM {
   virtual void save() {
     for (auto &field : fields) {
       this->storage->save(field);
-    }
-  }
-
+    } }
   void checkData(vector<string> &errors) {
     for (auto &schemaField : this->schema.getSchemaFields()) {
       bool isMatchNames = false;
@@ -324,13 +325,15 @@ class StringFieldORM : public BaseFuild<string> {
   void get(ifstream &stream) override {
     int _size;
     stream.read(reinterpret_cast<char *>(&_size), sizeof(int));
-    char *buf = new char[_size];
-    stream.read(buf, _size);
-    this->value = buf;
+    // cout << "Size: " << _size << endl;
+    char *buff = new char[_size + 1];
+    stream.read(buff, _size);
+    buff[_size] = '\0';
+    // cout << "Buf: " << buff << endl;
+    this->value = buff;
     this->size += _size;
     this->size += sizeof(int);
-    // cout << "Size: " << this->size << endl;
-    // cout << "Value: " << this->value << endl;
+    delete[] buff;
   };
 };
 
@@ -426,17 +429,41 @@ T* HardCast(vector<AFieldORM*> newUser, string key) {
 
 int main() {
   Schema userSchema({
-    // (new SchemaFuild<IntFieldORM>("id"))->required(true)->unique(true),
-    (new SchemaFuild<StringFieldORM>("email"))->required(true)->unique(false),
-    // (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true),
+    (new SchemaFuild<IntFieldORM>("id"))->required(true)->unique(true),
+    (new SchemaFuild<StringFieldORM>("email"))->required(true)->unique(true),
+    (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true),
   });
 
   UserProfile userModel(userSchema);
 
   userModel.create({
-    // new IntFieldORM("id", 32),
+    new IntFieldORM("id", 32),
     new StringFieldORM("email", "vladilenzia227@mail.ru"),
-    // new BoolFieldORM("isEmailConfirmed", false),
+    new BoolFieldORM("isEmailConfirmed", false),
+  });
+
+  // cout << endl;
+
+  userModel.create({
+    new IntFieldORM("id", 10),
+    new StringFieldORM("email", "moryak227res227@mail.ru"),
+    new BoolFieldORM("isEmailConfirmed", true),
+  });
+  
+  // cout << endl;
+
+  userModel.create({
+    new IntFieldORM("id", 1),
+    new StringFieldORM("email", "romaivanov@mail.ru"),
+    new BoolFieldORM("isEmailConfirmed", true),
+  });
+
+  // cout << endl;
+
+  userModel.create({
+    new IntFieldORM("id", 2),
+    new StringFieldORM("email", "romaivanov@mail.ru"),
+    new BoolFieldORM("isEmailConfirmed", false),
   });
 
 
@@ -448,5 +475,3 @@ int main() {
 
   return 0;
 }
-
-
