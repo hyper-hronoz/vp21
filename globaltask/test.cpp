@@ -182,9 +182,10 @@ class Schema {
   explicit Schema(initializer_list<ASchemaFuild*> list)
       : schemaFuilds(list) {}
 
-  explicit Schema(Schema schema, initializer_list<ASchemaFuild*> list) {
-    for (auto &extendedItem : list) {
-      for (auto &item : this->schemaFuilds) {
+  explicit Schema(initializer_list<ASchemaFuild*> list,
+      initializer_list<ASchemaFuild*> extendedFuilds) : schemaFuilds(list) {
+    for (auto &extendedItem : extendedFuilds) {
+      for (auto &item : list) {
         if (item->getName() == extendedItem->getName()) {
           cout << "Тревога, у нас одинаковое имя при наследовании!" << endl;
           return;
@@ -373,11 +374,6 @@ class BoolFieldORM : public BaseFuild<bool> {
     BaseFuild(key, typeid(*this).name()) {}
 };
 
-class UserProfile: public BaseORM {
- public:
-  explicit UserProfile(const Schema &schema) :
-    BaseORM(schema, typeid(this).name()) {}
-};
 
 template<class T>
 class SchemaFuild : public ASchemaFuild {
@@ -427,48 +423,55 @@ T* HardCast(vector<AFieldORM*> newUser, string key) {
   return {};
 }
 
-int main() {
-  Schema userSchema({
+class User : public BaseORM {
+ public:
+  explicit User(initializer_list<ASchemaFuild*> extendedFuilds = {}, const char* type = typeid(User).name()) :
+    BaseORM(*new Schema({
     (new SchemaFuild<IntFieldORM>("id"))->required(true)->unique(true),
     (new SchemaFuild<StringFieldORM>("email"))->required(true)->unique(true),
     (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true),
-  });
+  }, extendedFuilds), type) {}
+};
 
-  UserProfile userModel(userSchema);
+class Employer : public User {
+ public:
+  Employer() : User({
+    (new SchemaFuild<StringFieldORM>("job title"))->required(true),
+  }, typeid(this).name()) {}
+};
 
-  userModel.create({
+int main() {
+  User userModel;
+
+  Employer employer;
+
+  employer.create({
     new IntFieldORM("id", 32),
     new StringFieldORM("email", "vladilenzia227@mail.ru"),
     new BoolFieldORM("isEmailConfirmed", false),
+    new StringFieldORM("job title", "fucking job"),
   });
 
-  // cout << endl;
-
-  userModel.create({
-    new IntFieldORM("id", 10),
-    new StringFieldORM("email", "moryak227res227@mail.ru"),
-    new BoolFieldORM("isEmailConfirmed", true),
-  });
-  
-  // cout << endl;
-
-  userModel.create({
-    new IntFieldORM("id", 1),
-    new StringFieldORM("email", "romaivanov@mail.ru"),
-    new BoolFieldORM("isEmailConfirmed", true),
-  });
-
-  // cout << endl;
-
-  userModel.create({
-    new IntFieldORM("id", 2),
-    new StringFieldORM("email", "romaivanov@mail.ru"),
-    new BoolFieldORM("isEmailConfirmed", false),
-  });
-
-
+  // userModel.create({
+  //   new IntFieldORM("id", 32),
+  //   new StringFieldORM("email", "vladilenzia227@mail.ru"),
+  //   new BoolFieldORM("isEmailConfirmed", false),
+  // });
+  //
+  // userModel.create({
+  //   new IntFieldORM("id", 10),
+  //   new StringFieldORM("email", "moryak227res227@mail.ru"),
+  //   new BoolFieldORM("isEmailConfirmed", true),
+  // });
+  //
+  // userModel.create({
+  //   new IntFieldORM("id", 1),
+  //   new StringFieldORM("email", "romaivanov@mail.ru"),
+  //   new BoolFieldORM("isEmailConfirmed", true),
+  // });
+  //
   // vector<AFieldORM*> newUser = userModel.findOne<StringFieldORM>
-  //   (new StringFieldORM("email", "vladilenzia227@mail.ru"));
+  //   (new StringFieldORM("email", "moryak227res227@mail.ru"));
   //
   // IntFieldORM *newIntField = HardCast<IntFieldORM>(newUser, "id");
   // cout << "Final: " << newIntField->getValue() << endl;
