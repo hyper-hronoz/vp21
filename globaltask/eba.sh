@@ -1,2 +1,2 @@
 # g++ ./index.cpp ./Models/ProductModel.cpp ./Views/StartView.cpp ./Views/Menu/Menu.cpp ./Views/FirstLabView.cpp ./Views/ProviderView.cpp ./Views/EmployerView.cpp ./Views/Menu/MenuItem.cpp ./Models/ProviderModel.cpp ./Models/EmployerModel.cpp ./Models/Storage/Storage.cpp ./Models/Storage/Session.cpp ./Views/Menu/MenuItemFactory.cpp ./Controllers/StartController.cpp ./Models/Storage/SessionFactory.cpp ./Controllers/FirstLabController.cpp ./Controllers/ProviderController.cpp ./Controllers/EmployerController.cpp && ./a.out
-g++ test.cpp && ./a.out
+g++ -g3 test.cpp && ./a.out

@@ -1,16 +1,54 @@
 #include<iostream>
+#include <sstream>
 #include<fstream>
+#include <random>
 #include<map>
 #include<vector>
 #include<typeinfo>
 
 using namespace std;
 
+namespace uuid {
+  static std::random_device              rd;
+  static std::mt19937                    gen(rd());
+  static std::uniform_int_distribution<> dis(0, 15);
+  static std::uniform_int_distribution<> dis2(8, 11);
+
+  std::string generate_uuid_v4() {
+    std::stringstream ss;
+    int i;
+    ss << std::hex;
+    for (i = 0; i < 8; i++) {
+        ss << dis(gen);
+    }
+    ss << "-";
+    for (i = 0; i < 4; i++) {
+        ss << dis(gen);
+    }
+    ss << "-4";
+    for (i = 0; i < 3; i++) {
+        ss << dis(gen);
+    }
+    ss << "-";
+    ss << dis2(gen);
+    for (i = 0; i < 3; i++) {
+        ss << dis(gen);
+    }
+    ss << "-";
+    for (i = 0; i < 12; i++) {
+        ss << dis(gen);
+    };
+    return ss.str();
+  }
+}
+
 class AFieldORM {
  protected:
   string key;
   const char* type;
   int size;
+  bool isAutoGenerate;
+
  public:
   virtual ~AFieldORM() {}
   virtual void save(ofstream &stream) = 0;
@@ -34,6 +72,12 @@ class AFieldORM {
   int getSize() {
     return this->size;
   }
+
+  void setIsAutoGenerate(bool value = false) {
+    this->isAutoGenerate = value;
+  }
+
+  virtual void generate() {}
 };
 
 class Storage {
@@ -149,11 +193,12 @@ class BaseFuild : public AFieldORM {
   }
 };
 
-class ASchemaFuild {
+class ASchemaField {
  protected:
   string _name;
   bool _isRequired;
   bool _isUnique;
+  bool _isAutoGenerate;
   const char* _type;
 
  public:
@@ -161,29 +206,34 @@ class ASchemaFuild {
   virtual bool getRequired() = 0;
   virtual bool getUnique() = 0;
 
-  ASchemaFuild(string name, const char* type) : _name(name), _type(type) {}
-  virtual ~ASchemaFuild() {}
+  ASchemaField(string name, const char* type) : _name(name), _type(type) {}
+  virtual ~ASchemaField() {}
 
   virtual const char* getType() {
       return this->_type;
   }
 
-  virtual AFieldORM* getPureFuild() = 0;
+  virtual AFieldORM* getPureField() = 0;
 
   virtual string getName() const {
-      return this->_name; }
+    return this->_name;
+  }
+
+  virtual bool getIsAutoGenerate() {
+    return this->_isAutoGenerate;
+  }
 };
 
 class Schema {
  private:
-  vector<ASchemaFuild*> schemaFuilds;
+  vector<ASchemaField*> schemaFuilds;
 
  public:
-  explicit Schema(initializer_list<ASchemaFuild*> list)
+  explicit Schema(initializer_list<ASchemaField*> list)
       : schemaFuilds(list) {}
 
-  explicit Schema(initializer_list<ASchemaFuild*> list,
-      initializer_list<ASchemaFuild*> extendedFuilds) : schemaFuilds(list) {
+  explicit Schema(initializer_list<ASchemaField*> list,
+      initializer_list<ASchemaField*> extendedFuilds) : schemaFuilds(list) {
     for (auto &extendedItem : extendedFuilds) {
       for (auto &item : list) {
         if (item->getName() == extendedItem->getName()) {
@@ -201,7 +251,7 @@ class Schema {
     }
   }
 
-  vector<ASchemaFuild*> getSchemaFields() const {
+  vector<ASchemaField*> getSchemaFields() const {
     return this->schemaFuilds;
   }
 };
@@ -215,10 +265,15 @@ class BaseORM {
  private:
   virtual void save() {
     for (auto &field : fields) {
+      cout << "Saving: " << field->getKey() << endl;
       this->storage->save(field);
-    } }
+    } 
+  }
+
   void checkData(vector<string> &errors) {
     for (auto &schemaField : this->schema.getSchemaFields()) {
+
+      cout << "Schema field: " << schemaField->getName() << endl;
       bool isMatchNames = false;
       for (auto &field : this->fields) {
         if (schemaField->getName() == field->getKey()) {
@@ -254,6 +309,7 @@ class BaseORM {
                 + schemaField->getName());
       }
     }
+    cout << "End checking" << endl;
   }
 
  public:
@@ -268,8 +324,18 @@ class BaseORM {
   }
 
   void create(initializer_list<AFieldORM*> list) {
+    this->fields = {};
     vector<string> errors{};
-    this->fields = list;
+    for (auto & schemaField : this->schema.getSchemaFields()) {
+      if (schemaField->getIsAutoGenerate()) {
+        AFieldORM* tempField = schemaField->getPureField();
+        cout << "Name: "<< tempField->getKey() << endl;
+        tempField->setIsAutoGenerate(true);
+        tempField->generate();
+        this->fields.push_back(tempField);
+      }
+    }
+    this->fields.insert(this->fields.end(), list);
     this->checkData(errors);
     if (errors.size() == 0) {
       this->save();
@@ -288,7 +354,8 @@ class BaseORM {
     // getting schema fuilds
     vector<AFieldORM*> list{};
     for (auto &schemaFeild : this->schema.getSchemaFields()) {
-      list.push_back(schemaFeild->getPureFuild());
+      cout << "Getting pure field: " << schemaFeild->getName() << endl;
+      list.push_back(schemaFeild->getPureField());
     }
 
     int position = 0;
@@ -300,6 +367,7 @@ class BaseORM {
         if (!casted) {
           continue;
         }
+        cout << "Casted value: " << casted->getValue() << endl;
         if (casted->getValue() == castedModel->getValue()) {
           return list;
         }
@@ -311,7 +379,7 @@ class BaseORM {
 
 class StringFieldORM : public BaseFuild<string> {
  public:
-  explicit StringFieldORM(const string &key, const string &value) :
+  StringFieldORM(const string &key, const string &value) :
     BaseFuild(key, value, typeid(*this).name()) {}
 
   explicit StringFieldORM(const string &key) :
@@ -326,21 +394,28 @@ class StringFieldORM : public BaseFuild<string> {
   void get(ifstream &stream) override {
     int _size;
     stream.read(reinterpret_cast<char *>(&_size), sizeof(int));
-    // cout << "Size: " << _size << endl;
+    cout << "Size: " << _size << endl;
     char *buff = new char[_size + 1];
     stream.read(buff, _size);
     buff[_size] = '\0';
-    // cout << "Buf: " << buff << endl;
+    cout << "Buf: " << buff << endl;
     this->value = buff;
     this->size += _size;
     this->size += sizeof(int);
     delete[] buff;
   };
+
+  void generate() override {
+    if (this->isAutoGenerate) {
+      this->value = uuid::generate_uuid_v4();
+      cout << this->value << endl;
+    }
+  }
 };
 
 class IntFieldORM : public BaseFuild<int> {
  public:
-  explicit IntFieldORM(const string &key, const int &value) :
+  IntFieldORM(const string &key, const int &value) :
     BaseFuild(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
@@ -358,7 +433,7 @@ class IntFieldORM : public BaseFuild<int> {
 
 class BoolFieldORM : public BaseFuild<bool> {
  public:
-  explicit BoolFieldORM(const string &key, const bool &value) :
+  BoolFieldORM(const string &key, const bool &value) :
     BaseFuild(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
@@ -368,28 +443,38 @@ class BoolFieldORM : public BaseFuild<bool> {
   void get(ifstream &stream) override {
     this->size = sizeof(bool);
     stream.read(reinterpret_cast<char*>(&this->value), sizeof(bool));
+    cout << "Bool: " << this->value << endl;
   };
 
   explicit BoolFieldORM(const string &key) :
     BaseFuild(key, typeid(*this).name()) {}
 };
 
-
 template<class T>
-class SchemaFuild : public ASchemaFuild {
+class SchemaField : public ASchemaField {
  public:
-  explicit SchemaFuild(string name) : ASchemaFuild(name, typeid(T).name()) {}
+  explicit SchemaField(string name) : ASchemaField(name, typeid(T).name()) {}
 
-  SchemaFuild* required(bool value = false) {
-      this->_isRequired = value;
-      return this;
+  SchemaField* required(bool value = false) {
+    this->_isRequired = value;
+    return this;
   }
 
-  SchemaFuild* unique(bool value = false) {
-      this->_isUnique = value;
-      return this;
+  SchemaField* autoGenerate(bool value = false) {
+    if (this->_isUnique) {
+      this->_isUnique = false;
+    }
+    this->_isAutoGenerate = value;
+    return this;
   }
 
+  SchemaField* unique(bool value = false) {
+    if (this->_isAutoGenerate) {
+      this->_isUnique = false;
+    }
+    this->_isUnique = value;
+    return this;
+  }
 
   void print() override {
       cout << "{" << "\n" <<
@@ -408,7 +493,7 @@ class SchemaFuild : public ASchemaFuild {
       return this->_isRequired;
   }
 
-  AFieldORM* getPureFuild() override {
+  AFieldORM* getPureField() override {
     return new T(this->getName());
   }
 };
@@ -425,18 +510,18 @@ T* HardCast(vector<AFieldORM*> newUser, string key) {
 
 class User : public BaseORM {
  public:
-  explicit User(initializer_list<ASchemaFuild*> extendedFuilds = {}, const char* type = typeid(User).name()) :
+  explicit User(initializer_list<ASchemaField*> extendedFuilds = {}, const char* type = typeid(User).name()) :
     BaseORM(*new Schema({
-    (new SchemaFuild<IntFieldORM>("id"))->required(true)->unique(true),
-    (new SchemaFuild<StringFieldORM>("email"))->required(true)->unique(true),
-    (new SchemaFuild<BoolFieldORM>("isEmailConfirmed"))->required(true),
+    (new SchemaField<StringFieldORM>("id"))->required(true)->unique(true)->autoGenerate(true),
+    (new SchemaField<StringFieldORM>("email"))->required(true)->unique(true),
+    (new SchemaField<BoolFieldORM>("isEmailConfirmed"))->required(true),
   }, extendedFuilds), type) {}
 };
 
 class Employer : public User {
  public:
   Employer() : User({
-    (new SchemaFuild<StringFieldORM>("job title"))->required(true),
+    (new SchemaField<StringFieldORM>("job title"))->required(true),
   }, typeid(this).name()) {}
 };
 
@@ -445,36 +530,42 @@ int main() {
 
   Employer employer;
 
+  // !make delete required array to store pointers
+  // make primary key
   employer.create({
-    new IntFieldORM("id", 32),
     new StringFieldORM("email", "vladilenzia227@mail.ru"),
     new BoolFieldORM("isEmailConfirmed", false),
     new StringFieldORM("job title", "fucking job"),
   });
 
-  // userModel.create({
-  //   new IntFieldORM("id", 32),
-  //   new StringFieldORM("email", "vladilenzia227@mail.ru"),
-  //   new BoolFieldORM("isEmailConfirmed", false),
-  // });
-  //
-  // userModel.create({
-  //   new IntFieldORM("id", 10),
-  //   new StringFieldORM("email", "moryak227res227@mail.ru"),
-  //   new BoolFieldORM("isEmailConfirmed", true),
-  // });
-  //
-  // userModel.create({
-  //   new IntFieldORM("id", 1),
-  //   new StringFieldORM("email", "romaivanov@mail.ru"),
-  //   new BoolFieldORM("isEmailConfirmed", true),
-  // });
-  //
-  // vector<AFieldORM*> newUser = userModel.findOne<StringFieldORM>
-  //   (new StringFieldORM("email", "moryak227res227@mail.ru"));
-  //
-  // IntFieldORM *newIntField = HardCast<IntFieldORM>(newUser, "id");
-  // cout << "Final: " << newIntField->getValue() << endl;
+  userModel.create({
+    new StringFieldORM("email", "vladilenzia227@mail.ru"),
+    new BoolFieldORM("isEmailConfirmed", false),
+  });
+
+  userModel.create({
+    new StringFieldORM("email", "moryak227res227@mail.ru"),
+    new BoolFieldORM("isEmailConfirmed", true),
+  });
+
+  userModel.create({
+    new StringFieldORM("email", "romaivanov@mail.ru"),
+    new BoolFieldORM("isEmailConfirmed", true),
+  });
+
+  vector<AFieldORM*> newUser = userModel.findOne<StringFieldORM>
+    (new StringFieldORM("email", "moryak227res227@mail.ru"));
+
+  if (newUser.size() == 0) {
+    cout << "Пользователь не найден" << endl;
+  } else {
+    StringFieldORM *newUserId = HardCast<StringFieldORM>(newUser, "id");
+    StringFieldORM *newUserEmail = HardCast<StringFieldORM>(newUser, "email");
+    BoolFieldORM *newUserIsConfirmed = HardCast<BoolFieldORM>(newUser, "isEmailConfirmed");
+    cout << newUserId->getValue() << endl;
+    cout << newUserEmail->getValue() << endl;
+    cout << newUserIsConfirmed->getValue() << endl;
+  }
 
   return 0;
 }
