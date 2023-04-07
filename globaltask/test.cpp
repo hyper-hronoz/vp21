@@ -578,7 +578,7 @@ private:
   int amount;
 
 public:
-  Product(initializer_list<ASchemaField *> extendedFuilds = {},
+  Product(vector<AFieldORM*> fields = {}, initializer_list<ASchemaField *> extendedFuilds = {},
           const char *type = typeid(Product).name())
       : BaseORM(new Schema(
                     {(new SchemaField<StringFieldORM>("id"))
@@ -642,9 +642,7 @@ int main() {
   });
 
 
-  Product newProduct;
-  newProduct = product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
-  cout << newProduct << endl;
+  Product newProduct = product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
 
   // Provider provider;
   //
