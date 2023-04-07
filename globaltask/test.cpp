@@ -334,7 +334,7 @@ public:
       this->save();
     } else {
       for (auto &message : errors) {
-        // cout << message << endl;
+        cout << message << endl;
       }
     }
   }
@@ -577,6 +577,17 @@ private:
   int price;
   int amount;
 
+  void update(vector<AFieldORM*> fields) {
+    if (!fields.size()) {
+        return; 
+    }
+    this->id = HardCast<StringFieldORM>(fields, "id")->getValue();
+    this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
+    this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
+    this->price = HardCast<IntFieldORM>(fields, "price")->getValue();
+    this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
+  }
+
 public:
   Product(vector<AFieldORM*> fields = {}, initializer_list<ASchemaField *> extendedFuilds = {},
           const char *type = typeid(Product).name())
@@ -594,14 +605,11 @@ public:
                          ->unique(true),
                      (new SchemaField<IntFieldORM>("amount"))->required(true)},
                     extendedFuilds),
-                type) {}
+                type) {
+          this->update(fields);
+      }
 
-  void operator=(vector<AFieldORM *> fields) {
-    this->id = HardCast<StringFieldORM>(fields, "id")->getValue();
-    this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
-    this->price = HardCast<IntFieldORM>(fields, "price")->getValue();
-    this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
-  }
+  void operator=(vector<AFieldORM *> fields) {this->update(fields);}
 
   friend ostream &operator<<(ostream &output, const Product &product) {
     output << "name: " << product.name << endl;
@@ -641,8 +649,11 @@ int main() {
       new IntFieldORM("amount", 20),
   });
 
-
   Product newProduct = product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
+  cout << newProduct << endl;
+
+  Product product2 = newProduct.findOne<StringFieldORM>(new StringFieldORM("type", "toys"));
+  cout << product2 << endl;
 
   // Provider provider;
   //
