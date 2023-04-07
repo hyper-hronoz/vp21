@@ -213,7 +213,7 @@ public:
   explicit Schema(initializer_list<ASchemaField *> list) : schemaFuilds(list) {}
 
   explicit Schema(initializer_list<ASchemaField *> list,
-                  vector<ASchemaField *> extendedFuilds)
+                  initializer_list<ASchemaField *> extendedFuilds)
       : schemaFuilds(list) {
     for (auto &extendedItem : extendedFuilds) {
       for (auto &item : list) {
@@ -299,7 +299,6 @@ private:
                          schemaField->getName());
       }
     }
-    cout << "End checking" << endl;
   }
 
 public:
@@ -579,7 +578,7 @@ private:
   int amount;
 
 public:
-  Product(vector<ASchemaField *> extendedFuilds = {},
+  Product(initializer_list<ASchemaField *> extendedFuilds = {},
           const char *type = typeid(Product).name())
       : BaseORM(new Schema(
                     {(new SchemaField<StringFieldORM>("id"))
@@ -605,10 +604,10 @@ public:
   }
 
   friend ostream &operator<<(ostream &output, const Product &product) {
-    output << "name: " << product.name;
-    output << "type: " << product.type;
-    output << "price: " << product.price;
-    output << "amount: " << product.amount;
+    output << "name: " << product.name << endl;
+    output << "type: " << product.type << endl;
+    output << "price: " << product.price << endl;
+    output << "amount: " << product.amount << endl;
     return output;
   }
 
@@ -643,7 +642,9 @@ int main() {
   });
 
 
-  Product newProduct = product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
+  Product newProduct;
+  newProduct = product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
+  cout << newProduct << endl;
 
   // Provider provider;
   //
