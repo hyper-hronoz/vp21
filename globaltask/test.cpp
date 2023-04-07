@@ -302,7 +302,7 @@ private:
   }
 
 public:
-  BaseORM(){}
+  BaseORM() {}
 
   explicit BaseORM(Schema *schema, const char *DBName)
       : schema(schema), storage(new Storage(DBName)) {}
@@ -382,11 +382,13 @@ protected:
   int stringLength = 255;
 
 public:
-  StringFieldORM(const string &key, const string &value)
-      : BaseFuild(key, value, typeid(*this).name()) {}
+  StringFieldORM(const string &key, const string &value,
+                 const char *type = typeid(StringFieldORM).name())
+      : BaseFuild(key, value, type) {}
 
-  explicit StringFieldORM(const string &key)
-      : BaseFuild(key, typeid(*this).name()) {}
+  explicit StringFieldORM(const string &key,
+                          const char *type = typeid(StringFieldORM).name())
+      : BaseFuild(key, type) {}
 
   void save(ofstream &stream) override {
     int _size = this->stringLength;
@@ -408,9 +410,27 @@ public:
   void generate() override {
     if (this->isAutoGenerate) {
       this->value = uuid::generate_uuid_v4();
-      // cout << this->value << endl;
     }
   }
+
+  int getSize() {
+      return this->stringLength;
+  }
+
+  friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) { return str1.stringLength > str2.getSize();  }
+  friend bool operator<(StringFieldORM &str1, StringFieldORM &str2) {return str1.getSize() < str2.getSize(); }
+};
+
+class LongString : public StringFieldORM {
+protected:
+  int stringLength = 500;
+
+public:
+  LongString(const string &key, const string &value)
+      : StringFieldORM(key, value, typeid(*this).name()) {}
+
+  explicit LongString(const string &key)
+      : StringFieldORM(key, typeid(*this).name()) {}
 };
 
 class IntFieldORM : public BaseFuild<int> {
@@ -577,9 +597,9 @@ private:
   int price;
   int amount;
 
-  void update(vector<AFieldORM*> fields) {
+  void update(vector<AFieldORM *> fields) {
     if (!fields.size()) {
-        return; 
+      return;
     }
     this->id = HardCast<StringFieldORM>(fields, "id")->getValue();
     this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
@@ -589,7 +609,8 @@ private:
   }
 
 public:
-  Product(vector<AFieldORM*> fields = {}, initializer_list<ASchemaField *> extendedFuilds = {},
+  Product(vector<AFieldORM *> fields = {},
+          initializer_list<ASchemaField *> extendedFuilds = {},
           const char *type = typeid(Product).name())
       : BaseORM(new Schema(
                     {(new SchemaField<StringFieldORM>("id"))
@@ -606,10 +627,10 @@ public:
                      (new SchemaField<IntFieldORM>("amount"))->required(true)},
                     extendedFuilds),
                 type) {
-          this->update(fields);
-      }
+    this->update(fields);
+  }
 
-  void operator=(vector<AFieldORM *> fields) {this->update(fields);}
+  void operator=(vector<AFieldORM *> fields) { this->update(fields); }
 
   friend ostream &operator<<(ostream &output, const Product &product) {
     output << "name: " << product.name << endl;
@@ -649,11 +670,18 @@ int main() {
       new IntFieldORM("amount", 20),
   });
 
-  Product newProduct = product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
+  Product newProduct =
+      product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
   cout << newProduct << endl;
 
-  Product product2 = newProduct.findOne<StringFieldORM>(new StringFieldORM("type", "toys"));
+  Product product2 =
+      newProduct.findOne<StringFieldORM>(new StringFieldORM("type", "toys"));
   cout << product2 << endl;
+
+  // comparing sizes in bytes
+  StringFieldORM *test1 = new StringFieldORM("hello", "there");
+  LongString *longString = new LongString("fuck", "you");
+  cout << (test1 < longString) << endl;
 
   // Provider provider;
   //
