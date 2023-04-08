@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -209,17 +210,21 @@ class Schema {
 private:
   vector<ASchemaField *> schemaFields;
 
-  bool compareInterval(ASchemaField* field1, ASchemaField* field2) {
-    return (field1->getName() < field1->getName());
+  static bool compareInterval(ASchemaField *field1, ASchemaField *field2) {
+    return (field1->getName() < field2->getName());
   }
 
   void sortFields() {
-      sort(this->schemaFields.begin(), this->sortFields.end(), compareInterval);
+    sort(this->schemaFields.begin(), this->schemaFields.end(), compareInterval);
+    cout << "Sorted:" << endl;
+    for (auto &field : this->schemaFields) {
+        cout << field->getName() << endl;
+    }
   }
 
 public:
   explicit Schema(initializer_list<ASchemaField *> list) : schemaFields(list) {
-      this->sortFields();
+    this->sortFields();
   }
 
   explicit Schema(initializer_list<ASchemaField *> list,
@@ -312,9 +317,15 @@ private:
     }
   }
 
-public:
-  BaseORM() {}
+  static bool compareInterval(AFieldORM *field1, AFieldORM *field2) {
+    return (field1->getKey() < field2->getKey());
+  }
 
+  void sortFields() {
+    sort(this->fields.begin(), this->fields.end(), compareInterval);
+  }
+
+public:
   explicit BaseORM(Schema *schema, const char *DBName)
       : schema(schema), storage(new Storage(DBName)) {}
 
@@ -342,6 +353,7 @@ public:
     this->fields.insert(this->fields.end(), list);
     this->checkData(errors);
     if (errors.size() == 0) {
+        this->sortFields();
       this->save();
     } else {
       for (auto &message : errors) {
@@ -391,7 +403,6 @@ public:
 class StringFieldORM : public BaseFuild<string> {
 protected:
   int stringSize = 255;
-  
 
 public:
   StringFieldORM(const string &key, const string &value)
@@ -402,7 +413,8 @@ public:
 
   virtual void save(ofstream &stream) override {
     int _size = this->stringSize;
-    cout << "Saving value: " << this->value  << " Size: " << this->stringSize << endl; 
+    cout << "Saving value: " << this->value << " Size: " << this->stringSize
+         << endl;
     stream.write(this->value.c_str(), _size);
   };
 
@@ -424,30 +436,32 @@ public:
     }
   }
 
-  int getSize() {
-      return this->stringSize;
-  }
+  int getSize() { return this->stringSize; }
 
-  friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) { return str1.stringSize > str2.getSize();  }
-  friend bool operator<(StringFieldORM &str1, StringFieldORM &str2) {return str1.getSize() < str2.getSize(); }
+  friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) {
+    return str1.stringSize > str2.getSize();
+  }
+  friend bool operator<(StringFieldORM &str1, StringFieldORM &str2) {
+    return str1.getSize() < str2.getSize();
+  }
 };
 
 class LongString : public StringFieldORM {
 private:
-    void redifine() {
-          this->type = typeid(LongString).name();
-          this->stringSize = 1000;
-    }
+  void redifine() {
+    this->type = typeid(LongString).name();
+    this->stringSize = 1000;
+  }
+
 public:
   LongString(const string &key, const string &value)
       : StringFieldORM(key, value) {
-          this->redifine();
-      }
+    this->redifine();
+  }
 
-  explicit LongString(const string &key)
-      : StringFieldORM(key) {
-          this->redifine();
-      }
+  explicit LongString(const string &key) : StringFieldORM(key) {
+    this->redifine();
+  }
 };
 //
 class IntFieldORM : public BaseFuild<int> {
@@ -456,7 +470,7 @@ public:
       : BaseFuild(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
-      cout << "Saving value: " << this->value << endl;
+    cout << "Saving value: " << this->value << endl;
     stream.write(reinterpret_cast<char *>(&this->value), sizeof(int));
   };
 
@@ -543,7 +557,7 @@ template <class T> T *HardCast(vector<AFieldORM *> newUser, string key) {
       return dynamic_cast<T *>(userFuild);
     }
   }
-  return {};
+  return new T(key);
 }
 
 class User : public BaseORM {
@@ -552,11 +566,7 @@ public:
        const char *type = typeid(User).name())
       : BaseORM(
             new Schema(
-                {(new SchemaField<StringFieldORM>("id"))
-                     ->required(true)
-                     ->unique(true)
-                     ->autoGenerate(true),
-                 (new SchemaField<StringFieldORM>("email"))
+                {(new SchemaField<StringFieldORM>("email"))
                      ->required(true)
                      ->unique(true),
                  (new SchemaField<IntFieldORM>("age"))->required(true),
@@ -573,7 +583,7 @@ public:
   Provider()
       : User(
             {
-                (new SchemaField<StringFieldORM>("product id"))->required(true),
+                (new SchemaField<StringFieldORM>("product _id"))->required(true),
             },
             typeid(this).name()) {}
 
@@ -596,10 +606,7 @@ class ProductType : BaseORM {
 public:
   ProductType(initializer_list<ASchemaField *> extendedFuilds = {},
               const char *type = typeid(ProductType).name())
-      : BaseORM(new Schema({(new SchemaField<StringFieldORM>("id"))
-                                ->required(true)
-                                ->unique(true)
-                                ->autoGenerate(true),
+      : BaseORM(new Schema({
                             (new SchemaField<StringFieldORM>("type"))
                                 ->required(true)
                                 ->unique(true)},
@@ -619,9 +626,9 @@ private:
     if (!fields.size()) {
       return;
     }
-    this->id = HardCast<StringFieldORM>(fields, "id")->getValue();
+    this->id = HardCast<StringFieldORM>(fields, "_id")->getValue();
     this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
-    this->type = HardCast<LongString>(fields, "type")->getValue();
+    this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
     this->price = HardCast<IntFieldORM>(fields, "price")->getValue();
     this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
   }
@@ -631,11 +638,8 @@ public:
           initializer_list<ASchemaField *> extendedFuilds = {},
           const char *type = typeid(Product).name())
       : BaseORM(new Schema(
-                    {(new SchemaField<StringFieldORM>("id"))
-                         ->required(true)
-                         ->unique(true)
-                         ->autoGenerate(true),
-                     (new SchemaField<LongString>("type"))->required(true),
+                    {
+                     (new SchemaField<StringFieldORM>("type"))->required(true),
                      (new SchemaField<StringFieldORM>("name"))
                          ->required(true)
                          ->unique(true),
@@ -651,6 +655,7 @@ public:
   void operator=(vector<AFieldORM *> fields) { this->update(fields); }
 
   friend ostream &operator<<(ostream &output, const Product &product) {
+    output << "_id: " << product.id << endl;
     output << "name: " << product.name << endl;
     output << "type: " << product.type << endl;
     output << "price: " << product.price << endl;
@@ -667,11 +672,7 @@ public:
 class JobTitle : BaseORM {
   JobTitle(initializer_list<ASchemaField *> extendedFuilds = {},
            const char *type = typeid(JobTitle).name())
-      : BaseORM(new Schema({(new SchemaField<StringFieldORM>("id"))
-                                ->required(true)
-                                ->unique(true)
-                                ->autoGenerate(true),
-                            (new SchemaField<StringFieldORM>("job title"))
+      : BaseORM(new Schema({(new SchemaField<StringFieldORM>("job title"))
                                 ->required(true)
                                 ->unique(true)},
                            extendedFuilds),
@@ -682,14 +683,14 @@ int main() {
   Product product;
 
   product.create({
-      new LongString("type", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qu"),
-      new StringFieldORM("name", "whirligig"),
+      new StringFieldORM( "type", "toys"),
       new IntFieldORM("price", 10),
+      new StringFieldORM("name", "whirligig"),
       new IntFieldORM("amount", 20),
   });
 
-  Product newProduct =
-      product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
+  Product newProduct = product.findOne<StringFieldORM>(new StringFieldORM("type", "whirligig"));
+
   cout << newProduct << endl;
 
   // comparing sizes in bytes

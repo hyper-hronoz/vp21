@@ -1,42 +1,38 @@
-#include <iostream>
-#include <vector>
-
+#include <algorithm> // std::sort
+#include <iostream>  // std::cout
+#include <vector>    // std::vector
+                     //
 using namespace std;
 
-class C {
- private:
+struct Person {
   string name;
- public:
-  C(string name) : name(name) {}
+  int age;
 
-  virtual void doWork() {
-    cout << this->name << " " << endl;
+  Person(string name, int age) {
+    this->name = name;
+    this->age = age;
   }
 };
 
-class B : public C {
- public:
-  B(string name) : C(name) {}
 
-  void doWork() override {
-    cout << " Fuck " << endl;
-  }
-};
-
-class A {
+class Fuck {
  private:
-  vector<C> v;
+  std::vector<Person> myvector{Person("Dragon", 22), Person("Putin", 21), Person("Zombie", 199), Person("Vlad", 12), Person("Alice", 20), }; // create vector from array
+  static bool compareFunction(Person a, Person b) { return a.name < b.name; }
  public:
-  A(initializer_list<C> list) : v(list) {}
+  Fuck() {
+  std::sort(myvector.begin(), myvector.end(),
+            compareFunction); // sort the vector
+
+  for (auto& person : myvector) {
+    cout << person.name << endl;
+  }
+
+  }
 };
 
-
-int main (int argc, char *argv[])
-{
-
-  A({
-    B("Vlad"),
-  });
+int main() {
+  Fuck();
 
   return 0;
 }
