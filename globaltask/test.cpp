@@ -90,7 +90,7 @@ public:
 
     for (auto &field : fields) {
       field->setSize(0);
-      cout << position << " " << fileSize << endl;
+      // cout << position << " " << fileSize << endl;
       if (file.tellg() >= fileSize) {
         position = -1;
         break;
@@ -356,9 +356,9 @@ public:
       }
     }
     this->fields.insert(this->fields.end(), list);
+    this->sortFields();
     this->checkData(errors);
     if (errors.size() == 0) {
-      this->sortFields();
       this->save();
     } else {
       for (auto &message : errors) {
@@ -394,7 +394,7 @@ public:
       }
       this->storage->get(list, position);
       for (auto &item : list) {
-        cout << item->getKey() << endl;
+        // cout << item->getKey() << endl;
         auto casted = dynamic_cast<T *>(item);
         if (!casted) {
           continue;
@@ -689,8 +689,7 @@ public:
                          ->required(true)
                          ->unique(true),
                      (new SchemaField<IntFieldORM>("price"))
-                         ->required(true)
-                         ->unique(true),
+                         ->required(true),
                      (new SchemaField<IntFieldORM>("amount"))->required(true)},
                     extendedFuilds),
                 type) {
@@ -748,13 +747,20 @@ int main() {
       new IntFieldORM("amount", 12),
   });
 
+  product.create({
+      new StringFieldORM("type", "meal"),
+      new IntFieldORM("price", 4),
+      new StringFieldORM("name", "burger"),
+      new IntFieldORM("amount", 12),
+  });
+
   cout << "========================================" << endl;
 
   for (auto &model :
-       product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
+       product.find<StringFieldORM>(new StringFieldORM("type", "burger"))) {
     Product newProduct = model;
     cout << newProduct << endl;
-  };
+  }
 
   // comparing sizes in bytes
   // StringFieldORM *test1 = new StringFieldORM("hello", "there");
