@@ -79,7 +79,7 @@ private:
 public:
   explicit Storage(const char *name) : name(name) {}
 
-  void get(vector<AFieldORM *> fuilds, int &position) {
+  void get(vector<AFieldORM *> fields, int &position) {
     ifstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::in | ios::binary);
 
@@ -88,26 +88,39 @@ public:
     fileSize = file.tellg();
     file.seekg(position, ios::beg);
 
-    for (auto &fuild : fuilds) {
-      fuild->setSize(0);
+    for (auto &field : fields) {
+      field->setSize(0);
       if (file.tellg() >= fileSize) {
         position = -1;
         break;
       }
-      fuild->get(file);
-      position += fuild->getSize();
+      field->get(file);
+      position += field->getSize();
     }
 
     file.close();
   }
 
-  void save(AFieldORM *model) {
+  void saveOne(AFieldORM *field) {
     system("mkdir -p ./database");
 
     ofstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::out | ios::binary | std::ios_base::app);
 
-    model->save(file);
+    field->save(file);
+
+    file.close();
+  }
+
+  void save(vector<AFieldORM*> fields) {
+    system("mkdir -p ./database");
+
+    ofstream file(DB_FOLDER + static_cast<std::string>(this->name),
+                  std::ios::out | ios::binary | std::ios_base::app);
+
+    for (auto &field : fields) {
+        field->save(file);
+    }
 
     file.close();
   }
@@ -216,10 +229,6 @@ private:
 
   void sortFields() {
     sort(this->schemaFields.begin(), this->schemaFields.end(), compareInterval);
-    cout << "Sorted:" << endl;
-    for (auto &field : this->schemaFields) {
-        cout << field->getName() << endl;
-    }
   }
 
 public:
@@ -266,10 +275,7 @@ protected:
 
 private:
   virtual void save() {
-    for (auto &field : fields) {
-      cout << "Saving: " << field->getKey() << endl;
-      this->storage->save(field);
-    }
+    this->storage->save(fields);
   }
 
   void checkData(vector<string> &errors) {
@@ -344,7 +350,7 @@ public:
     for (auto &schemaField : this->schema->getSchemaFields()) {
       if (schemaField->getIsAutoGenerate()) {
         AFieldORM *tempField = schemaField->getPureField();
-        cout << "Auto generate key: " << tempField->getKey() << endl;
+        // cout << "Auto generate key: " << tempField->getKey() << endl;
         tempField->setIsAutoGenerate(true);
         tempField->generate();
         this->fields.push_back(tempField);
@@ -370,11 +376,45 @@ public:
     // cout << "Nothing to change in updateOne" << endl;
   }
 
+
+  template<class T> vector<vector<AFieldORM*>> find(AFieldORM *model) {
+    auto castedModel = dynamic_cast<T *>(model);
+    if (!castedModel) {
+      return {};
+    }
+
+    // getting schema fuilds
+    vector<AFieldORM *> list{};
+    for (auto &schemaFeild : this->schema->getSchemaFields()) {
+      // cout << "Getting pure field: " << schemaFeild->getName() << endl;
+      list.push_back(schemaFeild->getPureField());
+    }
+
+    int position = 0;
+    vector<vector<AFieldORM*>> models{};
+
+    while (position >= 0) {
+      this->storage->get(list, position);
+      for (auto &item : list) {
+        cout << item->getKey() << endl;
+        auto casted = dynamic_cast<T *>(item);
+        if (!casted) {
+          continue;
+        }
+        if (casted->getValue() == castedModel->getValue() && item->getKey() == model->getKey()) {
+          models.push_back(list);
+        }
+      }
+    }
+    return models;
+  }
+
   template <class T> vector<AFieldORM *> findOne(AFieldORM *model) {
     auto castedModel = dynamic_cast<T *>(model);
     if (!castedModel) {
       return {};
     }
+
     // getting schema fuilds
     vector<AFieldORM *> list{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
@@ -391,7 +431,7 @@ public:
         if (!casted) {
           continue;
         }
-        if (casted->getValue() == castedModel->getValue()) {
+        if (casted->getValue() == castedModel->getValue() && item->getKey() == model->getKey()) {
           return list;
         }
       }
@@ -413,8 +453,8 @@ public:
 
   virtual void save(ofstream &stream) override {
     int _size = this->stringSize;
-    cout << "Saving value: " << this->value << " Size: " << this->stringSize
-         << endl;
+    // cout << "Saving value: " << this->value << " Size: " << this->stringSize
+         // << endl;
     stream.write(this->value.c_str(), _size);
   };
 
@@ -470,7 +510,7 @@ public:
       : BaseFuild(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
-    cout << "Saving value: " << this->value << endl;
+    // cout << "Saving value: " << this->value << endl;
     stream.write(reinterpret_cast<char *>(&this->value), sizeof(int));
   };
 
@@ -639,6 +679,7 @@ public:
           const char *type = typeid(Product).name())
       : BaseORM(new Schema(
                     {
+                     (new SchemaField<StringFieldORM>("_id"))->required(true)->autoGenerate(true)->unique(true),
                      (new SchemaField<StringFieldORM>("type"))->required(true),
                      (new SchemaField<StringFieldORM>("name"))
                          ->required(true)
@@ -689,9 +730,37 @@ int main() {
       new IntFieldORM("amount", 20),
   });
 
-  Product newProduct = product.findOne<StringFieldORM>(new StringFieldORM("type", "whirligig"));
+  product.create({
+      new StringFieldORM( "type", "meal"),
+      new IntFieldORM("price", 1),
+      new StringFieldORM("name", "hot dog"),
+      new IntFieldORM("amount", 100),
+  });
 
-  cout << newProduct << endl;
+  product.create({
+      new StringFieldORM( "type", "meal"),
+      new IntFieldORM("price", 4),
+      new StringFieldORM("name", "burger"),
+      new IntFieldORM("amount", 12),
+  });
+
+  product.create({
+      new StringFieldORM( "type", "animal"),
+      new IntFieldORM("price", 300),
+      new StringFieldORM("name", "cow"),
+      new IntFieldORM("amount", 2),
+  });
+  
+  Product h = product.findOne<StringFieldORM>(new StringFieldORM("type", "animal"));
+  cout << h << endl;
+
+  cout << "========================================" << endl;
+
+  for(auto& model: product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
+      Product newProduct = model;
+      cout << newProduct << endl;
+  };
+
 
   // comparing sizes in bytes
   // StringFieldORM *test1 = new StringFieldORM("hello", "there");
