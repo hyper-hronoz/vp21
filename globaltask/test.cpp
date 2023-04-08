@@ -128,7 +128,7 @@ public:
 
   void update(AFieldORM *target) {}
 
-  bool isEntryExists(vector<AFieldORM *> fuilds, AFieldORM *target) {
+  bool isEntryExists(vector<AFieldORM *> fields, AFieldORM *target) {
     ifstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::in | ios::binary);
 
@@ -141,17 +141,17 @@ public:
 
     while (position >= 0) {
       bool isExists = false;
-      for (auto &fuild : fuilds) {
+      for (auto &field : fields) {
         // cout << "Position: " << position << " " << fileSize << endl;
-        fuild->setSize(0);
+        field->setSize(0);
         if (file.tellg() >= fileSize) {
           position = -1;
           break;
         }
-        if (fuild->isEntryExists(file) && fuild->getKey() == target->getKey()) {
+        if (field->isEntryExists(file) && field->getKey() == target->getKey()) {
           isExists = true;
         }
-        position += fuild->getSize();
+        position += field->getSize();
       }
       if (isExists)
         return isExists;
@@ -162,15 +162,15 @@ public:
   }
 };
 
-template <class T> class BaseFuild : public AFieldORM {
+template <class T> class BaseField : public AFieldORM {
 protected:
   T value;
 
 public:
-  BaseFuild(const string &key, const T &value, const char *type)
+  BaseField(const string &key, const T &value, const char *type)
       : AFieldORM(key, type), value(value) {}
 
-  explicit BaseFuild(const string &key, const char *type)
+  explicit BaseField(const string &key, const char *type)
       : AFieldORM(key, type) {}
 
   T getValue() { return this->value; }
@@ -238,9 +238,9 @@ public:
   }
 
   explicit Schema(initializer_list<ASchemaField *> list,
-                  initializer_list<ASchemaField *> extendedFuilds)
+                  initializer_list<ASchemaField *> extendedFields)
       : schemaFields(list) {
-    for (auto &extendedItem : extendedFuilds) {
+    for (auto &extendedItem : extendedFields) {
       for (auto &item : list) {
         if (item->getName() == extendedItem->getName()) {
           cout << "Тревога, у нас одинаковое имя при наследовании!" << endl;
@@ -301,7 +301,7 @@ private:
       for (auto &target : this->fields) {
         if (schemaField->getUnique() &&
             target->getKey() == schemaField->getName()) {
-          // cout << "Schema fuild: " << schemaField->getName() << endl;
+          // cout << "Schema field: " << schemaField->getName() << endl;
           isEntryExists = this->storage->isEntryExists(fields, target);
           break;
         }
@@ -381,7 +381,7 @@ public:
       return {};
     }
 
-    // getting schema fuilds
+    // getting schema fields
 
     int position = 0;
     vector<vector<AFieldORM *>> models = {};
@@ -416,7 +416,7 @@ public:
       return {};
     }
 
-    // getting schema fuilds
+    // getting schema fields
     vector<AFieldORM *> list{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
       // cout << "Getting pure field: " << schemaFeild->getName() << endl;
@@ -442,16 +442,16 @@ public:
   }
 };
 
-class StringFieldORM : public BaseFuild<string> {
+class StringFieldORM : public BaseField<string> {
 protected:
   int stringSize = 255;
 
 public:
   StringFieldORM(const string &key, const string &value)
-      : BaseFuild(key, value, typeid(StringFieldORM).name()) {}
+      : BaseField(key, value, typeid(StringFieldORM).name()) {}
 
   explicit StringFieldORM(const string &key)
-      : BaseFuild(key, typeid(StringFieldORM).name()) {}
+      : BaseField(key, typeid(StringFieldORM).name()) {}
 
   virtual void save(ofstream &stream) override {
     int _size = this->stringSize;
@@ -506,10 +506,10 @@ public:
   }
 };
 //
-class IntFieldORM : public BaseFuild<int> {
+class IntFieldORM : public BaseField<int> {
 public:
   IntFieldORM(const string &key, const int &value)
-      : BaseFuild(key, value, typeid(*this).name()) {}
+      : BaseField(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
     // cout << "Saving value: " << this->value << endl;
@@ -522,13 +522,13 @@ public:
   };
 
   explicit IntFieldORM(const string &key)
-      : BaseFuild(key, typeid(*this).name()) {}
+      : BaseField(key, typeid(*this).name()) {}
 };
 
-class BoolFieldORM : public BaseFuild<bool> {
+class BoolFieldORM : public BaseField<bool> {
 public:
   BoolFieldORM(const string &key, const bool &value)
-      : BaseFuild(key, value, typeid(*this).name()) {}
+      : BaseField(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
     stream.write(reinterpret_cast<char *>(&this->value), sizeof(bool));
@@ -541,7 +541,7 @@ public:
   };
 
   explicit BoolFieldORM(const string &key)
-      : BaseFuild(key, typeid(*this).name()) {}
+      : BaseField(key, typeid(*this).name()) {}
 };
 
 template <class T> class SchemaField : public ASchemaField {
@@ -594,9 +594,9 @@ public:
 };
 
 template <class T> T *HardCast(vector<AFieldORM *> newUser, string key) {
-  for (auto &userFuild : newUser) {
-    if (userFuild->getKey() == key) {
-      return dynamic_cast<T *>(userFuild);
+  for (auto &userField : newUser) {
+    if (userField->getKey() == key) {
+      return dynamic_cast<T *>(userField);
     }
   }
   return new T(key);
@@ -604,7 +604,7 @@ template <class T> T *HardCast(vector<AFieldORM *> newUser, string key) {
 
 class User : public BaseORM {
 public:
-  User(initializer_list<ASchemaField *> extendedFuilds = {},
+  User(initializer_list<ASchemaField *> extendedFields = {},
        const char *type = typeid(User).name())
       : BaseORM(
             new Schema(
@@ -614,7 +614,7 @@ public:
                  (new SchemaField<IntFieldORM>("age"))->required(true),
                  (new SchemaField<StringFieldORM>("name"))->required(true),
                  (new SchemaField<StringFieldORM>("password"))->required(true)},
-                extendedFuilds),
+                extendedFields),
             type) {}
 
   virtual void showPass() = 0;
@@ -647,12 +647,12 @@ public:
 
 class ProductType : BaseORM {
 public:
-  ProductType(initializer_list<ASchemaField *> extendedFuilds = {},
+  ProductType(initializer_list<ASchemaField *> extendedFields = {},
               const char *type = typeid(ProductType).name())
       : BaseORM(new Schema({(new SchemaField<StringFieldORM>("type"))
                                 ->required(true)
                                 ->unique(true)},
-                           extendedFuilds),
+                           extendedFields),
                 type) {}
 };
 
@@ -677,7 +677,7 @@ private:
 
 public:
   Product(vector<AFieldORM *> fields = {},
-          initializer_list<ASchemaField *> extendedFuilds = {},
+          initializer_list<ASchemaField *> extendedFields = {},
           const char *type = typeid(Product).name())
       : BaseORM(new Schema(
                     {(new SchemaField<StringFieldORM>("_id"))
@@ -691,7 +691,7 @@ public:
                      (new SchemaField<IntFieldORM>("price"))
                          ->required(true),
                      (new SchemaField<IntFieldORM>("amount"))->required(true)},
-                    extendedFuilds),
+                    extendedFields),
                 type) {
     this->update(fields);
   }
@@ -714,12 +714,12 @@ public:
 };
 
 class JobTitle : BaseORM {
-  JobTitle(initializer_list<ASchemaField *> extendedFuilds = {},
+  JobTitle(initializer_list<ASchemaField *> extendedFields = {},
            const char *type = typeid(JobTitle).name())
       : BaseORM(new Schema({(new SchemaField<StringFieldORM>("job title"))
                                 ->required(true)
                                 ->unique(true)},
-                           extendedFuilds),
+                           extendedFields),
                 type) {}
 };
 
@@ -738,13 +738,6 @@ int main() {
       new IntFieldORM("price", 3),
       new StringFieldORM("name", "willigig"),
       new IntFieldORM("amount", 11),
-  });
-
-  product.create({
-      new StringFieldORM("type", "meal"),
-      new IntFieldORM("price", 4),
-      new StringFieldORM("name", "burger"),
-      new IntFieldORM("amount", 12),
   });
 
   product.create({
