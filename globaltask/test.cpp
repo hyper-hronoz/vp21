@@ -90,6 +90,7 @@ public:
 
     for (auto &field : fields) {
       field->setSize(0);
+      cout << position << " " << fileSize << endl;
       if (file.tellg() >= fileSize) {
         position = -1;
         break;
@@ -112,14 +113,14 @@ public:
     file.close();
   }
 
-  void save(vector<AFieldORM*> fields) {
+  void save(vector<AFieldORM *> fields) {
     system("mkdir -p ./database");
 
     ofstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::out | ios::binary | std::ios_base::app);
 
     for (auto &field : fields) {
-        field->save(file);
+      field->save(file);
     }
 
     file.close();
@@ -274,9 +275,7 @@ protected:
   Storage *storage;
 
 private:
-  virtual void save() {
-    this->storage->save(fields);
-  }
+  virtual void save() { this->storage->save(fields); }
 
   void checkData(vector<string> &errors) {
     for (auto &schemaField : this->schema->getSchemaFields()) {
@@ -359,7 +358,7 @@ public:
     this->fields.insert(this->fields.end(), list);
     this->checkData(errors);
     if (errors.size() == 0) {
-        this->sortFields();
+      this->sortFields();
       this->save();
     } else {
       for (auto &message : errors) {
@@ -376,24 +375,23 @@ public:
     // cout << "Nothing to change in updateOne" << endl;
   }
 
-
-  template<class T> vector<vector<AFieldORM*>> find(AFieldORM *model) {
+  template <class T> vector<vector<AFieldORM *>> find(AFieldORM *model) {
     auto castedModel = dynamic_cast<T *>(model);
     if (!castedModel) {
       return {};
     }
 
     // getting schema fuilds
-    vector<AFieldORM *> list{};
-    for (auto &schemaFeild : this->schema->getSchemaFields()) {
-      // cout << "Getting pure field: " << schemaFeild->getName() << endl;
-      list.push_back(schemaFeild->getPureField());
-    }
 
     int position = 0;
-    vector<vector<AFieldORM*>> models{};
+    vector<vector<AFieldORM *>> models = {};
 
     while (position >= 0) {
+      vector<AFieldORM *> list{};
+      for (auto &schemaFeild : this->schema->getSchemaFields()) {
+        // cout << "Getting pure field: " << schemaFeild->getName() << endl;
+        list.push_back(schemaFeild->getPureField());
+      }
       this->storage->get(list, position);
       for (auto &item : list) {
         cout << item->getKey() << endl;
@@ -401,7 +399,10 @@ public:
         if (!casted) {
           continue;
         }
-        if (casted->getValue() == castedModel->getValue() && item->getKey() == model->getKey()) {
+        if (casted->getValue() == castedModel->getValue() &&
+            item->getKey() == model->getKey()) {
+          // cout << "Fuck: " << item->getKey() << " " << casted->getValue() <<
+          // endl;
           models.push_back(list);
         }
       }
@@ -431,7 +432,8 @@ public:
         if (!casted) {
           continue;
         }
-        if (casted->getValue() == castedModel->getValue() && item->getKey() == model->getKey()) {
+        if (casted->getValue() == castedModel->getValue() &&
+            item->getKey() == model->getKey()) {
           return list;
         }
       }
@@ -454,7 +456,7 @@ public:
   virtual void save(ofstream &stream) override {
     int _size = this->stringSize;
     // cout << "Saving value: " << this->value << " Size: " << this->stringSize
-         // << endl;
+    // << endl;
     stream.write(this->value.c_str(), _size);
   };
 
@@ -623,7 +625,8 @@ public:
   Provider()
       : User(
             {
-                (new SchemaField<StringFieldORM>("product _id"))->required(true),
+                (new SchemaField<StringFieldORM>("product _id"))
+                    ->required(true),
             },
             typeid(this).name()) {}
 
@@ -646,8 +649,7 @@ class ProductType : BaseORM {
 public:
   ProductType(initializer_list<ASchemaField *> extendedFuilds = {},
               const char *type = typeid(ProductType).name())
-      : BaseORM(new Schema({
-                            (new SchemaField<StringFieldORM>("type"))
+      : BaseORM(new Schema({(new SchemaField<StringFieldORM>("type"))
                                 ->required(true)
                                 ->unique(true)},
                            extendedFuilds),
@@ -678,8 +680,10 @@ public:
           initializer_list<ASchemaField *> extendedFuilds = {},
           const char *type = typeid(Product).name())
       : BaseORM(new Schema(
-                    {
-                     (new SchemaField<StringFieldORM>("_id"))->required(true)->autoGenerate(true)->unique(true),
+                    {(new SchemaField<StringFieldORM>("_id"))
+                         ->required(true)
+                         ->autoGenerate(true)
+                         ->unique(true),
                      (new SchemaField<StringFieldORM>("type"))->required(true),
                      (new SchemaField<StringFieldORM>("name"))
                          ->required(true)
@@ -724,43 +728,33 @@ int main() {
   Product product;
 
   product.create({
-      new StringFieldORM( "type", "toys"),
-      new IntFieldORM("price", 10),
-      new StringFieldORM("name", "whirligig"),
-      new IntFieldORM("amount", 20),
-  });
-
-  product.create({
-      new StringFieldORM( "type", "meal"),
+      new StringFieldORM("type", "meal"),
       new IntFieldORM("price", 1),
       new StringFieldORM("name", "hot dog"),
       new IntFieldORM("amount", 100),
   });
 
   product.create({
-      new StringFieldORM( "type", "meal"),
+      new StringFieldORM("type", "toys"),
+      new IntFieldORM("price", 3),
+      new StringFieldORM("name", "willigig"),
+      new IntFieldORM("amount", 11),
+  });
+
+  product.create({
+      new StringFieldORM("type", "meal"),
       new IntFieldORM("price", 4),
       new StringFieldORM("name", "burger"),
       new IntFieldORM("amount", 12),
   });
 
-  product.create({
-      new StringFieldORM( "type", "animal"),
-      new IntFieldORM("price", 300),
-      new StringFieldORM("name", "cow"),
-      new IntFieldORM("amount", 2),
-  });
-  
-  Product h = product.findOne<StringFieldORM>(new StringFieldORM("type", "animal"));
-  cout << h << endl;
-
   cout << "========================================" << endl;
 
-  for(auto& model: product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
-      Product newProduct = model;
-      cout << newProduct << endl;
+  for (auto &model :
+       product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
+    Product newProduct = model;
+    cout << newProduct << endl;
   };
-
 
   // comparing sizes in bytes
   // StringFieldORM *test1 = new StringFieldORM("hello", "there");
