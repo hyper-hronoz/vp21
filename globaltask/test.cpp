@@ -207,14 +207,24 @@ public:
 
 class Schema {
 private:
-  vector<ASchemaField *> schemaFuilds;
+  vector<ASchemaField *> schemaFields;
+
+  bool compareInterval(ASchemaField* field1, ASchemaField* field2) {
+    return (field1->getName() < field1->getName());
+  }
+
+  void sortFields() {
+      sort(this->schemaFields.begin(), this->sortFields.end(), compareInterval);
+  }
 
 public:
-  explicit Schema(initializer_list<ASchemaField *> list) : schemaFuilds(list) {}
+  explicit Schema(initializer_list<ASchemaField *> list) : schemaFields(list) {
+      this->sortFields();
+  }
 
   explicit Schema(initializer_list<ASchemaField *> list,
                   initializer_list<ASchemaField *> extendedFuilds)
-      : schemaFuilds(list) {
+      : schemaFields(list) {
     for (auto &extendedItem : extendedFuilds) {
       for (auto &item : list) {
         if (item->getName() == extendedItem->getName()) {
@@ -222,8 +232,9 @@ public:
           return;
         }
       }
-      this->schemaFuilds.push_back(extendedItem);
+      this->schemaFields.push_back(extendedItem);
     }
+    this->sortFields();
   }
 
   ~Schema() {
@@ -234,12 +245,12 @@ public:
   }
 
   void print() {
-    for (auto &item : this->schemaFuilds) {
+    for (auto &item : this->schemaFields) {
       item->print();
     }
   }
 
-  vector<ASchemaField *> getSchemaFields() const { return this->schemaFuilds; }
+  vector<ASchemaField *> getSchemaFields() const { return this->schemaFields; }
 };
 
 class BaseORM {
@@ -251,7 +262,7 @@ protected:
 private:
   virtual void save() {
     for (auto &field : fields) {
-      // cout << "Saving: " << field->getKey() << endl;
+      cout << "Saving: " << field->getKey() << endl;
       this->storage->save(field);
     }
   }
@@ -322,7 +333,7 @@ public:
     for (auto &schemaField : this->schema->getSchemaFields()) {
       if (schemaField->getIsAutoGenerate()) {
         AFieldORM *tempField = schemaField->getPureField();
-        // cout << "Name: " << tempField->getKey() << endl;
+        cout << "Auto generate key: " << tempField->getKey() << endl;
         tempField->setIsAutoGenerate(true);
         tempField->generate();
         this->fields.push_back(tempField);
@@ -379,24 +390,24 @@ public:
 
 class StringFieldORM : public BaseFuild<string> {
 protected:
-  int stringLength = 255;
+  int stringSize = 255;
+  
 
 public:
-  StringFieldORM(const string &key, const string &value,
-                 const char *type = typeid(StringFieldORM).name())
-      : BaseFuild(key, value, type) {}
+  StringFieldORM(const string &key, const string &value)
+      : BaseFuild(key, value, typeid(StringFieldORM).name()) {}
 
-  explicit StringFieldORM(const string &key,
-                          const char *type = typeid(StringFieldORM).name())
-      : BaseFuild(key, type) {}
+  explicit StringFieldORM(const string &key)
+      : BaseFuild(key, typeid(StringFieldORM).name()) {}
 
-  void save(ofstream &stream) override {
-    int _size = this->stringLength;
+  virtual void save(ofstream &stream) override {
+    int _size = this->stringSize;
+    cout << "Saving value: " << this->value  << " Size: " << this->stringSize << endl; 
     stream.write(this->value.c_str(), _size);
   };
 
-  void get(ifstream &stream) override {
-    int _size = this->stringLength;
+  virtual void get(ifstream &stream) override {
+    int _size = this->stringSize;
     // cout << "Size: " << _size << endl;
     char *buff = new char[_size + 1];
     stream.read(buff, _size);
@@ -414,31 +425,38 @@ public:
   }
 
   int getSize() {
-      return this->stringLength;
+      return this->stringSize;
   }
 
-  friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) { return str1.stringLength > str2.getSize();  }
+  friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) { return str1.stringSize > str2.getSize();  }
   friend bool operator<(StringFieldORM &str1, StringFieldORM &str2) {return str1.getSize() < str2.getSize(); }
 };
 
 class LongString : public StringFieldORM {
-protected:
-  int stringLength = 500;
-
+private:
+    void redifine() {
+          this->type = typeid(LongString).name();
+          this->stringSize = 1000;
+    }
 public:
   LongString(const string &key, const string &value)
-      : StringFieldORM(key, value, typeid(*this).name()) {}
+      : StringFieldORM(key, value) {
+          this->redifine();
+      }
 
   explicit LongString(const string &key)
-      : StringFieldORM(key, typeid(*this).name()) {}
+      : StringFieldORM(key) {
+          this->redifine();
+      }
 };
-
+//
 class IntFieldORM : public BaseFuild<int> {
 public:
   IntFieldORM(const string &key, const int &value)
       : BaseFuild(key, value, typeid(*this).name()) {}
 
   void save(ofstream &stream) override {
+      cout << "Saving value: " << this->value << endl;
     stream.write(reinterpret_cast<char *>(&this->value), sizeof(int));
   };
 
@@ -603,7 +621,7 @@ private:
     }
     this->id = HardCast<StringFieldORM>(fields, "id")->getValue();
     this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
-    this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
+    this->type = HardCast<LongString>(fields, "type")->getValue();
     this->price = HardCast<IntFieldORM>(fields, "price")->getValue();
     this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
   }
@@ -617,7 +635,7 @@ public:
                          ->required(true)
                          ->unique(true)
                          ->autoGenerate(true),
-                     (new SchemaField<StringFieldORM>("type"))->required(true),
+                     (new SchemaField<LongString>("type"))->required(true),
                      (new SchemaField<StringFieldORM>("name"))
                          ->required(true)
                          ->unique(true),
@@ -664,8 +682,8 @@ int main() {
   Product product;
 
   product.create({
+      new LongString("type", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qu"),
       new StringFieldORM("name", "whirligig"),
-      new StringFieldORM("type", "toys"),
       new IntFieldORM("price", 10),
       new IntFieldORM("amount", 20),
   });
@@ -674,14 +692,10 @@ int main() {
       product.findOne<StringFieldORM>(new StringFieldORM("name", "whirligig"));
   cout << newProduct << endl;
 
-  Product product2 =
-      newProduct.findOne<StringFieldORM>(new StringFieldORM("type", "toys"));
-  cout << product2 << endl;
-
   // comparing sizes in bytes
-  StringFieldORM *test1 = new StringFieldORM("hello", "there");
-  LongString *longString = new LongString("fuck", "you");
-  cout << (test1 < longString) << endl;
+  // StringFieldORM *test1 = new StringFieldORM("hello", "there");
+  // LongString *longString = new LongString("fuck", "you");
+  // cout << (test1 < longString) << endl;
 
   // Provider provider;
   //
