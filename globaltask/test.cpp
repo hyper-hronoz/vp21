@@ -54,7 +54,7 @@ public:
   virtual ~AFieldORM() {}
   virtual void save(fstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
-  virtual bool isEntryExists(ifstream &stream) = 0;
+  virtual string isEntryExists(ifstream &stream) = 0;
 
   AFieldORM(const string &key, const char *type) : key(key), type(type) {}
 
@@ -64,7 +64,7 @@ public:
 
   void setSize(int size) { this->size = size; }
 
-  int getSize() { return this->size; }
+  virtual int getSize() { return this->size; }
 
   void setIsAutoGenerate(bool value = false) { this->isAutoGenerate = value; }
 
@@ -134,32 +134,46 @@ public:
     file.close();
   }
 
-  bool isEntryExists(vector<AFieldORM *> fields) {
-    cout << "Storage is exists " << endl;
+  bool isContains(AFieldORM *field, vector<AFieldORM *> checkRequired) {
+    for (auto &check : checkRequired) {
+      if (check->getKey() == field->getKey()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void isEntryExists(vector<AFieldORM *> fields,
+                     vector<AFieldORM *> checkRequired,
+                     vector<string> &errors) {
+    // cout << "__Storage is exists " << endl;
     ifstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::in | ios::binary);
 
-    long fileSize;
-    fileSize = file.tellg();
-
     int position = 0;
 
-    // while (position >= 0) {
-    for (auto &field : fields) {
-      cout << "Current field: " << field->getKey() << endl;
-      // if (file.tellg() >= fileSize) {
-      //   position = -1;
-      //   break;
-      // }
-      // field->get(file);
-      // if (field->isEntryExists(file)) {
-      //     return true;
-      // }
-      // position += field->getSize();
-    }
-    // }
+    file.seekg(0, ios::end);
+    long fileSize = file.tellg();
+    file.seekg(position, ios::beg);
+    // cout << "File size: " << fileSize << endl;
 
-    return false;
+    while (position >= 0) {
+      // cout << "Current position: " << position << endl;
+      for (auto &field : fields) {
+        // cout << "Current field: " << field->getKey() << endl;
+        if (file.tellg() >= fileSize) {
+          position = -1;
+          break;
+        }
+        string value = field->isEntryExists(file);
+        if (value.length() != 0 && this->isContains(field, checkRequired)) {
+          errors.push_back("Found same field " + field->getKey() + ": " +
+                           value);
+        }
+        // cout << "Field size: " << field->getSize() << endl;
+        position += field->getSize();
+      }
+    }
   }
 };
 
@@ -179,17 +193,17 @@ public:
   virtual void save(fstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
 
-  virtual bool isEntryExists(ifstream &stream) {
+  virtual string isEntryExists(ifstream &stream) {
     T currentValue = this->value;
     this->get(stream);
     T gotValue = this->value;
     this->value = currentValue;
-    cout << "Current value: " << currentValue << " "
-         << "Got value: " << gotValue << endl;
+    // cout << "Current value: " << currentValue << " "
+         // << "Got value: " << gotValue << endl;
     if (gotValue == currentValue) {
-      return true;
+      return currentValue + "";
     }
-    return false;
+    return {};
   }
 };
 
@@ -274,18 +288,20 @@ protected:
 
 private:
   int cursor = 0;
-  virtual void save() { this->storage->save(fields); }
+  virtual void save() { this->storage->save(this->fields); }
 
-  bool isEntryExists() {
+  void checkUnique(vector<AFieldORM *> pfields, vector<string> &errors) {
+    vector<AFieldORM *> checkRequired = {};
     for (auto &schemaField : this->schema->getSchemaFields()) {
-      for (auto &target : this->fields) {
+      for (auto &field : pfields) {
         if (schemaField->getUnique() &&
-            target->getKey() == schemaField->getName()) {
-          return this->storage->isEntryExists(this->fields);
+            schemaField->getName() == field->getKey()) {
+          // cout << "Check required: " << field->getKey() << endl;
+          checkRequired.push_back(field);
         }
       }
     }
-    return false;
+    this->storage->isEntryExists(pfields, checkRequired, errors);
   }
 
   void checkNames(vector<string> &errors) {
@@ -313,7 +329,9 @@ private:
         }
       }
       if (!isMatch) {
-        errors.push_back("No such type: " + schemaField->getName() + " current type: " + schemaField->getType() + " required");
+        errors.push_back("No such type: " + schemaField->getName() +
+                         " current type: " + schemaField->getType() +
+                         " required");
       }
     }
   }
@@ -321,6 +339,7 @@ private:
   void checkData(vector<string> &errors) {
     this->checkNames(errors);
     this->checkTypes(errors);
+    this->checkUnique(this->fields, errors);
   }
 
   static bool compareInterval(AFieldORM *field1, AFieldORM *field2) {
@@ -375,7 +394,6 @@ public:
 
     int recordSize = 0;
     for (auto &currentField : currentFields) {
-      cout << currentField->getKey() << " " << currentField->getSize() << endl;
       recordSize += currentField->getSize();
       for (auto &newField : newFields) {
         if (newField->getKey() == currentField->getKey()) {
@@ -384,10 +402,27 @@ public:
       }
     }
 
+    for (auto &field : currentFields) {
+      for (auto &schemaFeild : this->schema->getSchemaFields()) {
+        if (field->getKey() == schemaFeild->getName() && field->getType() == schemaFeild->getType() && schemaFeild->getIsAutoGenerate()) {
+          // cout << "Generating field " << field->getKey() << endl;
+          field->setIsAutoGenerate(true);
+          field->generate();
+        }
+      }
+    }
+
+    vector<string> errors{};
+    this->checkUnique(currentFields, errors);
+    if (errors.size() != 0) {
+      for (auto &item : errors) {
+        cout << item << endl;
+      }
+      return;
+    }
+
     position -= recordSize;
-
-    cout << "Updating position: " << position << endl;
-
+    // cout << "Overwriting to " << position << endl;
     this->storage->save(currentFields, position);
   }
 
@@ -436,7 +471,7 @@ public:
     this->cursor = 0;
 
     while (this->cursor >= 0) {
-      cout << "FindOne Current Position: " << this->cursor << endl;
+      // cout << "FindOne Current Position: " << this->cursor << endl;
       this->storage->get(iterableFields, this->cursor);
       for (auto &iterableField : iterableFields) {
         auto casted = dynamic_cast<T *>(iterableField);
@@ -466,8 +501,6 @@ public:
 
   virtual void save(fstream &stream) override {
     int _size = this->stringSize;
-    // cout << "Saving value: " << this->value << " Size: " << this->stringSize
-    // << endl;
     stream.write(this->value.c_str(), _size);
   };
 
@@ -489,7 +522,7 @@ public:
     }
   }
 
-  int getSize() { return this->stringSize; }
+  int getSize() override { return this->stringSize; }
 
   friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) {
     return str1.stringSize > str2.getSize();
@@ -743,31 +776,37 @@ int main() {
       new IntFieldORM("amount", 100),
   });
 
-  // product.create({
-  //     new StringFieldORM("type", "toys"),
-  //     new IntFieldORM("price", 3),
-  //     new StringFieldORM("name", "willigig"),
-  //     new IntFieldORM("amount", 11),
-  // });
-  //
-  // product.create({
-  //     new StringFieldORM("type", "meal"),
-  //     new IntFieldORM("price", 4),
-  //     new StringFieldORM("name", "burger"),
-  //     new IntFieldORM("amount", 12),
-  // });
-  //
-  // product.create({
-  //     new StringFieldORM("type", "meal"),
-  //     new IntFieldORM("price", 4),
-  //     new StringFieldORM("name", "hot dog"),
-  //     new IntFieldORM("amount", 12),
-  // });
+  product.create({
+      new StringFieldORM("name", "burger"),
+      new StringFieldORM("type", "meal"),
+      new IntFieldORM("price", 1),
+      new IntFieldORM("amount", 100),
+  });
 
-  // product.updateOne<StringFieldORM>(new StringFieldORM("name", "hot dog"),
-  //                                   {
-  //                                       new StringFieldORM("name", "banana"),
-  //                                   });
+  product.create({
+      new StringFieldORM("name", "banana"),
+      new StringFieldORM("type", "meal"),
+      new IntFieldORM("price", 1),
+      new IntFieldORM("amount", 10),
+  });
+
+  product.create({
+      new StringFieldORM("name", "banana"),
+      new StringFieldORM("type", "meal"),
+      new IntFieldORM("price", 1),
+      new IntFieldORM("amount", 10),
+  });
+
+  for (auto &model :
+       product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
+    Product newProduct = model;
+    cout << newProduct << endl;
+  }
+
+  product.updateOne<StringFieldORM>(new StringFieldORM("name", "burger"),
+                                    {
+                                        new StringFieldORM("name", "boshki"),
+                                    });
 
   cout << "========================================" << endl;
 
