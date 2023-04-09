@@ -106,7 +106,7 @@ public:
     system("mkdir -p ./database");
 
     fstream file(DB_FOLDER + static_cast<std::string>(this->name),
-                  std::ios::out | ios::binary | std::ios_base::app);
+                 std::ios::out | ios::binary | std::ios_base::app);
 
     field->save(file);
 
@@ -134,38 +134,31 @@ public:
     file.close();
   }
 
-  void update(AFieldORM *target) {}
-
-  bool isEntryExists(vector<AFieldORM *> fields, AFieldORM *target) {
+  bool isEntryExists(vector<AFieldORM *> fields) {
+    cout << "Storage is exists " << endl;
     ifstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::in | ios::binary);
 
     long fileSize;
-    file.seekg(0, ios::end);
     fileSize = file.tellg();
 
     int position = 0;
-    file.seekg(position, ios::beg);
 
-    while (position >= 0) {
-      bool isExists = false;
-      for (auto &field : fields) {
-        // cout << "Position: " << position << " " << fileSize << endl;
-        field->setSize(0);
-        if (file.tellg() >= fileSize) {
-          position = -1;
-          break;
-        }
-        if (field->isEntryExists(file) && field->getKey() == target->getKey()) {
-          isExists = true;
-        }
-        position += field->getSize();
-      }
-      if (isExists)
-        return isExists;
+    // while (position >= 0) {
+    for (auto &field : fields) {
+      cout << "Current field: " << field->getKey() << endl;
+      // if (file.tellg() >= fileSize) {
+      //   position = -1;
+      //   break;
+      // }
+      // field->get(file);
+      // if (field->isEntryExists(file)) {
+      //     return true;
+      // }
+      // position += field->getSize();
     }
+    // }
 
-    file.close();
     return false;
   }
 };
@@ -187,16 +180,13 @@ public:
   virtual void get(ifstream &stream) = 0;
 
   virtual bool isEntryExists(ifstream &stream) {
-    // cout << "Type: " << typeid(T).name() << endl;
-    T constValue = this->value;
+    T currentValue = this->value;
     this->get(stream);
-    T gottedValue = this->value;
-    this->value = constValue;
-    // cout << "Gotted value: " << gottedValue << " Current value: " <<
-    // constValue << endl; cout << &constValue << " " << &this->value << endl;
-    if (gottedValue == constValue) {
-      // cout << "Found same" << endl;
-      // cout << this->value << " " << constValue << endl;
+    T gotValue = this->value;
+    this->value = currentValue;
+    cout << "Current value: " << currentValue << " "
+         << "Got value: " << gotValue << endl;
+    if (gotValue == currentValue) {
       return true;
     }
     return false;
@@ -286,49 +276,51 @@ private:
   int cursor = 0;
   virtual void save() { this->storage->save(fields); }
 
-  void checkData(vector<string> &errors) {
+  bool isEntryExists() {
     for (auto &schemaField : this->schema->getSchemaFields()) {
-
-      // cout << "Schema field: " << schemaField->getName() << endl;
-      bool isMatchNames = false;
-      for (auto &field : this->fields) {
-        if (schemaField->getName() == field->getKey()) {
-          isMatchNames = true;
-          break;
-        }
-      }
-
-      bool isMatchTypes = false;
-      for (auto &field : this->fields) {
-        if (schemaField->getType() == field->getType() && isMatchNames) {
-          isMatchTypes = true;
-          break;
-        }
-      }
-
-      bool isEntryExists = false;
       for (auto &target : this->fields) {
         if (schemaField->getUnique() &&
             target->getKey() == schemaField->getName()) {
-          // cout << "Schema field: " << schemaField->getName() << endl;
-          isEntryExists = this->storage->isEntryExists(this->fields, target);
-          break;
+          return this->storage->isEntryExists(this->fields);
         }
       }
+    }
+    return false;
+  }
 
-      if (!isMatchNames && schemaField->getRequired() == true) {
+  void checkNames(vector<string> &errors) {
+    for (auto &schemaField : this->schema->getSchemaFields()) {
+      bool isMatch = false;
+      for (auto &field : this->fields) {
+        if (field->getKey() == schemaField->getName() &&
+            schemaField->getRequired()) {
+          isMatch = true;
+        }
+      }
+      if (!isMatch) {
         errors.push_back("No such field: " + schemaField->getName());
       }
+    }
+  }
 
-      if (!isMatchTypes) {
-        errors.push_back("No such type: " + schemaField->getName());
+  void checkTypes(vector<string> &errors) {
+    for (auto &schemaField : this->schema->getSchemaFields()) {
+      bool isMatch = false;
+      for (auto &field : this->fields) {
+        if (schemaField->getType() == field->getType() &&
+            schemaField->getName() == field->getKey()) {
+          isMatch = true;
+        }
       }
-
-      if (isEntryExists) {
-        errors.push_back("This entry already exists: " +
-                         schemaField->getName());
+      if (!isMatch) {
+        errors.push_back("No such type: " + schemaField->getName() + " current type: " + schemaField->getType() + " required");
       }
     }
+  }
+
+  void checkData(vector<string> &errors) {
+    this->checkNames(errors);
+    this->checkTypes(errors);
   }
 
   static bool compareInterval(AFieldORM *field1, AFieldORM *field2) {
@@ -358,7 +350,6 @@ public:
     for (auto &schemaField : this->schema->getSchemaFields()) {
       if (schemaField->getIsAutoGenerate()) {
         AFieldORM *tempField = schemaField->getPureField();
-        // cout << "Auto generate key: " << tempField->getKey() << endl;
         tempField->setIsAutoGenerate(true);
         tempField->generate();
         this->fields.push_back(tempField);
@@ -410,7 +401,6 @@ public:
     vector<vector<AFieldORM *>> models = {};
 
     while (position >= 0) {
-      cout << "Getting position: " << position << endl;
       vector<AFieldORM *> list{};
       for (auto &schemaFeild : this->schema->getSchemaFields()) {
         list.push_back(schemaFeild->getPureField());
@@ -476,9 +466,6 @@ public:
 
   virtual void save(fstream &stream) override {
     int _size = this->stringSize;
-    if (this->getKey() == "_id") {
-      cout << "Saving position: " << stream.tellp() << endl;
-    }
     // cout << "Saving value: " << this->value << " Size: " << this->stringSize
     // << endl;
     stream.write(this->value.c_str(), _size);
@@ -750,25 +737,32 @@ int main() {
   Product product;
 
   product.create({
+      new StringFieldORM("name", "hot dog"),
       new StringFieldORM("type", "meal"),
       new IntFieldORM("price", 1),
-      new StringFieldORM("name", "hot dog"),
       new IntFieldORM("amount", 100),
   });
 
-  product.create({
-      new StringFieldORM("type", "toys"),
-      new IntFieldORM("price", 3),
-      new StringFieldORM("name", "willigig"),
-      new IntFieldORM("amount", 11),
-  });
-
-  product.create({
-      new StringFieldORM("type", "meal"),
-      new IntFieldORM("price", 4),
-      new StringFieldORM("name", "burger"),
-      new IntFieldORM("amount", 12),
-  });
+  // product.create({
+  //     new StringFieldORM("type", "toys"),
+  //     new IntFieldORM("price", 3),
+  //     new StringFieldORM("name", "willigig"),
+  //     new IntFieldORM("amount", 11),
+  // });
+  //
+  // product.create({
+  //     new StringFieldORM("type", "meal"),
+  //     new IntFieldORM("price", 4),
+  //     new StringFieldORM("name", "burger"),
+  //     new IntFieldORM("amount", 12),
+  // });
+  //
+  // product.create({
+  //     new StringFieldORM("type", "meal"),
+  //     new IntFieldORM("price", 4),
+  //     new StringFieldORM("name", "hot dog"),
+  //     new IntFieldORM("amount", 12),
+  // });
 
   // product.updateOne<StringFieldORM>(new StringFieldORM("name", "hot dog"),
   //                                   {
