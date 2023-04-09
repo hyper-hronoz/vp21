@@ -199,7 +199,7 @@ public:
     T gotValue = this->value;
     this->value = currentValue;
     // cout << "Current value: " << currentValue << " "
-         // << "Got value: " << gotValue << endl;
+    // << "Got value: " << gotValue << endl;
     if (gotValue == currentValue) {
       return currentValue + "";
     }
@@ -404,7 +404,9 @@ public:
 
     for (auto &field : currentFields) {
       for (auto &schemaFeild : this->schema->getSchemaFields()) {
-        if (field->getKey() == schemaFeild->getName() && field->getType() == schemaFeild->getType() && schemaFeild->getIsAutoGenerate()) {
+        if (field->getKey() == schemaFeild->getName() &&
+            field->getType() == schemaFeild->getType() &&
+            schemaFeild->getIsAutoGenerate()) {
           // cout << "Generating field " << field->getKey() << endl;
           field->setIsAutoGenerate(true);
           field->generate();
@@ -806,12 +808,13 @@ int main() {
   product.updateOne<StringFieldORM>(new StringFieldORM("name", "burger"),
                                     {
                                         new StringFieldORM("name", "boshki"),
+                                        new StringFieldORM("type", "gandon"),
                                     });
 
   cout << "========================================" << endl;
 
   for (auto &model :
-       product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
+       product.find<StringFieldORM>(new StringFieldORM("type", "gandon"))) {
     Product newProduct = model;
     cout << newProduct << endl;
   }
@@ -821,30 +824,8 @@ int main() {
   // LongString *longString = new LongString("fuck", "you");
   // cout << (test1 < longString) << endl;
 
-  // Provider provider;
-  //
-  // Employer employer;
-  //
-  // employer.create({
-  //     new StringFieldORM("email", "vladilenzia227@mail.ru"),
-  //     new StringFieldORM("sername", "fucking sername"),
-  //     new StringFieldORM("password", "fucking password"),
-  //     new StringFieldORM("job title", "fucking job"),
-  //     new IntFieldORM("age", 18),
-  //     new StringFieldORM("name", "Hronoz"),
-  // });
-  //
-  // vector<AFieldORM *> newUser = employer.findOne<StringFieldORM>(
-  //     new StringFieldORM("email", "vladilenzia227@mail.ru"));
-  //
-  // if (newUser.size() == 0) {
-  //   cout << "Пользователь не найден" << endl;
-  // } else {
-  //   StringFieldORM *newUserId = HardCast<StringFieldORM>(newUser, "id");
-  //   StringFieldORM *newUserEmail = HardCast<StringFieldORM>(newUser,
-  //   "email"); cout << newUserId->getValue() << endl; cout <<
-  //   newUserEmail->getValue() << endl; delete newUserId; delete newUserEmail;
-  // }
-
   return 0;
 }
+
+// че блять потрещим семки сука выродок ксива найти лоха по номеру Рома на хуй;
+// Внатуре пиздишь блять смотрящий на длину пиздижа в StringFieldORM на хуй? На стерме!
