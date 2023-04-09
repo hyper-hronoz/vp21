@@ -52,7 +52,7 @@ protected:
 
 public:
   virtual ~AFieldORM() {}
-  virtual void save(ofstream &stream) = 0;
+  virtual void save(fstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
   virtual bool isEntryExists(ifstream &stream) = 0;
 
@@ -105,7 +105,7 @@ public:
   void saveOne(AFieldORM *field) {
     system("mkdir -p ./database");
 
-    ofstream file(DB_FOLDER + static_cast<std::string>(this->name),
+    fstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::out | ios::binary | std::ios_base::app);
 
     field->save(file);
@@ -113,11 +113,19 @@ public:
     file.close();
   }
 
-  void save(vector<AFieldORM *> fields) {
+  void save(vector<AFieldORM *> fields, int cursor = -1) {
     system("mkdir -p ./database");
 
-    ofstream file(DB_FOLDER + static_cast<std::string>(this->name),
-                  std::ios::out | ios::binary | std::ios_base::app);
+    string path = DB_FOLDER + static_cast<std::string>(this->name);
+
+    fstream file;
+
+    if (cursor >= 0) {
+      file = fstream(path, ios::in | std::ios::out | ios::binary);
+      file.seekp(cursor, ios_base::beg);
+    } else {
+      file = fstream(path, std::ios::out | ios::binary | std::ios_base::app);
+    }
 
     for (auto &field : fields) {
       field->save(file);
@@ -175,7 +183,7 @@ public:
 
   T getValue() { return this->value; }
 
-  virtual void save(ofstream &stream) = 0;
+  virtual void save(fstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
 
   virtual bool isEntryExists(ifstream &stream) {
@@ -275,6 +283,7 @@ protected:
   Storage *storage;
 
 private:
+  int cursor = 0;
   virtual void save() { this->storage->save(fields); }
 
   void checkData(vector<string> &errors) {
@@ -302,7 +311,7 @@ private:
         if (schemaField->getUnique() &&
             target->getKey() == schemaField->getName()) {
           // cout << "Schema field: " << schemaField->getName() << endl;
-          isEntryExists = this->storage->isEntryExists(fields, target);
+          isEntryExists = this->storage->isEntryExists(this->fields, target);
           break;
         }
       }
@@ -367,12 +376,28 @@ public:
     }
   }
 
-  template <class T> void updateOne(AFieldORM *model, AFieldORM *replacer) {
-    vector<AFieldORM *> fields = findOne<T>(model);
-    for (auto &field : fields) {
-      this->storage;
+  template <class T>
+  void updateOne(AFieldORM *searchField,
+                 initializer_list<AFieldORM *> newFields) {
+    vector<AFieldORM *> currentFields = findOne<T>(searchField);
+    int position = this->cursor;
+
+    int recordSize = 0;
+    for (auto &currentField : currentFields) {
+      cout << currentField->getKey() << " " << currentField->getSize() << endl;
+      recordSize += currentField->getSize();
+      for (auto &newField : newFields) {
+        if (newField->getKey() == currentField->getKey()) {
+          currentField = newField;
+        }
+      }
     }
-    // cout << "Nothing to change in updateOne" << endl;
+
+    position -= recordSize;
+
+    cout << "Updating position: " << position << endl;
+
+    this->storage->save(currentFields, position);
   }
 
   template <class T> vector<vector<AFieldORM *>> find(AFieldORM *model) {
@@ -381,28 +406,23 @@ public:
       return {};
     }
 
-    // getting schema fields
-
     int position = 0;
     vector<vector<AFieldORM *>> models = {};
 
     while (position >= 0) {
+      cout << "Getting position: " << position << endl;
       vector<AFieldORM *> list{};
       for (auto &schemaFeild : this->schema->getSchemaFields()) {
-        // cout << "Getting pure field: " << schemaFeild->getName() << endl;
         list.push_back(schemaFeild->getPureField());
       }
       this->storage->get(list, position);
       for (auto &item : list) {
-        // cout << item->getKey() << endl;
         auto casted = dynamic_cast<T *>(item);
         if (!casted) {
           continue;
         }
         if (casted->getValue() == castedModel->getValue() &&
             item->getKey() == model->getKey()) {
-          // cout << "Fuck: " << item->getKey() << " " << casted->getValue() <<
-          // endl;
           models.push_back(list);
         }
       }
@@ -417,24 +437,25 @@ public:
     }
 
     // getting schema fields
-    vector<AFieldORM *> list{};
+    vector<AFieldORM *> iterableFields{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
       // cout << "Getting pure field: " << schemaFeild->getName() << endl;
-      list.push_back(schemaFeild->getPureField());
+      iterableFields.push_back(schemaFeild->getPureField());
     }
 
-    int position = 0;
+    this->cursor = 0;
 
-    while (position >= 0) {
-      this->storage->get(list, position);
-      for (auto &item : list) {
-        auto casted = dynamic_cast<T *>(item);
+    while (this->cursor >= 0) {
+      cout << "FindOne Current Position: " << this->cursor << endl;
+      this->storage->get(iterableFields, this->cursor);
+      for (auto &iterableField : iterableFields) {
+        auto casted = dynamic_cast<T *>(iterableField);
         if (!casted) {
           continue;
         }
         if (casted->getValue() == castedModel->getValue() &&
-            item->getKey() == model->getKey()) {
-          return list;
+            iterableField->getKey() == model->getKey()) {
+          return iterableFields;
         }
       }
     }
@@ -453,8 +474,11 @@ public:
   explicit StringFieldORM(const string &key)
       : BaseField(key, typeid(StringFieldORM).name()) {}
 
-  virtual void save(ofstream &stream) override {
+  virtual void save(fstream &stream) override {
     int _size = this->stringSize;
+    if (this->getKey() == "_id") {
+      cout << "Saving position: " << stream.tellp() << endl;
+    }
     // cout << "Saving value: " << this->value << " Size: " << this->stringSize
     // << endl;
     stream.write(this->value.c_str(), _size);
@@ -511,7 +535,7 @@ public:
   IntFieldORM(const string &key, const int &value)
       : BaseField(key, value, typeid(*this).name()) {}
 
-  void save(ofstream &stream) override {
+  void save(fstream &stream) override {
     // cout << "Saving value: " << this->value << endl;
     stream.write(reinterpret_cast<char *>(&this->value), sizeof(int));
   };
@@ -530,7 +554,7 @@ public:
   BoolFieldORM(const string &key, const bool &value)
       : BaseField(key, value, typeid(*this).name()) {}
 
-  void save(ofstream &stream) override {
+  void save(fstream &stream) override {
     stream.write(reinterpret_cast<char *>(&this->value), sizeof(bool));
   };
 
@@ -688,8 +712,7 @@ public:
                      (new SchemaField<StringFieldORM>("name"))
                          ->required(true)
                          ->unique(true),
-                     (new SchemaField<IntFieldORM>("price"))
-                         ->required(true),
+                     (new SchemaField<IntFieldORM>("price"))->required(true),
                      (new SchemaField<IntFieldORM>("amount"))->required(true)},
                     extendedFields),
                 type) {
@@ -747,10 +770,15 @@ int main() {
       new IntFieldORM("amount", 12),
   });
 
+  // product.updateOne<StringFieldORM>(new StringFieldORM("name", "hot dog"),
+  //                                   {
+  //                                       new StringFieldORM("name", "banana"),
+  //                                   });
+
   cout << "========================================" << endl;
 
   for (auto &model :
-       product.find<StringFieldORM>(new StringFieldORM("type", "burger"))) {
+       product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
     Product newProduct = model;
     cout << newProduct << endl;
   }
