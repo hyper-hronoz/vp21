@@ -5,6 +5,6 @@
 using namespace std;
 
 int main() {
-  StartController *controller = new StartController();
+  StartController();
   return 0;
 }
