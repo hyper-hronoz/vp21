@@ -1,24 +1,32 @@
 #include "StartView.h"
 
-#include "../Controllers/StartController.h"
+StartView::StartView() {
+  this->menu = Menu("---First lab menu---");
 
-void StartView::display() {
-    this->createStartMenu();
-    this->menu->awaitUserInput();
-}
+  this->menu.append(this->menuItemFactory.create("Вычеслить корень 25", []() {
+    std::cout << "Полезная логика!!!!!!!!" << std::endl;
+    std::cout << sqrt(25) << std::endl;
+  }));
 
-void StartView::createStartMenu() {
-    this->menu = new Menu("---Стартовое меню[Вы кто?]---");
+  this->menu.append(this->menuItemFactory.create("Поздороваться", []() {
+    std::cout << "Вжжжжжжжжжжжж, Hello there! General Kenobi!" << std::endl;
+  }));
 
-    menu->append(menuItemFactory->create("Поставщик", [this]() {
-        this->controller->getInstance<StartController>()->onSelectProvider();
-    }));
+  this->menu.append(
+      this->menuItemFactory.create("Изобразить картинку псевдографикой!", []() {
+        std::cout << "██╗  ██╗██████╗  ██████╗ ███╗   ██╗ ██████╗ ███████╗"
+                  << "\n"
+                     "██║  ██║██╔══██╗██╔═══██╗████╗  ██║██╔═══██╗╚══███╔╝"
+                  << "\n"
+                  << "███████║██████╔╝██║   ██║██╔██╗ ██║██║   ██║  ███╔╝ "
+                  << "\n"
+                  << "██╔══██║██╔══██╗██║   ██║██║╚██╗██║██║   ██║ ███╔╝  "
+                  << "\n"
+                  << "██║  ██║██║  ██║╚██████╔╝██║ ╚████║╚██████╔╝███████╗"
+                  << "\n"
+                  << "╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝"
+                  << std::endl;
+      }));
 
-    menu->append(menuItemFactory->create("Сотрудник", [this]() {
-        this->controller->getInstance<StartController>()->onSelectEmployer();
-    }));
-
-    menu->append(menuItemFactory->create("Первая лаба", [this]() {
-        this->controller->getInstance<StartController>()->onSelectFirstLab();
-    }));
+  this->menu.awaitUserInput();
 }

@@ -1,4 +1,4 @@
-#include "../Menu/MenuItem.h"
+#include "MenuItem.h"
 
 MenuItem::MenuItem(int id, std::string title) {
     this->title = title;
@@ -19,7 +19,6 @@ int MenuItem::getId() {
 }
 
 void MenuItem::executeCallback() {
-    system("clear");
     callback();
 }
 

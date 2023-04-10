@@ -1,5 +1,5 @@
 #pragma once
-#include "../Menu/MenuItem.h"
+#include "MenuItem.h"
 
 class MenuItemFactory {
  private:

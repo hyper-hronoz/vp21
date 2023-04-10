@@ -1,4 +1,4 @@
-#include "../Menu/Menu.h"
+#include "Menu.h"
 
 Menu::Menu() {
 
@@ -7,6 +7,13 @@ Menu::Menu() {
 Menu::Menu(std::string name) {
     this->title = name;
     menuItems = {};
+}
+
+Menu::~Menu() {
+    for (auto item : this->menuItems) {
+       delete item;
+    }
+    menuItems.clear();
 }
 
 void Menu::append(MenuItem* menuItem) {
@@ -40,5 +47,6 @@ void Menu::awaitUserInput() {
             awaitUserInput();
         }
     }
+    std::cout << "!Incorrect selection!" << std::endl;
     awaitUserInput();
 }

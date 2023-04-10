@@ -1,14 +1,14 @@
 #pragma once
-#include "iostream"
-#include "AView.h"
 
-class StartView : public AView<StartView> {
- public:
-    explicit StartView(IController<StartView>* controller)
-        : AView<StartView>(controller) {}
+#include "BaseView.h"
+#include <math.h>
 
-    void display() override;
-
+class StartView : public BaseView {
  private:
-    void createStartMenu();
+  Menu menu;
+  MenuItemFactory menuItemFactory;
+
+ public:
+  StartView();
+  void display() override;
 };
