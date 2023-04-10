@@ -1,11 +1,10 @@
 #include<iostream>
-#include<fstream>
 
-#include "Controllers/StartController.h"
-#include "Views/StartView.h"
+#include "./src/Controllers/StartController.h"
 
 using namespace std;
 
 int main() {
-    StartController(StartView());
+  StartController *controller = new StartController();
+  return 0;
 }

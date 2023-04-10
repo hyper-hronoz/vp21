@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/Lab2.dir/test.cpp.o CMakeFiles/Lab2.dir/test2.cpp.o CMakeFiles/Lab2.dir/index.cpp.o CMakeFiles/Lab2.dir/Views/StartView.cpp.o CMakeFiles/Lab2.dir/Views/Menu/Menu.cpp.o CMakeFiles/Lab2.dir/Views/Menu/MenuItem.cpp.o CMakeFiles/Lab2.dir/Views/Menu/MenuItemFactory.cpp.o CMakeFiles/Lab2.dir/Controllers/StartController.cpp.o -o Lab2 

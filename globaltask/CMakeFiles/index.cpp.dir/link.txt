@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/index.cpp.dir/src/Views/StartView.cpp.o CMakeFiles/index.cpp.dir/src/Views/Menu/Menu.cpp.o CMakeFiles/index.cpp.dir/src/Views/Menu/MenuItem.cpp.o CMakeFiles/index.cpp.dir/src/Views/Menu/MenuItemFactory.cpp.o CMakeFiles/index.cpp.dir/src/Controllers/StartController.cpp.o -o index.cpp 
