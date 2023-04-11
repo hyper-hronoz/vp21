@@ -2,48 +2,69 @@
 
 #include <algorithm>
 #include <fstream>
-#include <iostream> #include <map>
+#include <iostream>
 #include <random>
 #include <sstream>
+#include <string>
 #include <typeinfo>
 #include <vector>
-#include<string>
 
 using namespace std;
 
-namespace uuid {
 static std::random_device rd;
 static std::mt19937 gen(rd());
 static std::uniform_int_distribution<> dis(0, 15);
 static std::uniform_int_distribution<> dis2(8, 11);
 
-std::string generate_uuid_v4() {
-  std::stringstream ss;
-  int i;
-  ss << std::hex;
-  for (i = 0; i < 8; i++) {
-    ss << dis(gen);
+enum ERROR_TYPES {
+  SAME_ENTRY,
+};
+
+class Error {
+private:
+  ERROR_TYPES errorType;
+  string message;
+
+public:
+  Error(ERROR_TYPES errorType, string message) {
+    this->errorType = errorType;
+    this->message = message;
   }
-  ss << "-";
-  for (i = 0; i < 4; i++) {
-    ss << dis(gen);
+
+  string getMessage() { return this->message; }
+
+  ERROR_TYPES getErrorType() { return this->errorType; }
+};
+
+class UUID {
+public:
+  static std::string generate_uuid() {
+    std::stringstream ss;
+    int i;
+    ss << std::hex;
+    for (i = 0; i < 8; i++) {
+      ss << dis(gen);
+    }
+    ss << "-";
+    for (i = 0; i < 4; i++) {
+      ss << dis(gen);
+    }
+    ss << "-4";
+    for (i = 0; i < 3; i++) {
+      ss << dis(gen);
+    }
+    ss << "-";
+    ss << dis2(gen);
+    for (i = 0; i < 3; i++) {
+      ss << dis(gen);
+    }
+    ss << "-";
+    for (i = 0; i < 12; i++) {
+      ss << dis(gen);
+    };
+    return ss.str();
   }
-  ss << "-4";
-  for (i = 0; i < 3; i++) {
-    ss << dis(gen);
-  }
-  ss << "-";
-  ss << dis2(gen);
-  for (i = 0; i < 3; i++) {
-    ss << dis(gen);
-  }
-  ss << "-";
-  for (i = 0; i < 12; i++) {
-    ss << dis(gen);
-  };
-  return ss.str();
-}
-} // namespace uuid
+};
 
 class AFieldORM {
 protected:
@@ -146,8 +167,7 @@ public:
   }
 
   void isEntryExists(vector<AFieldORM *> fields,
-                     vector<AFieldORM *> checkRequired,
-                     vector<string> &errors) {
+                     vector<AFieldORM *> checkRequired, vector<Error> &errors) {
     // cout << "__Storage is exists " << endl;
     ifstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::in | ios::binary);
@@ -169,8 +189,9 @@ public:
         }
         string value = field->isEntryExists(file);
         if (value.length() != 0 && this->isContains(field, checkRequired)) {
-          errors.push_back("Found same field " + field->getKey() + ": " +
-                           value);
+          string errorMessage =
+              "Found same field " + field->getKey() + ": " + value;
+          errors.push_back(Error(ERROR_TYPES::SAME_ENTRY, errorMessage));
         }
         // cout << "Field size: " << field->getSize() << endl;
         position += field->getSize();
@@ -292,7 +313,7 @@ private:
   int cursor = 0;
   virtual void save() { this->storage->save(this->fields); }
 
-  void checkUnique(vector<AFieldORM *> pfields, vector<string> &errors) {
+  void checkUnique(vector<AFieldORM *> pfields, vector<Error> &errors) {
     vector<AFieldORM *> checkRequired = {};
     for (auto &schemaField : this->schema->getSchemaFields()) {
       for (auto &field : pfields) {
@@ -306,7 +327,7 @@ private:
     this->storage->isEntryExists(pfields, checkRequired, errors);
   }
 
-  void checkNames(vector<string> &errors) {
+  void checkNames(vector<Error> &errors) {
     for (auto &schemaField : this->schema->getSchemaFields()) {
       bool isMatch = false;
       for (auto &field : this->fields) {
@@ -316,12 +337,13 @@ private:
         }
       }
       if (!isMatch) {
-        errors.push_back("No such field: " + schemaField->getName());
+        string errorMessage = "No such field: " + schemaField->getName();
+        errors.push_back(Error(ERROR_TYPES::SAME_ENTRY, errorMessage));
       }
     }
   }
 
-  void checkTypes(vector<string> &errors) {
+  void checkTypes(vector<Error> &errors) {
     for (auto &schemaField : this->schema->getSchemaFields()) {
       bool isMatch = false;
       for (auto &field : this->fields) {
@@ -331,14 +353,15 @@ private:
         }
       }
       if (!isMatch) {
-        errors.push_back("No such type: " + schemaField->getName() +
-                         " current type: " + schemaField->getType() +
-                         " required");
+        string errorText = "No such type: " + schemaField->getName() +
+                           " current type: " + schemaField->getType() +
+                           " required";
+        errors.push_back(Error(ERROR_TYPES::SAME_ENTRY, errorText));
       }
     }
   }
 
-  void checkData(vector<string> &errors) {
+  void checkData(vector<Error> &errors) {
     this->checkNames(errors);
     this->checkTypes(errors);
     this->checkUnique(this->fields, errors);
@@ -365,9 +388,8 @@ public:
     delete this->schema;
   }
 
-  void create(initializer_list<AFieldORM *> list) {
+  void create(initializer_list<AFieldORM *> list, vector<Error> &errors) {
     this->fields = {};
-    vector<string> errors{};
     for (auto &schemaField : this->schema->getSchemaFields()) {
       if (schemaField->getIsAutoGenerate()) {
         AFieldORM *tempField = schemaField->getPureField();
@@ -381,10 +403,6 @@ public:
     this->checkData(errors);
     if (errors.size() == 0) {
       this->save();
-    } else {
-      for (auto &message : errors) {
-        cout << message << endl;
-      }
     }
   }
 
@@ -416,11 +434,11 @@ public:
       }
     }
 
-    vector<string> errors{};
+    vector<Error> errors{};
     this->checkUnique(currentFields, errors);
     if (errors.size() != 0) {
       for (auto &item : errors) {
-        cout << item << endl;
+        cout << item.getMessage() << endl;
       }
       return;
     }
@@ -484,10 +502,12 @@ public:
         }
         if (casted->getValue() == castedModel->getValue() &&
             iterableField->getKey() == model->getKey()) {
+          delete model;
           return iterableFields;
         }
       }
     }
+    delete model;
     return {};
   }
 };
@@ -522,11 +542,16 @@ public:
 
   void generate() override {
     if (this->isAutoGenerate) {
-      this->value = uuid::generate_uuid_v4();
+      this->value = UUID::generate_uuid();
     }
   }
 
   int getSize() override { return this->stringSize; }
+
+  friend std::istream &operator>>(std::istream &in, StringFieldORM *field) {
+    in >> field->value;
+    return in;
+  }
 
   friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) {
     return str1.stringSize > str2.getSize();

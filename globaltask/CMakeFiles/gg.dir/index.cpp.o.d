@@ -156,4 +156,45 @@ CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
  /usr/include/c++/12.2.1/bits/stl_heap.h \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/./Menu/MenuItemFactory.h
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Views/./Menu/MenuItemFactory.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/SecondLabController.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Models/Employer.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Models/User.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Models/./database/db.h \
+ /usr/include/c++/12.2.1/algorithm \
+ /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/12.2.1/pstl/execution_defs.h \
+ /usr/include/c++/12.2.1/fstream /usr/include/c++/12.2.1/bits/codecvt.h \
+ /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
+ /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
+ /usr/include/c++/12.2.1/bits/fstream.tcc /usr/include/c++/12.2.1/random \
+ /usr/include/c++/12.2.1/cmath /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
+ /usr/include/bits/fp-fast.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
+ /usr/include/bits/iscanonical.h /usr/include/c++/12.2.1/bits/specfun.h \
+ /usr/include/c++/12.2.1/limits /usr/include/c++/12.2.1/tr1/gamma.tcc \
+ /usr/include/c++/12.2.1/tr1/special_function_util.h \
+ /usr/include/c++/12.2.1/tr1/bessel_function.tcc \
+ /usr/include/c++/12.2.1/tr1/beta_function.tcc \
+ /usr/include/c++/12.2.1/tr1/ell_integral.tcc \
+ /usr/include/c++/12.2.1/tr1/exp_integral.tcc \
+ /usr/include/c++/12.2.1/tr1/hypergeometric.tcc \
+ /usr/include/c++/12.2.1/tr1/legendre_function.tcc \
+ /usr/include/c++/12.2.1/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/12.2.1/tr1/poly_hermite.tcc \
+ /usr/include/c++/12.2.1/tr1/poly_laguerre.tcc \
+ /usr/include/c++/12.2.1/tr1/riemann_zeta.tcc \
+ /usr/include/c++/12.2.1/bits/random.h \
+ /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/opt_random.h \
+ /usr/include/c++/12.2.1/bits/random.tcc /usr/include/c++/12.2.1/numeric \
+ /usr/include/c++/12.2.1/bits/stl_numeric.h /usr/include/c++/12.2.1/bit \
+ /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
+ /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Models/../utils/Observer.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Models/Provider.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Views/SecondLabView.h \
+ /home/hronoz/vp21/globaltask/./src/initializers/ProductTypeInitilizer.h \
+ /home/hronoz/vp21/globaltask/./src/initializers/../Models/ProductType.h

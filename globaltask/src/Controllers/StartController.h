@@ -2,7 +2,6 @@
 
 #include "../Views/StartView.h"
 
-
 class StartController {
  private:
   StartView *view = new StartView();

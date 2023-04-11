@@ -11,5 +11,7 @@ public:
             },
             typeid(this).name()) {}
 
-  void showPass() {}
+  void sayHello() override {
+    cout << "Hello I am employer" << endl;
+  }
 };

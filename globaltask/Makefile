@@ -177,6 +177,30 @@ src/Controllers/FirstLabController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/FirstLabController.cpp.s
 .PHONY : src/Controllers/FirstLabController.cpp.s
 
+src/Controllers/SecondLabController.o: src/Controllers/SecondLabController.cpp.o
+.PHONY : src/Controllers/SecondLabController.o
+
+# target to build an object file
+src/Controllers/SecondLabController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/SecondLabController.cpp.o
+.PHONY : src/Controllers/SecondLabController.cpp.o
+
+src/Controllers/SecondLabController.i: src/Controllers/SecondLabController.cpp.i
+.PHONY : src/Controllers/SecondLabController.i
+
+# target to preprocess a source file
+src/Controllers/SecondLabController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/SecondLabController.cpp.i
+.PHONY : src/Controllers/SecondLabController.cpp.i
+
+src/Controllers/SecondLabController.s: src/Controllers/SecondLabController.cpp.s
+.PHONY : src/Controllers/SecondLabController.s
+
+# target to generate assembly for a file
+src/Controllers/SecondLabController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/SecondLabController.cpp.s
+.PHONY : src/Controllers/SecondLabController.cpp.s
+
 src/Controllers/StartController.o: src/Controllers/StartController.cpp.o
 .PHONY : src/Controllers/StartController.o
 
@@ -297,6 +321,30 @@ src/Views/Menu/MenuItemFactory.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.s
 .PHONY : src/Views/Menu/MenuItemFactory.cpp.s
 
+src/Views/SecondLabView.o: src/Views/SecondLabView.cpp.o
+.PHONY : src/Views/SecondLabView.o
+
+# target to build an object file
+src/Views/SecondLabView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/SecondLabView.cpp.o
+.PHONY : src/Views/SecondLabView.cpp.o
+
+src/Views/SecondLabView.i: src/Views/SecondLabView.cpp.i
+.PHONY : src/Views/SecondLabView.i
+
+# target to preprocess a source file
+src/Views/SecondLabView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/SecondLabView.cpp.i
+.PHONY : src/Views/SecondLabView.cpp.i
+
+src/Views/SecondLabView.s: src/Views/SecondLabView.cpp.s
+.PHONY : src/Views/SecondLabView.s
+
+# target to generate assembly for a file
+src/Views/SecondLabView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/SecondLabView.cpp.s
+.PHONY : src/Views/SecondLabView.cpp.s
+
 src/Views/StartView.o: src/Views/StartView.cpp.o
 .PHONY : src/Views/StartView.o
 
@@ -336,6 +384,9 @@ help:
 	@echo "... src/Controllers/FirstLabController.o"
 	@echo "... src/Controllers/FirstLabController.i"
 	@echo "... src/Controllers/FirstLabController.s"
+	@echo "... src/Controllers/SecondLabController.o"
+	@echo "... src/Controllers/SecondLabController.i"
+	@echo "... src/Controllers/SecondLabController.s"
 	@echo "... src/Controllers/StartController.o"
 	@echo "... src/Controllers/StartController.i"
 	@echo "... src/Controllers/StartController.s"
@@ -351,6 +402,9 @@ help:
 	@echo "... src/Views/Menu/MenuItemFactory.o"
 	@echo "... src/Views/Menu/MenuItemFactory.i"
 	@echo "... src/Views/Menu/MenuItemFactory.s"
+	@echo "... src/Views/SecondLabView.o"
+	@echo "... src/Views/SecondLabView.i"
+	@echo "... src/Views/SecondLabView.s"
 	@echo "... src/Views/StartView.o"
 	@echo "... src/Views/StartView.i"
 	@echo "... src/Views/StartView.s"

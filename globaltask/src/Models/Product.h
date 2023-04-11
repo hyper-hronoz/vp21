@@ -1,8 +1,9 @@
 #pragma once
+#include "../utils/Observer.h"
 #include "./database/db.h"
 #include <iostream>
 
-class Product : public BaseORM {
+class Product : public BaseORM, public Observable {
 private:
   std::string id;
   std::string type;
