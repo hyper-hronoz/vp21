@@ -2,21 +2,16 @@
 
 #include "../Views/StartView.h"
 
+
 class StartController {
  private:
   StartView *view = new StartView();
 
-  void onSelectFirstLab() {
-    std::cout << "First lab done" << std::endl;
-  }
-  
-  void onSelectSecondLab() {
+  void onSelectFirstLab();
 
-  }
+  void onSelectSecondLab();
 
-  void onSelectThirdLab() {
-
-  }
+  void onSelectThirdLab();
 
  public:
   StartController() {

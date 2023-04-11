@@ -5,10 +5,8 @@
 class StartView : public BaseView {
  public:
   StartView() {
-    this->menu = Menu("Menu title");
+    this->menu = Menu("---Выберите лабу---");
   }
 
-  void display() override {
-    this->menu.awaitUserInput();
-  }
+  void display() override;
 };

@@ -1,7 +1,8 @@
 CMakeFiles/gg.dir/src/Controllers/FirstLabController.cpp.o: \
  /home/hronoz/vp21/globaltask/src/Controllers/FirstLabController.cpp \
  /usr/include/stdc-predef.h \
- /home/hronoz/vp21/globaltask/src/Controllers/FirstLabController.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/StartController.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/StartView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/BaseView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/Menu.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItem.h \
@@ -158,6 +159,8 @@ CMakeFiles/gg.dir/src/Controllers/FirstLabController.cpp.o: \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItemFactory.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/FirstLabController.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/FirstLabView.h \
  /usr/include/c++/12.2.1/cmath /usr/include/math.h \
  /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
  /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
