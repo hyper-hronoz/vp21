@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../Views/FirstLabView.h"
+#include "../Views/IntoView.h"
 
-class FirstLabController {
+class IntroController {
  private:
-  FirstLabView *view = new FirstLabView();
+  IntroView *view = new IntroView();
 
   void goBack();
 
  public:
-  FirstLabController() {
+  IntroController() {
     MenuItemFactory menuItemFactory{};
 
     this->view->getMenu()->append(menuItemFactory.create(
@@ -28,7 +28,7 @@ class FirstLabController {
     this->view->display();
   }
 
-  ~FirstLabController() {
+  ~IntroController() {
       delete this->view;
   }
 };

@@ -157,7 +157,7 @@ CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Views/./Menu/MenuItemFactory.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/SecondLabController.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/AuthenticationController.h \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Models/Employer.h \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Models/User.h \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Models/./database/db.h \
@@ -195,6 +195,6 @@ CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
  /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Models/../utils/Observer.h \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Models/Provider.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/SecondLabView.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Views/AuthenticationView.h \
  /home/hronoz/vp21/globaltask/./src/initializers/ProductTypeInitilizer.h \
  /home/hronoz/vp21/globaltask/./src/initializers/../Models/ProductType.h

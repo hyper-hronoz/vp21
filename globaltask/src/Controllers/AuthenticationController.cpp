@@ -1,18 +1,18 @@
-#include "SecondLabController.h"
+#include "AuthenticationController.h"
+#include "StartController.h"
 
-void SecondLabController::loginEmployer() {}
+void AuthenticationController::loginEmployer() {}
 
-void SecondLabController::loginProvider() {
+void AuthenticationController::loginProvider() {
   // StringFieldORM *login = new StringFieldORM("email");
   // StringFieldORM *password = new StringFieldORM("password");
   // cout << "Input login: ";
   // cin >> login;
   // cout << "Input password: ";
-  // cin >> password;
-  // Provider provider = this->provider.findOne<StringFieldORM>({login});
+  // cin >> password; Provider provider = this->provider.findOne<StringFieldORM>({login});
 }
 
-void SecondLabController::signUpEmployer() {
+void AuthenticationController::signUpEmployer() {
   // vector<Error> errors;
   //
   // this->employer.create({}, errors);
@@ -24,8 +24,12 @@ void SecondLabController::signUpEmployer() {
   // }
 }
 
-void SecondLabController::signUpProvider() {
+void AuthenticationController::signUpProvider() {
   vector<Error> errors;
 
   cin >> this->provider;
+}
+
+void AuthenticationController::goBack() {
+  StartController(); 
 }

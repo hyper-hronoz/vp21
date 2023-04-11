@@ -1,46 +1,68 @@
 #include <algorithm>
 #include <fstream>
-#include <iostream> #include <map>
+#include <iostream>
 #include <random>
 #include <sstream>
+#include <string>
 #include <typeinfo>
 #include <vector>
 
 using namespace std;
 
-namespace uuid {
 static std::random_device rd;
 static std::mt19937 gen(rd());
 static std::uniform_int_distribution<> dis(0, 15);
 static std::uniform_int_distribution<> dis2(8, 11);
 
-std::string generate_uuid_v4() {
-  std::stringstream ss;
-  int i;
-  ss << std::hex;
-  for (i = 0; i < 8; i++) {
-    ss << dis(gen);
+enum ERROR_TYPES {
+  SAME_ENTRY,
+};
+
+class Error {
+private:
+  ERROR_TYPES errorType;
+  string message;
+
+public:
+  Error(ERROR_TYPES errorType, string message) {
+    this->errorType = errorType;
+    this->message = message;
   }
-  ss << "-";
-  for (i = 0; i < 4; i++) {
-    ss << dis(gen);
+
+  string getMessage() { return this->message; }
+
+  ERROR_TYPES getErrorType() { return this->errorType; }
+};
+
+class UUID {
+public:
+  static std::string generate_uuid() {
+    std::stringstream ss;
+    int i;
+    ss << std::hex;
+    for (i = 0; i < 8; i++) {
+      ss << dis(gen);
+    }
+    ss << "-";
+    for (i = 0; i < 4; i++) {
+      ss << dis(gen);
+    }
+    ss << "-4";
+    for (i = 0; i < 3; i++) {
+      ss << dis(gen);
+    }
+    ss << "-";
+    ss << dis2(gen);
+    for (i = 0; i < 3; i++) {
+      ss << dis(gen);
+    }
+    ss << "-";
+    for (i = 0; i < 12; i++) {
+      ss << dis(gen);
+    };
+    return ss.str();
   }
-  ss << "-4";
-  for (i = 0; i < 3; i++) {
-    ss << dis(gen);
-  }
-  ss << "-";
-  ss << dis2(gen);
-  for (i = 0; i < 3; i++) {
-    ss << dis(gen);
-  }
-  ss << "-";
-  for (i = 0; i < 12; i++) {
-    ss << dis(gen);
-  };
-  return ss.str();
-}
-} // namespace uuid
+};
 
 class AFieldORM {
 protected:
@@ -112,6 +134,24 @@ public:
     file.close();
   }
 
+  void overwrite(vector<vector<AFieldORM *>> models) {
+    system("mkdir -p ./database");
+
+    string path = DB_FOLDER + static_cast<std::string>(this->name);
+
+    fstream file;
+
+    file = fstream(path, ios::in | std::ios::out | ios::binary | ios::trunc);
+
+    for (auto &model : models) {
+      for (auto &field : model) {
+        field->save(file);
+      }
+    }
+
+    file.close();
+  }
+
   void save(vector<AFieldORM *> fields, int cursor = -1) {
     system("mkdir -p ./database");
 
@@ -143,8 +183,7 @@ public:
   }
 
   void isEntryExists(vector<AFieldORM *> fields,
-                     vector<AFieldORM *> checkRequired,
-                     vector<string> &errors) {
+                     vector<AFieldORM *> checkRequired, vector<Error> &errors) {
     // cout << "__Storage is exists " << endl;
     ifstream file(DB_FOLDER + static_cast<std::string>(this->name),
                   std::ios::in | ios::binary);
@@ -166,8 +205,9 @@ public:
         }
         string value = field->isEntryExists(file);
         if (value.length() != 0 && this->isContains(field, checkRequired)) {
-          errors.push_back("Found same field " + field->getKey() + ": " +
-                           value);
+          string errorMessage =
+              "Found same field " + field->getKey() + ": " + value;
+          errors.push_back(Error(ERROR_TYPES::SAME_ENTRY, errorMessage));
         }
         // cout << "Field size: " << field->getSize() << endl;
         position += field->getSize();
@@ -203,6 +243,21 @@ public:
       return currentValue + "";
     }
     return {};
+  }
+
+  friend std::istream &operator>>(std::istream &input, BaseField<T> *field) {
+    input >> field->value;
+    while (1) {
+      if (input.fail()) {
+        cin.clear();
+        input.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Please enter the valid input" << endl;
+        input >> field->value;
+      }
+      if (!cin.fail())
+        break;
+    }
+    return input;
   }
 };
 
@@ -289,7 +344,7 @@ private:
   int cursor = 0;
   virtual void save() { this->storage->save(this->fields); }
 
-  void checkUnique(vector<AFieldORM *> pfields, vector<string> &errors) {
+  void checkUnique(vector<AFieldORM *> pfields, vector<Error> &errors) {
     vector<AFieldORM *> checkRequired = {};
     for (auto &schemaField : this->schema->getSchemaFields()) {
       for (auto &field : pfields) {
@@ -303,7 +358,7 @@ private:
     this->storage->isEntryExists(pfields, checkRequired, errors);
   }
 
-  void checkNames(vector<string> &errors) {
+  void checkNames(vector<Error> &errors) {
     for (auto &schemaField : this->schema->getSchemaFields()) {
       bool isMatch = false;
       for (auto &field : this->fields) {
@@ -313,12 +368,13 @@ private:
         }
       }
       if (!isMatch) {
-        errors.push_back("No such field: " + schemaField->getName());
+        string errorMessage = "No such field: " + schemaField->getName();
+        errors.push_back(Error(ERROR_TYPES::SAME_ENTRY, errorMessage));
       }
     }
   }
 
-  void checkTypes(vector<string> &errors) {
+  void checkTypes(vector<Error> &errors) {
     for (auto &schemaField : this->schema->getSchemaFields()) {
       bool isMatch = false;
       for (auto &field : this->fields) {
@@ -328,14 +384,15 @@ private:
         }
       }
       if (!isMatch) {
-        errors.push_back("No such type: " + schemaField->getName() +
-                         " current type: " + schemaField->getType() +
-                         " required");
+        string errorText = "No such type: " + schemaField->getName() +
+                           " current type: " + schemaField->getType() +
+                           " required";
+        errors.push_back(Error(ERROR_TYPES::SAME_ENTRY, errorText));
       }
     }
   }
 
-  void checkData(vector<string> &errors) {
+  void checkData(vector<Error> &errors) {
     this->checkNames(errors);
     this->checkTypes(errors);
     this->checkUnique(this->fields, errors);
@@ -362,9 +419,8 @@ public:
     delete this->schema;
   }
 
-  void create(initializer_list<AFieldORM *> list) {
+  void create(initializer_list<AFieldORM *> list, vector<Error> &errors) {
     this->fields = {};
-    vector<string> errors{};
     for (auto &schemaField : this->schema->getSchemaFields()) {
       if (schemaField->getIsAutoGenerate()) {
         AFieldORM *tempField = schemaField->getPureField();
@@ -378,10 +434,6 @@ public:
     this->checkData(errors);
     if (errors.size() == 0) {
       this->save();
-    } else {
-      for (auto &message : errors) {
-        cout << message << endl;
-      }
     }
   }
 
@@ -413,11 +465,11 @@ public:
       }
     }
 
-    vector<string> errors{};
+    vector<Error> errors{};
     this->checkUnique(currentFields, errors);
     if (errors.size() != 0) {
       for (auto &item : errors) {
-        cout << item << endl;
+        cout << item.getMessage() << endl;
       }
       return;
     }
@@ -456,23 +508,67 @@ public:
     return models;
   }
 
+  template <class T> void deleteOne(AFieldORM *model) {
+    auto castedModel = dynamic_cast<T *>(model);
+    if (!castedModel) {
+      return;
+    }
+
+    int position = 0;
+    vector<vector<AFieldORM *>> models = {};
+
+    while (position >= 0) {
+      vector<AFieldORM *> list{};
+      for (auto &schemaFeild : this->schema->getSchemaFields()) {
+        list.push_back(schemaFeild->getPureField());
+      }
+      this->storage->get(list, position);
+      for (auto &item : list) {
+        auto casted = dynamic_cast<T *>(item);
+        if (!casted) {
+          continue;
+        }
+        if (casted->getValue() != castedModel->getValue() &&
+            item->getKey() == model->getKey() && position >= 0) {
+          models.push_back(list);
+        }
+      }
+    }
+
+    this->storage->overwrite(models);
+  }
+
+  vector<vector<AFieldORM *>> find() {
+    int position = 0;
+    vector<vector<AFieldORM *>> models = {};
+
+    while (position >= 0) {
+      vector<AFieldORM *> list{};
+      for (auto &schemaFeild : this->schema->getSchemaFields()) {
+        list.push_back(schemaFeild->getPureField());
+      }
+      this->storage->get(list, position);
+      if (position >= 0) {
+        models.push_back(list);
+      }
+    }
+    return models;
+  }
+
   template <class T> vector<AFieldORM *> findOne(AFieldORM *model) {
     auto castedModel = dynamic_cast<T *>(model);
     if (!castedModel) {
       return {};
     }
 
-    // getting schema fields
     vector<AFieldORM *> iterableFields{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
-      // cout << "Getting pure field: " << schemaFeild->getName() << endl;
       iterableFields.push_back(schemaFeild->getPureField());
     }
 
     this->cursor = 0;
 
     while (this->cursor >= 0) {
-      // cout << "FindOne Current Position: " << this->cursor << endl;
       this->storage->get(iterableFields, this->cursor);
       for (auto &iterableField : iterableFields) {
         auto casted = dynamic_cast<T *>(iterableField);
@@ -481,10 +577,12 @@ public:
         }
         if (casted->getValue() == castedModel->getValue() &&
             iterableField->getKey() == model->getKey()) {
+          delete model;
           return iterableFields;
         }
       }
     }
+    delete model;
     return {};
   }
 };
@@ -519,7 +617,7 @@ public:
 
   void generate() override {
     if (this->isAutoGenerate) {
-      this->value = uuid::generate_uuid_v4();
+      this->value = UUID::generate_uuid();
     }
   }
 
@@ -647,65 +745,11 @@ template <class T> T *HardCast(vector<AFieldORM *> newUser, string key) {
   return new T(key);
 }
 
-class User : public BaseORM {
-public:
-  User(initializer_list<ASchemaField *> extendedFields = {},
-       const char *type = typeid(User).name())
-      : BaseORM(
-            new Schema(
-                {(new SchemaField<StringFieldORM>("email"))
-                     ->required(true)
-                     ->unique(true),
-                 (new SchemaField<IntFieldORM>("age"))->required(true),
-                 (new SchemaField<StringFieldORM>("name"))->required(true),
-                 (new SchemaField<StringFieldORM>("password"))->required(true)},
-                extendedFields),
-            type) {}
-
-  virtual void showPass() = 0;
-};
-
-class Provider : public User {
-public:
-  Provider()
-      : User(
-            {
-                (new SchemaField<StringFieldORM>("product _id"))
-                    ->required(true),
-            },
-            typeid(this).name()) {}
-
-  void showPass() {}
-};
-
-class Employer : public User {
-public:
-  Employer()
-      : User(
-            {
-                (new SchemaField<StringFieldORM>("title"))->required(true),
-            },
-            typeid(this).name()) {}
-
-  void showPass() {}
-};
-
-class ProductType : BaseORM {
-public:
-  ProductType(initializer_list<ASchemaField *> extendedFields = {},
-              const char *type = typeid(ProductType).name())
-      : BaseORM(new Schema({(new SchemaField<StringFieldORM>("type"))
-                                ->required(true)
-                                ->unique(true)},
-                           extendedFields),
-                type) {}
-};
-
 class Product : public BaseORM {
 private:
-  string id;
-  string type;
-  string name;
+  std::string id;
+  std::string type;
+  std::string name;
   int price;
   int amount;
 
@@ -757,65 +801,44 @@ public:
   }
 };
 
-class JobTitle : BaseORM {
-  JobTitle(initializer_list<ASchemaField *> extendedFields = {},
-           const char *type = typeid(JobTitle).name())
-      : BaseORM(new Schema({(new SchemaField<StringFieldORM>("job title"))
-                                ->required(true)
-                                ->unique(true)},
-                           extendedFields),
-                type) {}
-};
-
 int main() {
   Product product;
 
-  product.create({
-      new StringFieldORM("name", "hot dog"),
-      new StringFieldORM("type", "meal"),
-      new IntFieldORM("price", 1),
-      new IntFieldORM("amount", 100),
-  });
+  vector<Error> errors;
 
-  product.create({
-      new StringFieldORM("name", "burger"),
-      new StringFieldORM("type", "meal"),
-      new IntFieldORM("price", 1),
-      new IntFieldORM("amount", 100),
-  });
+  product.create(
+      {
+          new StringFieldORM("name", "hot dog"),
+          new StringFieldORM("type", "meal"),
+          new IntFieldORM("price", 1),
+          new IntFieldORM("amount", 100),
+      },
+      errors);
 
-  product.create({
-      new StringFieldORM("name", "banana"),
-      new StringFieldORM("type", "meal"),
-      new IntFieldORM("price", 1),
-      new IntFieldORM("amount", 10),
-  });
+  product.create(
+      {
+          new StringFieldORM("name", "burger"),
+          new StringFieldORM("type", "meal"),
+          new IntFieldORM("price", 1),
+          new IntFieldORM("amount", 100),
+      },
+      errors);
 
-  product.create({
-      new StringFieldORM("name", "banana"),
-      new StringFieldORM("type", "meal"),
-      new IntFieldORM("price", 1),
-      new IntFieldORM("amount", 10),
-  });
+  product.create(
+      {
+          new StringFieldORM("name", "banana"),
+          new StringFieldORM("type", "meal"),
+          new IntFieldORM("price", 1),
+          new IntFieldORM("amount", 10),
+      },
+      errors);
 
-  for (auto &model :
-       product.find<StringFieldORM>(new StringFieldORM("type", "meal"))) {
+  product.deleteOne<StringFieldORM>(new StringFieldORM("name", "burger"));
+  product.deleteOne<StringFieldORM>(new StringFieldORM("name", "hot dog"));
+
+  for (auto &model : product.find()) {
     Product newProduct = model;
-    cout << newProduct << endl;
-  }
-
-  product.updateOne<StringFieldORM>(new StringFieldORM("name", "burger"),
-                                    {
-                                        new StringFieldORM("name", "boshki"),
-                                        new StringFieldORM("type", "gandon"),
-                                    });
-
-  cout << "========================================" << endl;
-
-  for (auto &model :
-       product.find<StringFieldORM>(new StringFieldORM("type", "gandon"))) {
-    Product newProduct = model;
-    cout << newProduct << endl;
+    cout << "New product: " << newProduct << endl;
   }
 
   // comparing sizes in bytes
@@ -826,4 +849,5 @@ int main() {
   return 0;
 }
 
-// Внатуре пиздишь блять смотрящий на длину пиздижа в StringFieldORM на хуй? На стерме!
+// Внатуре пиздишь блять смотрящий на длину пиздижа в StringFieldORM на хуй? На
+// стерме!

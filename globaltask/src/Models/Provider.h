@@ -37,29 +37,25 @@ public:
   }
 
   friend istream &operator>>(istream &input, Provider &provider) {
-    cout << "email: ";
-    input >> provider.email;
-    cout << "password: ";
-    input >> provider.password;
-    cout << "type: ";
-    input >> provider.type;
-    cout << "name: ";
-    input >> provider.name;
-    cout << "age: ";
-    input >> provider.age;
-
     vector<Error> errors;
 
-    provider.create({
-        new StringFieldORM("email", provider.email),
-        new StringFieldORM("type", provider.type),
-        new StringFieldORM("name", provider.name),
-        new StringFieldORM("password", provider.password),
-        new IntFieldORM("age", provider.age),
-    }, errors);
+    StringFieldORM *email = new StringFieldORM("email", provider.email);
+    StringFieldORM *type = new StringFieldORM("type", provider.type);
+    StringFieldORM *name = new StringFieldORM("name", provider.name);
+    StringFieldORM *password =
+        new StringFieldORM("password", provider.password);
+    IntFieldORM *age = new IntFieldORM("age", provider.age);
+
+    cout << "Email: "; cin >> email;
+    cout << "Type: "; cin >> type;
+    cout << "Name: "; cin >> name;
+    cout << "Password: "; cin >> password;
+    cout << "Age: "; cin >> age;
+
+    provider.create({email, type, name, password, age}, errors);
 
     for (auto &errors : errors) {
-        cout << errors.getMessage() << endl;
+      cout << errors.getMessage() << endl;
     }
 
     return input;

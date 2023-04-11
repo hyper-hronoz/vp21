@@ -1,13 +1,13 @@
 #include "StartController.h"
-#include "FirstLabController.h"
-#include "SecondLabController.h"
+#include "IntroController.h"
+#include "AuthenticationController.h"
 
 void StartController::onSelectFirstLab() {
-  FirstLabController controller;
+   IntroController();
 }
 
 void StartController::onSelectSecondLab() {
-  SecondLabController controller;
+  AuthenticationController();
 }
 
 void StartController::onSelectThirdLab() {

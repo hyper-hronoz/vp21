@@ -3,9 +3,9 @@
 #include "cmath"
 #include "BaseView.h"
 
-class FirstLabView : public BaseView {
+class IntroView : public BaseView {
 public:
-  FirstLabView() { this->menu = Menu("---First lab view---"); }
+  IntroView() { this->menu = Menu("---First lab view---"); }
 
   void printGraphics() {
         std::cout <<

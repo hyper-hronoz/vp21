@@ -1,5 +1,5 @@
-CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o: \
- /home/hronoz/vp21/globaltask/src/Controllers/StartController.cpp \
+CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o: \
+ /home/hronoz/vp21/globaltask/src/Controllers/IntroController.cpp \
  /usr/include/stdc-predef.h \
  /home/hronoz/vp21/globaltask/src/Controllers/StartController.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/StartView.h \
@@ -179,24 +179,4 @@ CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o: \
  /usr/include/c++/12.2.1/tr1/modified_bessel_func.tcc \
  /usr/include/c++/12.2.1/tr1/poly_hermite.tcc \
  /usr/include/c++/12.2.1/tr1/poly_laguerre.tcc \
- /usr/include/c++/12.2.1/tr1/riemann_zeta.tcc \
- /home/hronoz/vp21/globaltask/src/Controllers/AuthenticationController.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/Employer.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/User.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/./database/db.h \
- /usr/include/c++/12.2.1/algorithm \
- /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
- /usr/include/c++/12.2.1/pstl/execution_defs.h \
- /usr/include/c++/12.2.1/fstream /usr/include/c++/12.2.1/bits/codecvt.h \
- /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
- /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
- /usr/include/c++/12.2.1/bits/fstream.tcc /usr/include/c++/12.2.1/random \
- /usr/include/c++/12.2.1/bits/random.h \
- /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/opt_random.h \
- /usr/include/c++/12.2.1/bits/random.tcc /usr/include/c++/12.2.1/numeric \
- /usr/include/c++/12.2.1/bits/stl_numeric.h /usr/include/c++/12.2.1/bit \
- /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
- /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/../utils/Observer.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/Provider.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthenticationView.h
+ /usr/include/c++/12.2.1/tr1/riemann_zeta.tcc

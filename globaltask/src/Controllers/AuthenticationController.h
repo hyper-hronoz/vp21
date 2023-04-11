@@ -3,11 +3,11 @@
 #include "../Models/Employer.h"
 #include "../Models/Provider.h"
 
-#include "../Views/SecondLabView.h"
+#include "../Views/AuthenticationView.h"
 
-class SecondLabController {
+class AuthenticationController {
 private:
-  SecondLabView *view = new SecondLabView();
+  AuthenticationView *view = new AuthenticationView();
   Employer employer;
   Provider provider;
 
@@ -19,8 +19,10 @@ private:
 
   void loginProvider();
 
+  void goBack();
+
 public:
-  SecondLabController() {
+  AuthenticationController() {
     MenuItemFactory menuItemFactory{};
 
     this->view->getMenu()->append(menuItemFactory.create(
@@ -34,6 +36,9 @@ public:
 
     this->view->getMenu()->append(menuItemFactory.create(
         "Войти как поставщик", [=]() { this->loginProvider(); }));
+
+    this->view->getMenu()->append(menuItemFactory.create(
+        "Вернуться", [=]() { this->goBack(); }));
 
     this->view->display();
   }

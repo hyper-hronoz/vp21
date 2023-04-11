@@ -2,9 +2,9 @@
 
 #include "BaseView.h"
 
-class SecondLabView : public BaseView {
+class AuthenticationView : public BaseView {
  public:
-  SecondLabView() {
+  AuthenticationView() {
     this->menu = Menu("---Лаба 2 выберите дейстиве---");
   }
 

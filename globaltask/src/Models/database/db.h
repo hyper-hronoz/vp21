@@ -136,6 +136,24 @@ public:
     file.close();
   }
 
+  void overwrite(vector<vector<AFieldORM *>> models) {
+    system("mkdir -p ./database");
+
+    string path = DB_FOLDER + static_cast<std::string>(this->name);
+
+    fstream file;
+
+    file = fstream(path, ios::in | std::ios::out | ios::binary | ios::trunc);
+
+    for (auto &model : models) {
+      for (auto &field : model) {
+        field->save(file);
+      }
+    }
+
+    file.close();
+  }
+
   void save(vector<AFieldORM *> fields, int cursor = -1) {
     system("mkdir -p ./database");
 
@@ -227,6 +245,21 @@ public:
       return currentValue + "";
     }
     return {};
+  }
+
+  friend std::istream &operator>>(std::istream &input, BaseField<T> *field) {
+    input >> field->value;
+    while (1) {
+      if (input.fail()) {
+        cin.clear();
+        input.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Please enter the valid input" << endl;
+        input >> field->value;
+      }
+      if (!cin.fail())
+        break;
+    }
+    return input;
   }
 };
 
@@ -477,23 +510,67 @@ public:
     return models;
   }
 
+  template <class T> void deleteOne(AFieldORM *model) {
+    auto castedModel = dynamic_cast<T *>(model);
+    if (!castedModel) {
+      return;
+    }
+
+    int position = 0;
+    vector<vector<AFieldORM *>> models = {};
+
+    while (position >= 0) {
+      vector<AFieldORM *> list{};
+      for (auto &schemaFeild : this->schema->getSchemaFields()) {
+        list.push_back(schemaFeild->getPureField());
+      }
+      this->storage->get(list, position);
+      for (auto &item : list) {
+        auto casted = dynamic_cast<T *>(item);
+        if (!casted) {
+          continue;
+        }
+        if (casted->getValue() != castedModel->getValue() &&
+            item->getKey() == model->getKey() && position >= 0) {
+          models.push_back(list);
+        }
+      }
+    }
+
+    this->storage->overwrite(models);
+  }
+
+  vector<vector<AFieldORM *>> find() {
+    int position = 0;
+    vector<vector<AFieldORM *>> models = {};
+
+    while (position >= 0) {
+      vector<AFieldORM *> list{};
+      for (auto &schemaFeild : this->schema->getSchemaFields()) {
+        list.push_back(schemaFeild->getPureField());
+      }
+      this->storage->get(list, position);
+      if (position >= 0) {
+        models.push_back(list);
+      }
+    }
+    return models;
+  }
+
   template <class T> vector<AFieldORM *> findOne(AFieldORM *model) {
     auto castedModel = dynamic_cast<T *>(model);
     if (!castedModel) {
       return {};
     }
 
-    // getting schema fields
     vector<AFieldORM *> iterableFields{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
-      // cout << "Getting pure field: " << schemaFeild->getName() << endl;
       iterableFields.push_back(schemaFeild->getPureField());
     }
 
     this->cursor = 0;
 
     while (this->cursor >= 0) {
-      // cout << "FindOne Current Position: " << this->cursor << endl;
       this->storage->get(iterableFields, this->cursor);
       for (auto &iterableField : iterableFields) {
         auto casted = dynamic_cast<T *>(iterableField);
@@ -547,11 +624,6 @@ public:
   }
 
   int getSize() override { return this->stringSize; }
-
-  friend std::istream &operator>>(std::istream &in, StringFieldORM *field) {
-    in >> field->value;
-    return in;
-  }
 
   friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) {
     return str1.stringSize > str2.getSize();

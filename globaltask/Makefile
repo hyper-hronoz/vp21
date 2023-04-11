@@ -153,53 +153,53 @@ index.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/index.cpp.s
 .PHONY : index.cpp.s
 
-src/Controllers/FirstLabController.o: src/Controllers/FirstLabController.cpp.o
-.PHONY : src/Controllers/FirstLabController.o
+src/Controllers/AuthenticationController.o: src/Controllers/AuthenticationController.cpp.o
+.PHONY : src/Controllers/AuthenticationController.o
 
 # target to build an object file
-src/Controllers/FirstLabController.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/FirstLabController.cpp.o
-.PHONY : src/Controllers/FirstLabController.cpp.o
+src/Controllers/AuthenticationController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o
+.PHONY : src/Controllers/AuthenticationController.cpp.o
 
-src/Controllers/FirstLabController.i: src/Controllers/FirstLabController.cpp.i
-.PHONY : src/Controllers/FirstLabController.i
+src/Controllers/AuthenticationController.i: src/Controllers/AuthenticationController.cpp.i
+.PHONY : src/Controllers/AuthenticationController.i
 
 # target to preprocess a source file
-src/Controllers/FirstLabController.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/FirstLabController.cpp.i
-.PHONY : src/Controllers/FirstLabController.cpp.i
+src/Controllers/AuthenticationController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.i
+.PHONY : src/Controllers/AuthenticationController.cpp.i
 
-src/Controllers/FirstLabController.s: src/Controllers/FirstLabController.cpp.s
-.PHONY : src/Controllers/FirstLabController.s
+src/Controllers/AuthenticationController.s: src/Controllers/AuthenticationController.cpp.s
+.PHONY : src/Controllers/AuthenticationController.s
 
 # target to generate assembly for a file
-src/Controllers/FirstLabController.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/FirstLabController.cpp.s
-.PHONY : src/Controllers/FirstLabController.cpp.s
+src/Controllers/AuthenticationController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.s
+.PHONY : src/Controllers/AuthenticationController.cpp.s
 
-src/Controllers/SecondLabController.o: src/Controllers/SecondLabController.cpp.o
-.PHONY : src/Controllers/SecondLabController.o
+src/Controllers/IntroController.o: src/Controllers/IntroController.cpp.o
+.PHONY : src/Controllers/IntroController.o
 
 # target to build an object file
-src/Controllers/SecondLabController.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/SecondLabController.cpp.o
-.PHONY : src/Controllers/SecondLabController.cpp.o
+src/Controllers/IntroController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o
+.PHONY : src/Controllers/IntroController.cpp.o
 
-src/Controllers/SecondLabController.i: src/Controllers/SecondLabController.cpp.i
-.PHONY : src/Controllers/SecondLabController.i
+src/Controllers/IntroController.i: src/Controllers/IntroController.cpp.i
+.PHONY : src/Controllers/IntroController.i
 
 # target to preprocess a source file
-src/Controllers/SecondLabController.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/SecondLabController.cpp.i
-.PHONY : src/Controllers/SecondLabController.cpp.i
+src/Controllers/IntroController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.i
+.PHONY : src/Controllers/IntroController.cpp.i
 
-src/Controllers/SecondLabController.s: src/Controllers/SecondLabController.cpp.s
-.PHONY : src/Controllers/SecondLabController.s
+src/Controllers/IntroController.s: src/Controllers/IntroController.cpp.s
+.PHONY : src/Controllers/IntroController.s
 
 # target to generate assembly for a file
-src/Controllers/SecondLabController.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/SecondLabController.cpp.s
-.PHONY : src/Controllers/SecondLabController.cpp.s
+src/Controllers/IntroController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.s
+.PHONY : src/Controllers/IntroController.cpp.s
 
 src/Controllers/StartController.o: src/Controllers/StartController.cpp.o
 .PHONY : src/Controllers/StartController.o
@@ -225,29 +225,53 @@ src/Controllers/StartController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/StartController.cpp.s
 .PHONY : src/Controllers/StartController.cpp.s
 
-src/Views/FirstLabView.o: src/Views/FirstLabView.cpp.o
-.PHONY : src/Views/FirstLabView.o
+src/Views/AuthenticationView.o: src/Views/AuthenticationView.cpp.o
+.PHONY : src/Views/AuthenticationView.o
 
 # target to build an object file
-src/Views/FirstLabView.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/FirstLabView.cpp.o
-.PHONY : src/Views/FirstLabView.cpp.o
+src/Views/AuthenticationView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o
+.PHONY : src/Views/AuthenticationView.cpp.o
 
-src/Views/FirstLabView.i: src/Views/FirstLabView.cpp.i
-.PHONY : src/Views/FirstLabView.i
+src/Views/AuthenticationView.i: src/Views/AuthenticationView.cpp.i
+.PHONY : src/Views/AuthenticationView.i
 
 # target to preprocess a source file
-src/Views/FirstLabView.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/FirstLabView.cpp.i
-.PHONY : src/Views/FirstLabView.cpp.i
+src/Views/AuthenticationView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.i
+.PHONY : src/Views/AuthenticationView.cpp.i
 
-src/Views/FirstLabView.s: src/Views/FirstLabView.cpp.s
-.PHONY : src/Views/FirstLabView.s
+src/Views/AuthenticationView.s: src/Views/AuthenticationView.cpp.s
+.PHONY : src/Views/AuthenticationView.s
 
 # target to generate assembly for a file
-src/Views/FirstLabView.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/FirstLabView.cpp.s
-.PHONY : src/Views/FirstLabView.cpp.s
+src/Views/AuthenticationView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.s
+.PHONY : src/Views/AuthenticationView.cpp.s
+
+src/Views/IntoView.o: src/Views/IntoView.cpp.o
+.PHONY : src/Views/IntoView.o
+
+# target to build an object file
+src/Views/IntoView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/IntoView.cpp.o
+.PHONY : src/Views/IntoView.cpp.o
+
+src/Views/IntoView.i: src/Views/IntoView.cpp.i
+.PHONY : src/Views/IntoView.i
+
+# target to preprocess a source file
+src/Views/IntoView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/IntoView.cpp.i
+.PHONY : src/Views/IntoView.cpp.i
+
+src/Views/IntoView.s: src/Views/IntoView.cpp.s
+.PHONY : src/Views/IntoView.s
+
+# target to generate assembly for a file
+src/Views/IntoView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/IntoView.cpp.s
+.PHONY : src/Views/IntoView.cpp.s
 
 src/Views/Menu/Menu.o: src/Views/Menu/Menu.cpp.o
 .PHONY : src/Views/Menu/Menu.o
@@ -321,30 +345,6 @@ src/Views/Menu/MenuItemFactory.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.s
 .PHONY : src/Views/Menu/MenuItemFactory.cpp.s
 
-src/Views/SecondLabView.o: src/Views/SecondLabView.cpp.o
-.PHONY : src/Views/SecondLabView.o
-
-# target to build an object file
-src/Views/SecondLabView.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/SecondLabView.cpp.o
-.PHONY : src/Views/SecondLabView.cpp.o
-
-src/Views/SecondLabView.i: src/Views/SecondLabView.cpp.i
-.PHONY : src/Views/SecondLabView.i
-
-# target to preprocess a source file
-src/Views/SecondLabView.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/SecondLabView.cpp.i
-.PHONY : src/Views/SecondLabView.cpp.i
-
-src/Views/SecondLabView.s: src/Views/SecondLabView.cpp.s
-.PHONY : src/Views/SecondLabView.s
-
-# target to generate assembly for a file
-src/Views/SecondLabView.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/SecondLabView.cpp.s
-.PHONY : src/Views/SecondLabView.cpp.s
-
 src/Views/StartView.o: src/Views/StartView.cpp.o
 .PHONY : src/Views/StartView.o
 
@@ -381,18 +381,21 @@ help:
 	@echo "... index.o"
 	@echo "... index.i"
 	@echo "... index.s"
-	@echo "... src/Controllers/FirstLabController.o"
-	@echo "... src/Controllers/FirstLabController.i"
-	@echo "... src/Controllers/FirstLabController.s"
-	@echo "... src/Controllers/SecondLabController.o"
-	@echo "... src/Controllers/SecondLabController.i"
-	@echo "... src/Controllers/SecondLabController.s"
+	@echo "... src/Controllers/AuthenticationController.o"
+	@echo "... src/Controllers/AuthenticationController.i"
+	@echo "... src/Controllers/AuthenticationController.s"
+	@echo "... src/Controllers/IntroController.o"
+	@echo "... src/Controllers/IntroController.i"
+	@echo "... src/Controllers/IntroController.s"
 	@echo "... src/Controllers/StartController.o"
 	@echo "... src/Controllers/StartController.i"
 	@echo "... src/Controllers/StartController.s"
-	@echo "... src/Views/FirstLabView.o"
-	@echo "... src/Views/FirstLabView.i"
-	@echo "... src/Views/FirstLabView.s"
+	@echo "... src/Views/AuthenticationView.o"
+	@echo "... src/Views/AuthenticationView.i"
+	@echo "... src/Views/AuthenticationView.s"
+	@echo "... src/Views/IntoView.o"
+	@echo "... src/Views/IntoView.i"
+	@echo "... src/Views/IntoView.s"
 	@echo "... src/Views/Menu/Menu.o"
 	@echo "... src/Views/Menu/Menu.i"
 	@echo "... src/Views/Menu/Menu.s"
@@ -402,9 +405,6 @@ help:
 	@echo "... src/Views/Menu/MenuItemFactory.o"
 	@echo "... src/Views/Menu/MenuItemFactory.i"
 	@echo "... src/Views/Menu/MenuItemFactory.s"
-	@echo "... src/Views/SecondLabView.o"
-	@echo "... src/Views/SecondLabView.i"
-	@echo "... src/Views/SecondLabView.s"
 	@echo "... src/Views/StartView.o"
 	@echo "... src/Views/StartView.i"
 	@echo "... src/Views/StartView.s"
