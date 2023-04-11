@@ -1,57 +1,56 @@
+#include "cmath"
 #include <SFML/Graphics.hpp>
-#include<iostream>
-#include <math.h>
+#include <iostream>
 
-class Segment {
-private:
-  float deg2rad(float deg) { return deg * M_PI / 180; }
+using namespace std;
 
-public:
-  void drawCircleSegment(sf::RenderWindow &view) {
-    sf::VertexArray arr(sf::LinesStrip);
+float deg2rad(float deg) { return deg * M_PI / 180; }
 
-    float segmentAngle = deg2rad(180);
-    float radius = 200;
-    sf::Vector2f radiusPos = view.getView().getCenter();
+void drawCircleSegment(sf::RenderWindow &view) {
+  sf::ConvexShape arr;
 
-    int circlePoints = 1000;
-    float angle = 0;
 
-    arr.append(radiusPos);
+  float segmentAngle = deg2rad(180);
+  float radius = 200;
+  sf::Vector2f radiusPos = view.getView().getCenter();
 
-    while (angle <= segmentAngle) {
-      sf::Vector2f p(cos(angle + (segmentAngle / 2)) * radius,
-                     sin(angle + (segmentAngle / 2)) * radius);
+  int circlePoints = 1000;
+  arr.setPointCount(circlePoints);
+  float angle = 0;
 
-      p += radiusPos;
-      arr.append(p);
+  arr.setPoint(0, radiusPos);
 
-      angle += segmentAngle / circlePoints;
-    }
+  for (int i = 0; i < circlePoints; i++) {
+    sf::Vector2f p(cos(angle + (segmentAngle / 2)) * radius,
+                   sin(angle + (segmentAngle / 2)) * radius);
 
-    arr.append(radiusPos);
+    p += radiusPos;
+    arr.setPoint(i, p);
 
-    view.draw(arr);
-
-    view.display();
+    angle += segmentAngle / circlePoints;
   }
-};
+
+  // arr.setPoint(circlePoints - 1, radiusPos);
+
+  view.draw(arr);
+
+  view.display();
+}
 
 int main() {
-  sf::RenderWindow gameWindow(sf::VideoMode(800, 800), "circle");
-  gameWindow.setFramerateLimit(60);
-
-  Segment segment;
-
-  while (gameWindow.isOpen()) {
+  sf::RenderWindow window(sf::VideoMode(800, 800), "sfmltest");
+  sf::CircleShape shape(100.f);
+  shape.setFillColor(sf::Color::Green);
+  while (window.isOpen()) {
     sf::Event event;
-    while (gameWindow.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        gameWindow.close();
-      }
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed)
+        window.close();
     }
-
-    segment.fuckMyBrain();
-    // segment.drawCircleSegment(gameWindow);
+    drawCircleSegment(window);
+    // window.clear();
+    // window.draw(shape);
+    // window.display();
   }
+  return 0;
 }
