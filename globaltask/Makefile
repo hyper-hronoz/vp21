@@ -201,6 +201,30 @@ src/Controllers/IntroController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.s
 .PHONY : src/Controllers/IntroController.cpp.s
 
+src/Controllers/ProviderController.o: src/Controllers/ProviderController.cpp.o
+.PHONY : src/Controllers/ProviderController.o
+
+# target to build an object file
+src/Controllers/ProviderController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o
+.PHONY : src/Controllers/ProviderController.cpp.o
+
+src/Controllers/ProviderController.i: src/Controllers/ProviderController.cpp.i
+.PHONY : src/Controllers/ProviderController.i
+
+# target to preprocess a source file
+src/Controllers/ProviderController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.i
+.PHONY : src/Controllers/ProviderController.cpp.i
+
+src/Controllers/ProviderController.s: src/Controllers/ProviderController.cpp.s
+.PHONY : src/Controllers/ProviderController.s
+
+# target to generate assembly for a file
+src/Controllers/ProviderController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.s
+.PHONY : src/Controllers/ProviderController.cpp.s
+
 src/Controllers/StartController.o: src/Controllers/StartController.cpp.o
 .PHONY : src/Controllers/StartController.o
 
@@ -345,6 +369,30 @@ src/Views/Menu/MenuItemFactory.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.s
 .PHONY : src/Views/Menu/MenuItemFactory.cpp.s
 
+src/Views/ProviderView.o: src/Views/ProviderView.cpp.o
+.PHONY : src/Views/ProviderView.o
+
+# target to build an object file
+src/Views/ProviderView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o
+.PHONY : src/Views/ProviderView.cpp.o
+
+src/Views/ProviderView.i: src/Views/ProviderView.cpp.i
+.PHONY : src/Views/ProviderView.i
+
+# target to preprocess a source file
+src/Views/ProviderView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/ProviderView.cpp.i
+.PHONY : src/Views/ProviderView.cpp.i
+
+src/Views/ProviderView.s: src/Views/ProviderView.cpp.s
+.PHONY : src/Views/ProviderView.s
+
+# target to generate assembly for a file
+src/Views/ProviderView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/ProviderView.cpp.s
+.PHONY : src/Views/ProviderView.cpp.s
+
 src/Views/StartView.o: src/Views/StartView.cpp.o
 .PHONY : src/Views/StartView.o
 
@@ -387,6 +435,9 @@ help:
 	@echo "... src/Controllers/IntroController.o"
 	@echo "... src/Controllers/IntroController.i"
 	@echo "... src/Controllers/IntroController.s"
+	@echo "... src/Controllers/ProviderController.o"
+	@echo "... src/Controllers/ProviderController.i"
+	@echo "... src/Controllers/ProviderController.s"
 	@echo "... src/Controllers/StartController.o"
 	@echo "... src/Controllers/StartController.i"
 	@echo "... src/Controllers/StartController.s"
@@ -405,6 +456,9 @@ help:
 	@echo "... src/Views/Menu/MenuItemFactory.o"
 	@echo "... src/Views/Menu/MenuItemFactory.i"
 	@echo "... src/Views/Menu/MenuItemFactory.s"
+	@echo "... src/Views/ProviderView.o"
+	@echo "... src/Views/ProviderView.i"
+	@echo "... src/Views/ProviderView.s"
 	@echo "... src/Views/StartView.o"
 	@echo "... src/Views/StartView.i"
 	@echo "... src/Views/StartView.s"

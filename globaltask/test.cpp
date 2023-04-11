@@ -836,6 +836,8 @@ int main() {
   product.deleteOne<StringFieldORM>(new StringFieldORM("name", "burger"));
   product.deleteOne<StringFieldORM>(new StringFieldORM("name", "hot dog"));
 
+  Product newProduct = product.findOne<StringFieldORM>(new StringFieldORM("name", "banana"));
+
   for (auto &model : product.find()) {
     Product newProduct = model;
     cout << "New product: " << newProduct << endl;

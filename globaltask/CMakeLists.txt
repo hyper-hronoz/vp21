@@ -7,9 +7,11 @@ add_executable(gg
 	./src/Controllers/StartController.cpp
 	./src/Controllers/AuthenticationController.cpp
 	./src/Controllers/IntroController.cpp
+	./src/Controllers/ProviderController.cpp
 	./src/Views/StartView.cpp            
 	./src/Views/IntoView.cpp            
 	./src/Views/AuthenticationView.cpp
+	./src/Views/ProviderView.cpp
 	./src/Views/Menu/Menu.cpp            
 	./src/Views/Menu/MenuItem.cpp        
 	./src/Views/Menu/MenuItemFactory.cpp 

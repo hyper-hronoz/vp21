@@ -125,10 +125,24 @@ CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Controllers/IntroController.cpp -o CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.s
 
+CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: CMakeFiles/gg.dir/flags.make
+CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: src/Controllers/ProviderController.cpp
+CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o -MF CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o.d -o CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o -c /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.cpp
+
+CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.cpp > CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.i
+
+CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.cpp -o CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.s
+
 CMakeFiles/gg.dir/src/Views/StartView.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/StartView.cpp.o: src/Views/StartView.cpp
 CMakeFiles/gg.dir/src/Views/StartView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/gg.dir/src/Views/StartView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/gg.dir/src/Views/StartView.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/StartView.cpp.o -MF CMakeFiles/gg.dir/src/Views/StartView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/StartView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/StartView.cpp
 
 CMakeFiles/gg.dir/src/Views/StartView.cpp.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/gg.dir/src/Views/StartView.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.o: src/Views/IntoView.cpp
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/gg.dir/src/Views/IntoView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/gg.dir/src/Views/IntoView.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/IntoView.cpp.o -MF CMakeFiles/gg.dir/src/Views/IntoView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/IntoView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/IntoView.cpp
 
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/gg.dir/src/Views/IntoView.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o: src/Views/AuthenticationView.cpp
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o -MF CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/AuthenticationView.cpp
 
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.i: cmake_force
@@ -167,10 +181,24 @@ CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Views/AuthenticationView.cpp -o CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.s
 
+CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: CMakeFiles/gg.dir/flags.make
+CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: src/Views/ProviderView.cpp
+CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o -MF CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/ProviderView.cpp
+
+CMakeFiles/gg.dir/src/Views/ProviderView.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gg.dir/src/Views/ProviderView.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hronoz/vp21/globaltask/src/Views/ProviderView.cpp > CMakeFiles/gg.dir/src/Views/ProviderView.cpp.i
+
+CMakeFiles/gg.dir/src/Views/ProviderView.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Views/ProviderView.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Views/ProviderView.cpp -o CMakeFiles/gg.dir/src/Views/ProviderView.cpp.s
+
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o: src/Views/Menu/Menu.cpp
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o -MF CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o.d -o CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/Menu/Menu.cpp
 
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.i: cmake_force
@@ -184,7 +212,7 @@ CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o: src/Views/Menu/MenuItem.cpp
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o -MF CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o.d -o CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/Menu/MenuItem.cpp
 
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.i: cmake_force
@@ -198,7 +226,7 @@ CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o: src/Views/Menu/MenuItemFactory.cpp
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o -MF CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o.d -o CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/Menu/MenuItemFactory.cpp
 
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.i: cmake_force
@@ -215,9 +243,11 @@ gg_OBJECTS = \
 "CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o" \
 "CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o" \
 "CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o" \
+"CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/StartView.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/IntoView.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o" \
+"CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o"
@@ -229,15 +259,17 @@ gg: CMakeFiles/gg.dir/index.cpp.o
 gg: CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o
 gg: CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o
 gg: CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o
+gg: CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/StartView.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/IntoView.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o
+gg: CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o
 gg: CMakeFiles/gg.dir/build.make
 gg: CMakeFiles/gg.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable gg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable gg"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gg.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

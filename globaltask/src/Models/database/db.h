@@ -628,6 +628,7 @@ public:
   friend bool operator>(StringFieldORM &str1, StringFieldORM &str2) {
     return str1.stringSize > str2.getSize();
   }
+
   friend bool operator<(StringFieldORM &str1, StringFieldORM &str2) {
     return str1.getSize() < str2.getSize();
   }

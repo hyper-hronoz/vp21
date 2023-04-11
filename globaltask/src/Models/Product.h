@@ -53,8 +53,4 @@ public:
     return output;
   }
 
-  friend istream &operator>>(istream &input, Product &product) {
-    cout << "Не несет полезной нагрузки" << endl;
-    return input;
-  }
 };

@@ -4,7 +4,6 @@
 
 class Provider : public User {
 protected:
-  std::string id;
   std::string type;
 
   void update(vector<AFieldORM *> fields) {
@@ -15,8 +14,8 @@ protected:
     this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
     this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
     this->email = HardCast<StringFieldORM>(fields, "email")->getValue();
-  }
-
+    this->age = HardCast<IntFieldORM>(fields, "age")->getValue();
+    this->password = HardCast<StringFieldORM>(fields, "password")->getValue(); }
 public:
   Provider(vector<AFieldORM *> fields = {})
       : User(
@@ -33,6 +32,7 @@ public:
     output << "type: " << provider.type << endl;
     output << "name: " << provider.name << endl;
     output << "age: " << provider.age << endl;
+    output << "password: " << provider.password << endl;
     return output;
   }
 

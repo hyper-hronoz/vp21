@@ -16,11 +16,11 @@ class StartController {
   StartController() {
     MenuItemFactory menuItemFactory{};
 
-    view->getMenu()->append(menuItemFactory.create("Первая лаба", [this] () {
+    view->getMenu()->append(menuItemFactory.create("Узнать о заводе", [this] () {
       this->onSelectFirstLab();
     }));
 
-    view->getMenu()->append(menuItemFactory.create("Вторая лаба", [this] () {
+    view->getMenu()->append(menuItemFactory.create("Авторизироваться", [this] () {
       this->onSelectSecondLab();
     }));
 

@@ -1,5 +1,12 @@
-CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/12.2.1/iostream \
+CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: \
+ /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.cpp \
+ /usr/include/stdc-predef.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/ProviderView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/BaseView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/Menu.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItem.h \
+ /usr/include/c++/12.2.1/iostream \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -131,11 +138,6 @@ CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
  /usr/include/c++/12.2.1/bits/basic_ios.tcc \
  /usr/include/c++/12.2.1/bits/ostream.tcc /usr/include/c++/12.2.1/istream \
  /usr/include/c++/12.2.1/bits/istream.tcc \
- /home/hronoz/vp21/globaltask/./src/Controllers/StartController.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/StartView.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/BaseView.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/./Menu/Menu.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/./Menu/MenuItem.h \
  /usr/include/c++/12.2.1/functional /usr/include/c++/12.2.1/tuple \
  /usr/include/c++/12.2.1/bits/uses_allocator.h \
  /usr/include/c++/12.2.1/bits/std_function.h \
@@ -156,12 +158,10 @@ CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
  /usr/include/c++/12.2.1/bits/stl_heap.h \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/./Menu/MenuItemFactory.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/AuthenticationController.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Models/Employer.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Models/User.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Models/../utils/Observer.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Models/./database/db.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItemFactory.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductType.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/../utils/Observer.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/./database/db.h \
  /usr/include/c++/12.2.1/algorithm \
  /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
  /usr/include/c++/12.2.1/pstl/execution_defs.h \
@@ -194,9 +194,5 @@ CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
  /usr/include/c++/12.2.1/bits/stl_numeric.h /usr/include/c++/12.2.1/bit \
  /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
  /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Models/Provider.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/AuthenticationView.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/ProviderController.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Views/ProviderView.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Models/ProductType.h \
- /home/hronoz/vp21/globaltask/./src/initializers/ProductTypeInitilizer.h
+ /home/hronoz/vp21/globaltask/src/Controllers/StartController.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/StartView.h
