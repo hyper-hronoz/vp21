@@ -7,8 +7,11 @@ using namespace std;
 
 float addition = 0;
 float xPosition = 0;
+float yPosition = 0;
 float xSpeed = 1;
-float direction = 1;
+float ySpeed = 1;
+float xDirection = 1;
+float yDirection = 1;
 
 class Segment {
 private:
@@ -48,7 +51,7 @@ public:
 };
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode(800, 800), "sfmltest");
+  sf::RenderWindow window(sf::VideoMode(1920, 1080), "sfmltest");
   sf::CircleShape shape(100.f);
   shape.setFillColor(sf::Color::Green);
   while (window.isOpen()) {
@@ -60,13 +63,15 @@ int main() {
     Segment segment;
     sf::Vector2f position = window.getView().getCenter();
     float radius = 100;
-    xPosition += xSpeed * direction;
+    xPosition += xSpeed * xDirection;
+    yPosition += ySpeed * yDirection;
     position.x += xPosition;
-    if (position.x + radius > 800) {
-        direction = -1; 
+    position.y += yPosition;
+    if (position.x + radius > 1920 || position.x - radius < 0) {
+        xDirection *= -1; 
     }
-    if (position.x - radius < 0) {
-        direction = 1;
+    if (position.y + radius > 1080 || position.y - radius < 0) {
+        yDirection *= -1; 
     }
     segment.drawCircleSegment(window, position, radius);
   }
