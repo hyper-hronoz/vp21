@@ -18,6 +18,7 @@ static std::uniform_int_distribution<> dis2(8, 11);
 
 enum ERROR_TYPES {
   SAME_ENTRY,
+  NOT_FOUND,
 };
 
 class Error {
@@ -579,12 +580,12 @@ public:
         }
         if (casted->getValue() == castedModel->getValue() &&
             iterableField->getKey() == model->getKey()) {
-          delete model;
+          // delete model;
           return iterableFields;
         }
       }
     }
-    delete model;
+    // delete model;
     return {};
   }
 };

@@ -80,7 +80,7 @@ void AuthenticationController::signUpProvider() {
 
   cout << "Email: ";
   cin >> email;
-  cout << "Type: ";
+  cout << "Product type: ";
   cin >> type;
   cout << "Name: ";
   cin >> name;
@@ -89,16 +89,22 @@ void AuthenticationController::signUpProvider() {
   cout << "Age: ";
   cin >> age;
 
-  provider.create({email, type, name, password, age}, errors);
+  ProductType _productType = this->productType.findOne<StringFieldORM>(type);
 
-  for (auto &errors : errors) {
-    cout << errors.getMessage() << endl;
+  if  (_productType.getType() != type->getValue()) {
+    errors.push_back(Error(ERROR_TYPES::NOT_FOUND, "Такой тип продукта не может быть задан"));
   }
+
+  provider.create({email, type, name, password, age}, errors);
 
   if (errors.size() > 0) {
     cout << "Ошибка регистрации" << endl;
+    for (auto &errors : errors) {
+      cout << errors.getMessage() << endl;
+    }
     return;
   }
+
   cout << "Поставщиек успешно зарегистрирован" << endl;
 }
 

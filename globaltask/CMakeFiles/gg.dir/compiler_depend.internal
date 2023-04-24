@@ -264,10 +264,10 @@ CMakeFiles/gg.dir/index.cpp.o
  /usr/include/c++/12.2.1/sstream
  /usr/include/c++/12.2.1/bits/sstream.tcc
  /home/hronoz/vp21/globaltask/src/Models/Provider.h
+ /home/hronoz/vp21/globaltask/src/Models/ProductType.h
  /home/hronoz/vp21/globaltask/src/Views/AuthenticationView.h
  /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h
  /home/hronoz/vp21/globaltask/src/Views/ProviderView.h
- /home/hronoz/vp21/globaltask/src/Models/ProductType.h
  /home/hronoz/vp21/globaltask/src/initializers/ProductTypeInitilizer.h
 
 CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o
@@ -513,6 +513,7 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o
  /usr/include/c++/12.2.1/sstream
  /usr/include/c++/12.2.1/bits/sstream.tcc
  /home/hronoz/vp21/globaltask/src/Models/Provider.h
+ /home/hronoz/vp21/globaltask/src/Models/ProductType.h
  /home/hronoz/vp21/globaltask/src/Views/AuthenticationView.h
  /home/hronoz/vp21/globaltask/src/Views/BaseView.h
  /home/hronoz/vp21/globaltask/src/Views/Menu/Menu.h
@@ -534,7 +535,6 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o
  /home/hronoz/vp21/globaltask/src/Views/Menu/MenuItemFactory.h
  /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h
  /home/hronoz/vp21/globaltask/src/Views/ProviderView.h
- /home/hronoz/vp21/globaltask/src/Models/ProductType.h
  /home/hronoz/vp21/globaltask/src/Controllers/StartController.h
  /home/hronoz/vp21/globaltask/src/Views/StartView.h
  /home/hronoz/vp21/globaltask/src/Views/AuthEmployerLoginView.h
@@ -1314,6 +1314,7 @@ CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o
  /usr/include/c++/12.2.1/sstream
  /usr/include/c++/12.2.1/bits/sstream.tcc
  /home/hronoz/vp21/globaltask/src/Models/Provider.h
+ /home/hronoz/vp21/globaltask/src/Models/ProductType.h
  /home/hronoz/vp21/globaltask/src/Views/AuthenticationView.h
 
 CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o

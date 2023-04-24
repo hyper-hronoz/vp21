@@ -2,6 +2,7 @@
 
 #include "../Models/Employer.h"
 #include "../Models/Provider.h"
+#include "../Models/ProductType.h"
 
 #include "../Views/AuthenticationView.h"
 
@@ -10,6 +11,7 @@ private:
   AuthenticationView *view = new AuthenticationView();
   Employer employer;
   Provider provider;
+  ProductType productType;
 
   void signUpEmployer();
 

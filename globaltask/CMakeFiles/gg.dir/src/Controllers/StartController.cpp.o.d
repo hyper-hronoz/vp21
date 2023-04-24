@@ -199,4 +199,5 @@ CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o: \
  /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
  /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/Provider.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductType.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthenticationView.h
