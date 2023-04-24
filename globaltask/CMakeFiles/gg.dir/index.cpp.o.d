@@ -198,5 +198,5 @@ CMakeFiles/gg.dir/index.cpp.o: /home/hronoz/vp21/globaltask/index.cpp \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Views/AuthenticationView.h \
  /home/hronoz/vp21/globaltask/./src/Controllers/ProviderController.h \
  /home/hronoz/vp21/globaltask/./src/Controllers/../Views/ProviderView.h \
- /home/hronoz/vp21/globaltask/./src/Controllers/../Models/ProductType.h \
+ /home/hronoz/vp21/globaltask/./src/Controllers/../Views/../Models/ProductType.h \
  /home/hronoz/vp21/globaltask/./src/initializers/ProductTypeInitilizer.h

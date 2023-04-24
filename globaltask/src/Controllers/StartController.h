@@ -24,10 +24,6 @@ class StartController {
       this->onSelectSecondLab();
     }));
 
-    view->getMenu()->append(menuItemFactory.create("Третья лаба", [this] () {
-      this->onSelectThirdLab();
-    }));
-
     view->display();
   }
 

@@ -159,9 +159,9 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItemFactory.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductType.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/../utils/Observer.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/./database/db.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/ProductType.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/../utils/Observer.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/./database/db.h \
  /usr/include/c++/12.2.1/algorithm \
  /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
  /usr/include/c++/12.2.1/pstl/execution_defs.h \

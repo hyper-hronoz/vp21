@@ -199,6 +199,12 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o: \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItemFactory.h \
  /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/ProviderView.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductType.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/ProductType.h \
  /home/hronoz/vp21/globaltask/src/Controllers/StartController.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/StartView.h
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/StartView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthEmployerLoginView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthBaseView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthEmployerSignUpView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthBaseViewSignUp.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthProviderLoginView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthProviderSignUpView.h

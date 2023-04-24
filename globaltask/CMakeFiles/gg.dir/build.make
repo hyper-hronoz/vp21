@@ -153,10 +153,66 @@ CMakeFiles/gg.dir/src/Views/StartView.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Views/StartView.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Views/StartView.cpp -o CMakeFiles/gg.dir/src/Views/StartView.cpp.s
 
+CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o: CMakeFiles/gg.dir/flags.make
+CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o: src/Views/AuthEmployerSignUpView.cpp
+CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o -MF CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/AuthEmployerSignUpView.cpp
+
+CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hronoz/vp21/globaltask/src/Views/AuthEmployerSignUpView.cpp > CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.i
+
+CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Views/AuthEmployerSignUpView.cpp -o CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.s
+
+CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o: CMakeFiles/gg.dir/flags.make
+CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o: src/Views/AuthEmployerLoginView.cpp
+CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o -MF CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/AuthEmployerLoginView.cpp
+
+CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hronoz/vp21/globaltask/src/Views/AuthEmployerLoginView.cpp > CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.i
+
+CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Views/AuthEmployerLoginView.cpp -o CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.s
+
+CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o: CMakeFiles/gg.dir/flags.make
+CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o: src/Views/AuthProviderSignUpView.cpp
+CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o -MF CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/AuthProviderSignUpView.cpp
+
+CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hronoz/vp21/globaltask/src/Views/AuthProviderSignUpView.cpp > CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.i
+
+CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Views/AuthProviderSignUpView.cpp -o CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.s
+
+CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o: CMakeFiles/gg.dir/flags.make
+CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o: src/Views/AuthProviderLoginView.cpp
+CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o -MF CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/AuthProviderLoginView.cpp
+
+CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hronoz/vp21/globaltask/src/Views/AuthProviderLoginView.cpp > CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.i
+
+CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hronoz/vp21/globaltask/src/Views/AuthProviderLoginView.cpp -o CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.s
+
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.o: src/Views/IntoView.cpp
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/gg.dir/src/Views/IntoView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/gg.dir/src/Views/IntoView.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/IntoView.cpp.o -MF CMakeFiles/gg.dir/src/Views/IntoView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/IntoView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/IntoView.cpp
 
 CMakeFiles/gg.dir/src/Views/IntoView.cpp.i: cmake_force
@@ -170,7 +226,7 @@ CMakeFiles/gg.dir/src/Views/IntoView.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o: src/Views/AuthenticationView.cpp
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o -MF CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/AuthenticationView.cpp
 
 CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.i: cmake_force
@@ -184,7 +240,7 @@ CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: src/Views/ProviderView.cpp
 CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o -MF CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o.d -o CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/ProviderView.cpp
 
 CMakeFiles/gg.dir/src/Views/ProviderView.cpp.i: cmake_force
@@ -198,7 +254,7 @@ CMakeFiles/gg.dir/src/Views/ProviderView.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o: src/Views/Menu/Menu.cpp
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o -MF CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o.d -o CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/Menu/Menu.cpp
 
 CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.i: cmake_force
@@ -212,7 +268,7 @@ CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o: src/Views/Menu/MenuItem.cpp
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o -MF CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o.d -o CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/Menu/MenuItem.cpp
 
 CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.i: cmake_force
@@ -226,7 +282,7 @@ CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.s: cmake_force
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o: CMakeFiles/gg.dir/flags.make
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o: src/Views/Menu/MenuItemFactory.cpp
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o: CMakeFiles/gg.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o -MF CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o.d -o CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o -c /home/hronoz/vp21/globaltask/src/Views/Menu/MenuItemFactory.cpp
 
 CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.i: cmake_force
@@ -245,6 +301,10 @@ gg_OBJECTS = \
 "CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o" \
 "CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/StartView.cpp.o" \
+"CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o" \
+"CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o" \
+"CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o" \
+"CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/IntoView.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o" \
 "CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o" \
@@ -261,6 +321,10 @@ gg: CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o
 gg: CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o
 gg: CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/StartView.cpp.o
+gg: CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o
+gg: CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o
+gg: CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o
+gg: CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/IntoView.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o
@@ -269,7 +333,7 @@ gg: CMakeFiles/gg.dir/src/Views/Menu/MenuItem.cpp.o
 gg: CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o
 gg: CMakeFiles/gg.dir/build.make
 gg: CMakeFiles/gg.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable gg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hronoz/vp21/globaltask/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable gg"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gg.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

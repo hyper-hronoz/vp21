@@ -249,6 +249,102 @@ src/Controllers/StartController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/StartController.cpp.s
 .PHONY : src/Controllers/StartController.cpp.s
 
+src/Views/AuthEmployerLoginView.o: src/Views/AuthEmployerLoginView.cpp.o
+.PHONY : src/Views/AuthEmployerLoginView.o
+
+# target to build an object file
+src/Views/AuthEmployerLoginView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o
+.PHONY : src/Views/AuthEmployerLoginView.cpp.o
+
+src/Views/AuthEmployerLoginView.i: src/Views/AuthEmployerLoginView.cpp.i
+.PHONY : src/Views/AuthEmployerLoginView.i
+
+# target to preprocess a source file
+src/Views/AuthEmployerLoginView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.i
+.PHONY : src/Views/AuthEmployerLoginView.cpp.i
+
+src/Views/AuthEmployerLoginView.s: src/Views/AuthEmployerLoginView.cpp.s
+.PHONY : src/Views/AuthEmployerLoginView.s
+
+# target to generate assembly for a file
+src/Views/AuthEmployerLoginView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.s
+.PHONY : src/Views/AuthEmployerLoginView.cpp.s
+
+src/Views/AuthEmployerSignUpView.o: src/Views/AuthEmployerSignUpView.cpp.o
+.PHONY : src/Views/AuthEmployerSignUpView.o
+
+# target to build an object file
+src/Views/AuthEmployerSignUpView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o
+.PHONY : src/Views/AuthEmployerSignUpView.cpp.o
+
+src/Views/AuthEmployerSignUpView.i: src/Views/AuthEmployerSignUpView.cpp.i
+.PHONY : src/Views/AuthEmployerSignUpView.i
+
+# target to preprocess a source file
+src/Views/AuthEmployerSignUpView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.i
+.PHONY : src/Views/AuthEmployerSignUpView.cpp.i
+
+src/Views/AuthEmployerSignUpView.s: src/Views/AuthEmployerSignUpView.cpp.s
+.PHONY : src/Views/AuthEmployerSignUpView.s
+
+# target to generate assembly for a file
+src/Views/AuthEmployerSignUpView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.s
+.PHONY : src/Views/AuthEmployerSignUpView.cpp.s
+
+src/Views/AuthProviderLoginView.o: src/Views/AuthProviderLoginView.cpp.o
+.PHONY : src/Views/AuthProviderLoginView.o
+
+# target to build an object file
+src/Views/AuthProviderLoginView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o
+.PHONY : src/Views/AuthProviderLoginView.cpp.o
+
+src/Views/AuthProviderLoginView.i: src/Views/AuthProviderLoginView.cpp.i
+.PHONY : src/Views/AuthProviderLoginView.i
+
+# target to preprocess a source file
+src/Views/AuthProviderLoginView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.i
+.PHONY : src/Views/AuthProviderLoginView.cpp.i
+
+src/Views/AuthProviderLoginView.s: src/Views/AuthProviderLoginView.cpp.s
+.PHONY : src/Views/AuthProviderLoginView.s
+
+# target to generate assembly for a file
+src/Views/AuthProviderLoginView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.s
+.PHONY : src/Views/AuthProviderLoginView.cpp.s
+
+src/Views/AuthProviderSignUpView.o: src/Views/AuthProviderSignUpView.cpp.o
+.PHONY : src/Views/AuthProviderSignUpView.o
+
+# target to build an object file
+src/Views/AuthProviderSignUpView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.o
+.PHONY : src/Views/AuthProviderSignUpView.cpp.o
+
+src/Views/AuthProviderSignUpView.i: src/Views/AuthProviderSignUpView.cpp.i
+.PHONY : src/Views/AuthProviderSignUpView.i
+
+# target to preprocess a source file
+src/Views/AuthProviderSignUpView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.i
+.PHONY : src/Views/AuthProviderSignUpView.cpp.i
+
+src/Views/AuthProviderSignUpView.s: src/Views/AuthProviderSignUpView.cpp.s
+.PHONY : src/Views/AuthProviderSignUpView.s
+
+# target to generate assembly for a file
+src/Views/AuthProviderSignUpView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthProviderSignUpView.cpp.s
+.PHONY : src/Views/AuthProviderSignUpView.cpp.s
+
 src/Views/AuthenticationView.o: src/Views/AuthenticationView.cpp.o
 .PHONY : src/Views/AuthenticationView.o
 
@@ -441,6 +537,18 @@ help:
 	@echo "... src/Controllers/StartController.o"
 	@echo "... src/Controllers/StartController.i"
 	@echo "... src/Controllers/StartController.s"
+	@echo "... src/Views/AuthEmployerLoginView.o"
+	@echo "... src/Views/AuthEmployerLoginView.i"
+	@echo "... src/Views/AuthEmployerLoginView.s"
+	@echo "... src/Views/AuthEmployerSignUpView.o"
+	@echo "... src/Views/AuthEmployerSignUpView.i"
+	@echo "... src/Views/AuthEmployerSignUpView.s"
+	@echo "... src/Views/AuthProviderLoginView.o"
+	@echo "... src/Views/AuthProviderLoginView.i"
+	@echo "... src/Views/AuthProviderLoginView.s"
+	@echo "... src/Views/AuthProviderSignUpView.o"
+	@echo "... src/Views/AuthProviderSignUpView.i"
+	@echo "... src/Views/AuthProviderSignUpView.s"
 	@echo "... src/Views/AuthenticationView.o"
 	@echo "... src/Views/AuthenticationView.i"
 	@echo "... src/Views/AuthenticationView.s"

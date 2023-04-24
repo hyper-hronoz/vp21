@@ -9,6 +9,9 @@ public:
 };
 
 class Observable {
+private:
+  std::vector<Observer *> _observers;
+
 public:
   void addObserver(Observer *observer) { _observers.push_back(observer); }
   void notifyUpdate() {
@@ -17,7 +20,4 @@ public:
       _observers[i]->update();
     }
   }
-
-private:
-  std::vector<Observer *> _observers;
 };

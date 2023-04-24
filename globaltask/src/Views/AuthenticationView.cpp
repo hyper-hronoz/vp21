@@ -3,3 +3,4 @@
 void AuthenticationView::display() {
   this->menu.awaitUserInput();
 }
+

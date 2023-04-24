@@ -5,11 +5,8 @@
 #include "./src/Controllers/ProviderController.h"
 #include "./src/initializers/ProductTypeInitilizer.h"
 
-using namespace std;
-
 int main() {
   ProductTypeInitilizer().initilizeProductTypes();
-  // AuthenticationController();
-  ProviderController();
+  StartController _;
   return 0;
 }
