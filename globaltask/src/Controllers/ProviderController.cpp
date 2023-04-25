@@ -22,25 +22,36 @@ void ProviderController::getAllProductTypes() {
 
 void ProviderController::provideProduct() {
   StringFieldORM *searchField =
-      new StringFieldORM("email", this->providerModel.getEmail());
-  IntFieldORM *replaceField;
-  if (this->providerModel.getProductsAmount() > 0) {
+      new StringFieldORM("email", this->providerModel->getEmail());
+
+  cout << searchField->getValue() << endl;
+  cout << this->providerModel->getProductsAmount() << endl;
+
+  if (this->providerModel->getProductsAmount() > 0) {
+    IntFieldORM *replaceField;
     replaceField =
-        new IntFieldORM("amount", this->providerModel.getProductsAmount() - 1);
+        new IntFieldORM("amount", this->providerModel->getProductsAmount() - 1);
+    this->providerModel =
+        new Provider(this->providerModel->updateOne<StringFieldORM>(
+            searchField, {replaceField}));
+    cout << this->providerModel << endl;
+    delete replaceField;
   }
 
-  this->providerModel =
-      this->providerModel.updateOne<IntFieldORM>(searchField, {replaceField});
-
   delete searchField;
-  delete replaceField;
 }
 
 void ProviderController::printInfo() {
   this->view->printProvider(this->providerModel);
 }
 
-void ProviderController::deleteAccount() {}
+void ProviderController::deleteAccount() {
+  StringFieldORM *query =
+      new StringFieldORM("email", this->providerModel->getEmail());
+  this->providerModel->deleteOne<StringFieldORM>(query);
+  StartController _;
+  delete query;
+}
 
 void ProviderController::updateAccount() {}
 

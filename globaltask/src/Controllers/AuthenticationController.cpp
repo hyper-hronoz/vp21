@@ -25,9 +25,10 @@ void AuthenticationController::loginProvider() {
   AuthProviderLoginView view;
   StringFieldORM password("password", view.getPassword());
   StringFieldORM *login = new StringFieldORM("email", view.getLogin());
-  Provider newProvider = this->provider.findOne<StringFieldORM>(login);
-  if (newProvider.getEmail() == login->getValue() &&
-      password.getValue() == newProvider.getPassword()) {
+  Provider *newProvider =
+      new Provider(this->provider.findOne<StringFieldORM>(login));
+  if (newProvider->getEmail() == login->getValue() &&
+      password.getValue() == newProvider->getPassword()) {
     cout << "Login successfull" << endl;
     ProviderController _(newProvider);
   } else {
@@ -89,11 +90,14 @@ void AuthenticationController::signUpProvider() {
   cin >> password;
   cout << "Age: ";
   cin >> age;
+  cout << "Amount: ";
+  cin >> amount;
 
   ProductType _productType = this->productType.findOne<StringFieldORM>(type);
 
-  if  (_productType.getType() != type->getValue()) {
-    errors.push_back(Error(ERROR_TYPES::NOT_FOUND, "Такой тип продукта не может быть задан"));
+  if (_productType.getType() != type->getValue()) {
+    errors.push_back(Error(ERROR_TYPES::NOT_FOUND,
+                           "Такой тип продукта не может быть задан"));
   }
 
   provider.create({email, type, name, password, amount, age}, errors);

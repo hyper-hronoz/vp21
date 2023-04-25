@@ -9,7 +9,7 @@ class ProviderView : public BaseView {
 public:
   ProviderView() { this->menu = Menu("---Provider menu---"); }
 
-  void printProvider(Provider provider) { cout << provider << endl; }
+  void printProvider(Provider *provider) { cout << *provider << endl; }
 
   void display() override;
 };

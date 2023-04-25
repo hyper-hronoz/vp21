@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -15,6 +16,13 @@ static std::random_device rd;
 static std::mt19937 gen(rd());
 static std::uniform_int_distribution<> dis(0, 15);
 static std::uniform_int_distribution<> dis2(8, 11);
+
+class Contains {
+public:
+  bool contains(const std::string &str, const std::string &subString) {
+    return str.find(subString) != std::string::npos;
+  }
+};
 
 enum ERROR_TYPES {
   SAME_ENTRY,
@@ -267,9 +275,9 @@ public:
 class ASchemaField {
 protected:
   string _name;
-  bool _isRequired;
-  bool _isUnique;
-  bool _isAutoGenerate;
+  bool _isRequired = true;
+  bool _isUnique = false;
+  bool _isAutoGenerate = false;
   const char *_type;
 
 public:
@@ -443,6 +451,7 @@ public:
   template <class T>
   vector<AFieldORM *> updateOne(AFieldORM *searchField,
                                 initializer_list<AFieldORM *> newFields) {
+    cout << "Finding one" << endl;
     vector<AFieldORM *> currentFields = findOne<T>(searchField);
     int position = this->cursor;
 
@@ -456,25 +465,26 @@ public:
       }
     }
 
-    for (auto &field : currentFields) {
-      for (auto &schemaFeild : this->schema->getSchemaFields()) {
-        if (field->getKey() == schemaFeild->getName() &&
-            field->getType() == schemaFeild->getType() &&
-            schemaFeild->getIsAutoGenerate()) {
-          // cout << "Generating field " << field->getKey() << endl;
-          field->setIsAutoGenerate(true);
-          field->generate();
-        }
-      }
-    }
-
+    cout << "Errors checking " << endl;
     vector<Error> errors{};
     this->checkUnique(currentFields, errors);
     if (errors.size() != 0) {
-      for (auto &item : errors) {
-        cout << item.getMessage() << endl;
+      auto id_maybe = dynamic_cast<BaseField<string> *>(currentFields[0]);
+      string id = "";
+      if (id_maybe) {
+        id = id_maybe->getValue();
       }
-      return {};
+      Contains contains;
+      if (errors[0].getErrorType() == ERROR_TYPES::SAME_ENTRY &&
+          contains.contains(errors[0].getMessage(), id)) {
+        cout << "Same id" << endl;
+      } else {
+
+        for (auto &item : errors) {
+          cout << item.getMessage() << endl;
+        }
+        return {};
+      }
     }
 
     position -= recordSize;

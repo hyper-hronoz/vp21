@@ -222,6 +222,9 @@ CMakeFiles/gg.dir/index.cpp.o: index.cpp \
   /usr/include/c++/12.2.1/algorithm \
   /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/12.2.1/pstl/execution_defs.h \
+  /usr/include/c++/12.2.1/cstring \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/c++/12.2.1/fstream \
   /usr/include/c++/12.2.1/bits/codecvt.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -470,6 +473,9 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o: src/Controller
   /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
   /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/12.2.1/pstl/execution_defs.h \
+  /usr/include/c++/12.2.1/cstring \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/c++/12.2.1/fstream \
   /usr/include/c++/12.2.1/bits/codecvt.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -786,10 +792,8 @@ CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o: src/Controllers/IntroCo
 CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: src/Controllers/ProviderController.cpp \
   /usr/include/stdc-predef.h \
   src/Controllers/ProviderController.h \
-  src/Views/ProviderView.h \
-  src/Views/BaseView.h \
-  src/Views/Menu/Menu.h \
-  src/Views/Menu/MenuItem.h \
+  src/Models/ProductType.h \
+  src/utils/Observer.h \
   /usr/include/c++/12.2.1/iostream \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -971,37 +975,23 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: src/Controllers/Prov
   /usr/include/c++/12.2.1/bits/ostream.tcc \
   /usr/include/c++/12.2.1/istream \
   /usr/include/c++/12.2.1/bits/istream.tcc \
-  /usr/include/c++/12.2.1/functional \
-  /usr/include/c++/12.2.1/tuple \
-  /usr/include/c++/12.2.1/bits/uses_allocator.h \
-  /usr/include/c++/12.2.1/bits/std_function.h \
-  /usr/include/c++/12.2.1/unordered_map \
-  /usr/include/c++/12.2.1/ext/aligned_buffer.h \
-  /usr/include/c++/12.2.1/bits/hashtable.h \
-  /usr/include/c++/12.2.1/bits/hashtable_policy.h \
-  /usr/include/c++/12.2.1/bits/enable_special_members.h \
-  /usr/include/c++/12.2.1/bits/node_handle.h \
-  /usr/include/c++/12.2.1/bits/unordered_map.h \
-  /usr/include/c++/12.2.1/bits/erase_if.h \
   /usr/include/c++/12.2.1/vector \
   /usr/include/c++/12.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/12.2.1/bits/stl_vector.h \
   /usr/include/c++/12.2.1/bits/stl_bvector.h \
   /usr/include/c++/12.2.1/bits/vector.tcc \
-  /usr/include/c++/12.2.1/array \
-  /usr/include/c++/12.2.1/compare \
+  src/Models/database/db.h \
+  /usr/include/c++/12.2.1/algorithm \
   /usr/include/c++/12.2.1/bits/stl_algo.h \
   /usr/include/c++/12.2.1/bits/algorithmfwd.h \
   /usr/include/c++/12.2.1/bits/stl_heap.h \
   /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
-  src/Views/Menu/MenuItemFactory.h \
-  src/Models/ProductType.h \
-  src/utils/Observer.h \
-  src/Models/database/db.h \
-  /usr/include/c++/12.2.1/algorithm \
   /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/12.2.1/pstl/execution_defs.h \
+  /usr/include/c++/12.2.1/cstring \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/c++/12.2.1/fstream \
   /usr/include/c++/12.2.1/bits/codecvt.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -1042,6 +1032,27 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: src/Controllers/Prov
   /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
   /usr/include/c++/12.2.1/sstream \
   /usr/include/c++/12.2.1/bits/sstream.tcc \
+  src/Models/Provider.h \
+  src/Models/User.h \
+  src/Views/ProviderView.h \
+  src/Views/BaseView.h \
+  src/Views/Menu/Menu.h \
+  src/Views/Menu/MenuItem.h \
+  /usr/include/c++/12.2.1/functional \
+  /usr/include/c++/12.2.1/tuple \
+  /usr/include/c++/12.2.1/bits/uses_allocator.h \
+  /usr/include/c++/12.2.1/bits/std_function.h \
+  /usr/include/c++/12.2.1/unordered_map \
+  /usr/include/c++/12.2.1/ext/aligned_buffer.h \
+  /usr/include/c++/12.2.1/bits/hashtable.h \
+  /usr/include/c++/12.2.1/bits/hashtable_policy.h \
+  /usr/include/c++/12.2.1/bits/enable_special_members.h \
+  /usr/include/c++/12.2.1/bits/node_handle.h \
+  /usr/include/c++/12.2.1/bits/unordered_map.h \
+  /usr/include/c++/12.2.1/bits/erase_if.h \
+  /usr/include/c++/12.2.1/array \
+  /usr/include/c++/12.2.1/compare \
+  src/Views/Menu/MenuItemFactory.h \
   src/Controllers/StartController.h \
   src/Views/StartView.h
 
@@ -1293,6 +1304,9 @@ CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o: src/Controllers/StartCo
   /usr/include/c++/12.2.1/algorithm \
   /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/12.2.1/pstl/execution_defs.h \
+  /usr/include/c++/12.2.1/cstring \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/c++/12.2.1/fstream \
   /usr/include/c++/12.2.1/bits/codecvt.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -3254,9 +3268,8 @@ CMakeFiles/gg.dir/src/Views/Menu/MenuItemFactory.cpp.o: src/Views/Menu/MenuItemF
 CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: src/Views/ProviderView.cpp \
   /usr/include/stdc-predef.h \
   src/Views/ProviderView.h \
-  src/Views/BaseView.h \
-  src/Views/Menu/Menu.h \
-  src/Views/Menu/MenuItem.h \
+  src/Models/ProductType.h \
+  src/utils/Observer.h \
   /usr/include/c++/12.2.1/iostream \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -3438,37 +3451,23 @@ CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: src/Views/ProviderView.cpp \
   /usr/include/c++/12.2.1/bits/ostream.tcc \
   /usr/include/c++/12.2.1/istream \
   /usr/include/c++/12.2.1/bits/istream.tcc \
-  /usr/include/c++/12.2.1/functional \
-  /usr/include/c++/12.2.1/tuple \
-  /usr/include/c++/12.2.1/bits/uses_allocator.h \
-  /usr/include/c++/12.2.1/bits/std_function.h \
-  /usr/include/c++/12.2.1/unordered_map \
-  /usr/include/c++/12.2.1/ext/aligned_buffer.h \
-  /usr/include/c++/12.2.1/bits/hashtable.h \
-  /usr/include/c++/12.2.1/bits/hashtable_policy.h \
-  /usr/include/c++/12.2.1/bits/enable_special_members.h \
-  /usr/include/c++/12.2.1/bits/node_handle.h \
-  /usr/include/c++/12.2.1/bits/unordered_map.h \
-  /usr/include/c++/12.2.1/bits/erase_if.h \
   /usr/include/c++/12.2.1/vector \
   /usr/include/c++/12.2.1/bits/stl_uninitialized.h \
   /usr/include/c++/12.2.1/bits/stl_vector.h \
   /usr/include/c++/12.2.1/bits/stl_bvector.h \
   /usr/include/c++/12.2.1/bits/vector.tcc \
-  /usr/include/c++/12.2.1/array \
-  /usr/include/c++/12.2.1/compare \
+  src/Models/database/db.h \
+  /usr/include/c++/12.2.1/algorithm \
   /usr/include/c++/12.2.1/bits/stl_algo.h \
   /usr/include/c++/12.2.1/bits/algorithmfwd.h \
   /usr/include/c++/12.2.1/bits/stl_heap.h \
   /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
-  src/Views/Menu/MenuItemFactory.h \
-  src/Models/ProductType.h \
-  src/utils/Observer.h \
-  src/Models/database/db.h \
-  /usr/include/c++/12.2.1/algorithm \
   /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/12.2.1/pstl/execution_defs.h \
+  /usr/include/c++/12.2.1/cstring \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/c++/12.2.1/fstream \
   /usr/include/c++/12.2.1/bits/codecvt.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -3508,7 +3507,27 @@ CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: src/Views/ProviderView.cpp \
   /usr/include/c++/12.2.1/bit \
   /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
   /usr/include/c++/12.2.1/sstream \
-  /usr/include/c++/12.2.1/bits/sstream.tcc
+  /usr/include/c++/12.2.1/bits/sstream.tcc \
+  src/Models/Provider.h \
+  src/Models/User.h \
+  src/Views/BaseView.h \
+  src/Views/Menu/Menu.h \
+  src/Views/Menu/MenuItem.h \
+  /usr/include/c++/12.2.1/functional \
+  /usr/include/c++/12.2.1/tuple \
+  /usr/include/c++/12.2.1/bits/uses_allocator.h \
+  /usr/include/c++/12.2.1/bits/std_function.h \
+  /usr/include/c++/12.2.1/unordered_map \
+  /usr/include/c++/12.2.1/ext/aligned_buffer.h \
+  /usr/include/c++/12.2.1/bits/hashtable.h \
+  /usr/include/c++/12.2.1/bits/hashtable_policy.h \
+  /usr/include/c++/12.2.1/bits/enable_special_members.h \
+  /usr/include/c++/12.2.1/bits/node_handle.h \
+  /usr/include/c++/12.2.1/bits/unordered_map.h \
+  /usr/include/c++/12.2.1/bits/erase_if.h \
+  /usr/include/c++/12.2.1/array \
+  /usr/include/c++/12.2.1/compare \
+  src/Views/Menu/MenuItemFactory.h
 
 CMakeFiles/gg.dir/src/Views/StartView.cpp.o: src/Views/StartView.cpp \
   /usr/include/stdc-predef.h \
@@ -3764,11 +3783,17 @@ src/Models/Provider.h:
 
 /usr/include/c++/12.2.1/bit:
 
+/usr/include/c++/12.2.1/numeric:
+
+/usr/include/c++/12.2.1/bits/random.tcc:
+
 /usr/include/c++/12.2.1/bits/refwrap.h:
 
 /usr/include/c++/12.2.1/debug/debug.h:
 
 /usr/include/c++/12.2.1/bits/unordered_map.h:
+
+/usr/include/string.h:
 
 /usr/include/bits/mathcalls-helper-functions.h:
 
@@ -3923,8 +3948,6 @@ src/Views/Menu/MenuItem.cpp:
 /usr/include/c++/12.2.1/bits/stl_algo.h:
 
 /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++locale.h:
-
-/usr/include/c++/12.2.1/bits/random.tcc:
 
 /usr/include/asm-generic/errno-base.h:
 
@@ -4162,6 +4185,12 @@ src/Views/BaseView.h:
 
 /usr/include/bits/fp-logb.h:
 
+/usr/include/c++/12.2.1/bits/stl_numeric.h:
+
+/usr/include/c++/12.2.1/iosfwd:
+
+/usr/include/bits/types/error_t.h:
+
 /usr/include/c++/12.2.1/bits/locale_classes.tcc:
 
 /usr/include/c++/12.2.1/system_error:
@@ -4260,6 +4289,10 @@ src/Models/database/db.h:
 
 /usr/include/c++/12.2.1/algorithm:
 
+/usr/include/c++/12.2.1/cstring:
+
+/usr/include/strings.h:
+
 /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++io.h:
 
 /usr/include/bits/types/timer_t.h:
@@ -4295,11 +4328,3 @@ src/Models/database/db.h:
 /usr/include/c++/12.2.1/bits/std_function.h:
 
 /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/opt_random.h:
-
-/usr/include/c++/12.2.1/numeric:
-
-/usr/include/c++/12.2.1/iosfwd:
-
-/usr/include/bits/types/error_t.h:
-
-/usr/include/c++/12.2.1/bits/stl_numeric.h:

@@ -2,9 +2,8 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: \
  /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.cpp \
  /usr/include/stdc-predef.h \
  /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/ProviderView.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/ProductType.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/../utils/Observer.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductType.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/../utils/Observer.h \
  /usr/include/c++/12.2.1/iostream \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -141,7 +140,7 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: \
  /usr/include/c++/12.2.1/bits/stl_vector.h \
  /usr/include/c++/12.2.1/bits/stl_bvector.h \
  /usr/include/c++/12.2.1/bits/vector.tcc \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/./database/db.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/./database/db.h \
  /usr/include/c++/12.2.1/algorithm \
  /usr/include/c++/12.2.1/bits/stl_algo.h \
  /usr/include/c++/12.2.1/bits/algorithmfwd.h \
@@ -150,7 +149,9 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
  /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
  /usr/include/c++/12.2.1/pstl/execution_defs.h \
- /usr/include/c++/12.2.1/fstream /usr/include/c++/12.2.1/bits/codecvt.h \
+ /usr/include/c++/12.2.1/cstring /usr/include/string.h \
+ /usr/include/strings.h /usr/include/c++/12.2.1/fstream \
+ /usr/include/c++/12.2.1/bits/codecvt.h \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
  /usr/include/c++/12.2.1/bits/fstream.tcc /usr/include/c++/12.2.1/random \
@@ -179,8 +180,9 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: \
  /usr/include/c++/12.2.1/bits/stl_numeric.h /usr/include/c++/12.2.1/bit \
  /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
  /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/Provider.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/../Models/User.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/Provider.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/User.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/ProviderView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/BaseView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/Menu.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItem.h \
