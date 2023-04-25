@@ -2,9 +2,8 @@ CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: \
  /home/hronoz/vp21/globaltask/src/Views/ProviderView.cpp \
  /usr/include/stdc-predef.h \
  /home/hronoz/vp21/globaltask/src/Views/ProviderView.h \
- /home/hronoz/vp21/globaltask/src/Views/BaseView.h \
- /home/hronoz/vp21/globaltask/src/Views/./Menu/Menu.h \
- /home/hronoz/vp21/globaltask/src/Views/./Menu/MenuItem.h \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/ProductType.h \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/../utils/Observer.h \
  /usr/include/c++/12.2.1/iostream \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -136,32 +135,18 @@ CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: \
  /usr/include/c++/12.2.1/bits/locale_facets.tcc \
  /usr/include/c++/12.2.1/bits/basic_ios.tcc \
  /usr/include/c++/12.2.1/bits/ostream.tcc /usr/include/c++/12.2.1/istream \
- /usr/include/c++/12.2.1/bits/istream.tcc \
- /usr/include/c++/12.2.1/functional /usr/include/c++/12.2.1/tuple \
- /usr/include/c++/12.2.1/bits/uses_allocator.h \
- /usr/include/c++/12.2.1/bits/std_function.h \
- /usr/include/c++/12.2.1/unordered_map \
- /usr/include/c++/12.2.1/ext/aligned_buffer.h \
- /usr/include/c++/12.2.1/bits/hashtable.h \
- /usr/include/c++/12.2.1/bits/hashtable_policy.h \
- /usr/include/c++/12.2.1/bits/enable_special_members.h \
- /usr/include/c++/12.2.1/bits/node_handle.h \
- /usr/include/c++/12.2.1/bits/unordered_map.h \
- /usr/include/c++/12.2.1/bits/erase_if.h /usr/include/c++/12.2.1/vector \
+ /usr/include/c++/12.2.1/bits/istream.tcc /usr/include/c++/12.2.1/vector \
  /usr/include/c++/12.2.1/bits/stl_uninitialized.h \
  /usr/include/c++/12.2.1/bits/stl_vector.h \
  /usr/include/c++/12.2.1/bits/stl_bvector.h \
- /usr/include/c++/12.2.1/bits/vector.tcc /usr/include/c++/12.2.1/array \
- /usr/include/c++/12.2.1/compare /usr/include/c++/12.2.1/bits/stl_algo.h \
+ /usr/include/c++/12.2.1/bits/vector.tcc \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/./database/db.h \
+ /usr/include/c++/12.2.1/algorithm \
+ /usr/include/c++/12.2.1/bits/stl_algo.h \
  /usr/include/c++/12.2.1/bits/algorithmfwd.h \
  /usr/include/c++/12.2.1/bits/stl_heap.h \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
- /home/hronoz/vp21/globaltask/src/Views/./Menu/MenuItemFactory.h \
- /home/hronoz/vp21/globaltask/src/Views/../Models/ProductType.h \
- /home/hronoz/vp21/globaltask/src/Views/../Models/../utils/Observer.h \
- /home/hronoz/vp21/globaltask/src/Views/../Models/./database/db.h \
- /usr/include/c++/12.2.1/algorithm \
  /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
  /usr/include/c++/12.2.1/pstl/execution_defs.h \
  /usr/include/c++/12.2.1/fstream /usr/include/c++/12.2.1/bits/codecvt.h \
@@ -192,4 +177,22 @@ CMakeFiles/gg.dir/src/Views/ProviderView.cpp.o: \
  /usr/include/c++/12.2.1/bits/random.tcc /usr/include/c++/12.2.1/numeric \
  /usr/include/c++/12.2.1/bits/stl_numeric.h /usr/include/c++/12.2.1/bit \
  /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
- /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc
+ /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/Provider.h \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/User.h \
+ /home/hronoz/vp21/globaltask/src/Views/BaseView.h \
+ /home/hronoz/vp21/globaltask/src/Views/./Menu/Menu.h \
+ /home/hronoz/vp21/globaltask/src/Views/./Menu/MenuItem.h \
+ /usr/include/c++/12.2.1/functional /usr/include/c++/12.2.1/tuple \
+ /usr/include/c++/12.2.1/bits/uses_allocator.h \
+ /usr/include/c++/12.2.1/bits/std_function.h \
+ /usr/include/c++/12.2.1/unordered_map \
+ /usr/include/c++/12.2.1/ext/aligned_buffer.h \
+ /usr/include/c++/12.2.1/bits/hashtable.h \
+ /usr/include/c++/12.2.1/bits/hashtable_policy.h \
+ /usr/include/c++/12.2.1/bits/enable_special_members.h \
+ /usr/include/c++/12.2.1/bits/node_handle.h \
+ /usr/include/c++/12.2.1/bits/unordered_map.h \
+ /usr/include/c++/12.2.1/bits/erase_if.h /usr/include/c++/12.2.1/array \
+ /usr/include/c++/12.2.1/compare \
+ /home/hronoz/vp21/globaltask/src/Views/./Menu/MenuItemFactory.h

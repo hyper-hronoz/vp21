@@ -29,7 +29,7 @@ void AuthenticationController::loginProvider() {
   if (newProvider.getEmail() == login->getValue() &&
       password.getValue() == newProvider.getPassword()) {
     cout << "Login successfull" << endl;
-    ProviderController();
+    ProviderController _(newProvider);
   } else {
     cout << "Login is not successfull" << endl;
     cout << "Wrong login or password" << endl;
@@ -77,6 +77,7 @@ void AuthenticationController::signUpProvider() {
   StringFieldORM *name = new StringFieldORM("name");
   StringFieldORM *password = new StringFieldORM("password");
   IntFieldORM *age = new IntFieldORM("age");
+  IntFieldORM *amount = new IntFieldORM("amount");
 
   cout << "Email: ";
   cin >> email;
@@ -95,7 +96,7 @@ void AuthenticationController::signUpProvider() {
     errors.push_back(Error(ERROR_TYPES::NOT_FOUND, "Такой тип продукта не может быть задан"));
   }
 
-  provider.create({email, type, name, password, age}, errors);
+  provider.create({email, type, name, password, amount, age}, errors);
 
   if (errors.size() > 0) {
     cout << "Ошибка регистрации" << endl;

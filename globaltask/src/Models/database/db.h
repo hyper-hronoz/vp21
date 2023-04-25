@@ -441,8 +441,8 @@ public:
   }
 
   template <class T>
-  void updateOne(AFieldORM *searchField,
-                 initializer_list<AFieldORM *> newFields) {
+  vector<AFieldORM *> updateOne(AFieldORM *searchField,
+                                initializer_list<AFieldORM *> newFields) {
     vector<AFieldORM *> currentFields = findOne<T>(searchField);
     int position = this->cursor;
 
@@ -474,12 +474,14 @@ public:
       for (auto &item : errors) {
         cout << item.getMessage() << endl;
       }
-      return;
+      return {};
     }
 
     position -= recordSize;
     // cout << "Overwriting to " << position << endl;
     this->storage->save(currentFields, position);
+
+    return currentFields;
   }
 
   template <class T> vector<vector<AFieldORM *>> find(AFieldORM *model) {

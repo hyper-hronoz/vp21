@@ -5,6 +5,7 @@
 class Provider : public User {
 protected:
   std::string type;
+  int productsAmount;
 
   void update(vector<AFieldORM *> fields) {
     if (!fields.size()) {
@@ -12,6 +13,7 @@ protected:
     }
     this->id = HardCast<StringFieldORM>(fields, "_id")->getValue();
     this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
+    this->productsAmount = HardCast<IntFieldORM>(fields, "amount")->getValue();
     this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
     this->email = HardCast<StringFieldORM>(fields, "email")->getValue();
     this->age = HardCast<IntFieldORM>(fields, "age")->getValue();
@@ -21,15 +23,21 @@ public:
       : User(
             {
                 (new SchemaField<StringFieldORM>("type"))->required(true),
+                (new SchemaField<IntFieldORM>("amount"))->required(true),
             },
             typeid(this).name()) {
     this->update(fields);
+  }
+
+  int getProductsAmount() {
+    return this->productsAmount;
   }
 
   friend ostream &operator<<(ostream &output, const Provider &provider) {
     output << "_id: " << provider.id << endl;
     output << "email: " << provider.email << endl;
     output << "type: " << provider.type << endl;
+    output << "amount: " << provider.email << endl;
     output << "name: " << provider.name << endl;
     output << "age: " << provider.age << endl;
     output << "password: " << provider.password << endl;
