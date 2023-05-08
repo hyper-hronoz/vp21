@@ -6,13 +6,19 @@
 
 class ProductType : public BaseORM, public Observable {
 private:
+  string _id;
   string type;
 
   void update(vector<AFieldORM *> fields) {
-    if (fields.size() == 0) {
-      return;
+    try {
+      if (fields.size() == 0) {
+        return;
+      }
+      this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
+      this->_id = HardCast<StringFieldORM>(fields, "_id")->getValue();
+    } catch (std::exception& e) {
+      std::cout << "Bad cast ProductType, not enought data" << std::endl;
     }
-    this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
   }
 
 public:
@@ -36,7 +42,8 @@ public:
   void operator=(vector<AFieldORM *> fields) { this->update(fields); }
 
   friend ostream &operator<<(ostream &output, const ProductType &pt) {
-    output << pt.type;
+    output << pt._id << endl;
+    output << pt.type << endl;
     return output;
   }
 

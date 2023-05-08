@@ -8,16 +8,22 @@ protected:
   int amount;
 
   void update(vector<AFieldORM *> fields) {
-    if (!fields.size()) {
-      return;
+    try {
+      if (!fields.size()) {
+        return;
+      }
+      this->id = HardCast<StringFieldORM>(fields, "_id")->getValue();
+      this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
+      this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
+      this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
+      this->email = HardCast<StringFieldORM>(fields, "email")->getValue();
+      this->age = HardCast<IntFieldORM>(fields, "age")->getValue();
+      this->password = HardCast<StringFieldORM>(fields, "password")->getValue();
+    } catch (std::exception& e) {
+      std::cout << "Bad cast Provider, not enought data" << std::endl;
     }
-    this->id = HardCast<StringFieldORM>(fields, "_id")->getValue();
-    this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
-    this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
-    this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
-    this->email = HardCast<StringFieldORM>(fields, "email")->getValue();
-    this->age = HardCast<IntFieldORM>(fields, "age")->getValue();
-    this->password = HardCast<StringFieldORM>(fields, "password")->getValue(); }
+  }
+
 public:
   Provider(vector<AFieldORM *> fields = {})
       : User(
@@ -29,9 +35,7 @@ public:
     this->update(fields);
   }
 
-  int getProductsAmount() {
-    return this->amount;
-  }
+  int getProductsAmount() { return this->amount; }
 
   friend ostream &operator<<(ostream &output, const Provider &provider) {
     output << "_id: " << provider.id << endl;

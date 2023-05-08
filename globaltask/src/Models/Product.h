@@ -12,14 +12,18 @@ private:
   int amount;
 
   void update(vector<AFieldORM *> fields) {
-    if (!fields.size()) {
-      return;
+    try {
+      if (!fields.size()) {
+        return;
+      }
+      this->id = HardCast<StringFieldORM>(fields, "_id")->getValue();
+      this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
+      this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
+      this->price = HardCast<IntFieldORM>(fields, "price")->getValue();
+      this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
+    } catch (std::exception& e) {
+      std::cout << "Bad cast no enought data" << std::endl;
     }
-    this->id = HardCast<StringFieldORM>(fields, "_id")->getValue();
-    this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
-    this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
-    this->price = HardCast<IntFieldORM>(fields, "price")->getValue();
-    this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
   }
 
 public:
