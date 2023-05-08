@@ -33,7 +33,7 @@ void ProviderController::provideProduct() {
     this->providerModel =
         new Provider(this->providerModel->updateOne<StringFieldORM>(
             searchField, {replaceField}));
-    cout << this->providerModel << endl;
+    cout << *this->providerModel << endl;
 
     delete replaceField;
   }
@@ -89,18 +89,19 @@ void ProviderController::refillProduct() {
       },
       errors);
 
+  cout << newProduct << endl;
   cout << "Updating provider" << endl;
-  this->providerModel->updateOne<StringFieldORM>(
-      new StringFieldORM("productID"),
-      {
-          new StringFieldORM("productID", product.getId()),
-          new IntFieldORM("amount",
-                          this->providerModel->getProductsAmount() + 1),
-      });
+  this->providerModel =
+      new Provider(this->providerModel->updateOne<StringFieldORM>(
+          new StringFieldORM("productID"),
+          {
+              new StringFieldORM("productID", newProduct.getId()),
+              new IntFieldORM("amount",
+                              this->providerModel->getProductsAmount() + 1),
+          }));
 
   cout << *this->providerModel << endl;
 
   cout << endl;
 
-  cout << newProduct << endl;
 }

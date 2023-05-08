@@ -6,9 +6,9 @@
 
 class Product : public BaseORM, public Observable {
 private:
-  std::string id;
-  std::string type;
-  std::string name;
+  std::string id = "";
+  std::string type = "";
+  std::string name = "";
   int price;
 
   void update(vector<AFieldORM *> fields) {

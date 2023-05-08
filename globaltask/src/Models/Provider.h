@@ -45,14 +45,15 @@ public:
     output << "amount: " << provider.amount << endl;
     output << "name: " << provider.name << endl;
     output << "age: " << provider.age << endl;
+    output << "productID: " << provider.productID << endl;
     return output;
   }
+
+  void operator=(vector<AFieldORM *> fields) { this->update(fields); }
 
   friend istream &operator>>(istream &input, Provider &provider) {
     return input;
   }
 
   void sayHello() override { cout << "Hello i am provider" << endl; }
-
-  std::string getType() { return this->type; }
 };

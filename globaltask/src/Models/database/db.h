@@ -563,7 +563,7 @@ public:
       Contains contains;
       if (errors[0].getErrorType() == ERROR_TYPES::SAME_ENTRY &&
           contains.contains(errors[0].getMessage(), id)) {
-        cout << "Same id" << endl;
+        // cout << "Same id" << endl;
       } else {
 
         for (auto &item : errors) {
