@@ -1,16 +1,9 @@
 #include "StartController.h"
-#include "IntroController.h"
 #include "AuthenticationController.h"
+#include "IntroController.h"
 
-void StartController::onSelectFirstLab() {
-   IntroController();
-}
+void StartController::onSelectIntro() { IntroController _; }
 
-void StartController::onSelectSecondLab() {
-  AuthenticationController();
-}
+void StartController::onSelectAuth() { AuthenticationController _; }
 
-void StartController::onSelectThirdLab() {
-
-}
-
+void StartController::onSelectThirdLab() {}

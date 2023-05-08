@@ -1,6 +1,7 @@
 #pragma once
 #include "../utils/Observer.h"
 #include "./database/db.h"
+#include "string"
 #include <iostream>
 
 class Product : public BaseORM, public Observable {
@@ -9,7 +10,6 @@ private:
   std::string type;
   std::string name;
   int price;
-  int amount;
 
   void update(vector<AFieldORM *> fields) {
     try {
@@ -20,8 +20,7 @@ private:
       this->name = HardCast<StringFieldORM>(fields, "name")->getValue();
       this->type = HardCast<StringFieldORM>(fields, "type")->getValue();
       this->price = HardCast<IntFieldORM>(fields, "price")->getValue();
-      this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
       std::cout << "Bad cast no enought data" << std::endl;
     }
   }
@@ -30,19 +29,21 @@ public:
   Product(vector<AFieldORM *> fields = {},
           initializer_list<ASchemaField *> extendedFields = {},
           const char *type = typeid(Product).name())
-      : BaseORM(new Schema(
-                    {(new SchemaField<StringFieldORM>("_id"))
-                         ->required(true)
-                         ->autoGenerate(true)
-                         ->unique(true),
-                     (new SchemaField<StringFieldORM>("type"))->required(true),
-                     (new SchemaField<StringFieldORM>("name"))
-                         ->required(true)
-                         ->unique(true),
-                     (new SchemaField<IntFieldORM>("price"))->required(true),
-                     (new SchemaField<IntFieldORM>("amount"))->required(true)},
-                    extendedFields),
-                type) {
+      : BaseORM(
+            new Schema(
+                {
+                    (new SchemaField<StringFieldORM>("_id"))
+                        ->required(true)
+                        ->autoGenerate(true)
+                        ->unique(true),
+                    (new SchemaField<StringFieldORM>("type"))->required(true),
+                    (new SchemaField<StringFieldORM>("name"))
+                        ->required(true)
+                        ->unique(true),
+                    (new SchemaField<IntFieldORM>("price"))->required(true),
+                },
+                extendedFields),
+            type) {
     this->update(fields);
   }
 
@@ -53,8 +54,8 @@ public:
     output << "name: " << product.name << endl;
     output << "type: " << product.type << endl;
     output << "price: " << product.price << endl;
-    output << "amount: " << product.amount << endl;
     return output;
   }
 
+  std::string getId() { return this->id; }
 };

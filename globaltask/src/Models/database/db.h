@@ -1,3 +1,9 @@
+// данный продукт помимо санкционированных с преподавателем 
+// решений может содержить побочные продукты переработки:
+// костыли, плохой нейминг и неотловленные исключения, 
+// которые могут вызывать опатию, головокружение и 
+// тошноту от программирования
+
 #pragma once
 
 #include <algorithm>
@@ -10,98 +16,7 @@
 #include <typeinfo>
 #include <vector>
 
-#define ll long long
-
 using namespace std;
-
-template <typename DT> class DBData {
-private:
-  DT *arr;
-  ll capacity;
-  ll length;
-
-public:
-  DBData(ll = 100);
-  ll push_back(DT);
-
-  DT pop_back();
-
-  ll size() const;
-  DT &operator[](ll);
-
-  class Iterator {
-  private:
-    DT *ptr;
-
-  public:
-    explicit Iterator() : ptr(nullptr) {}
-    explicit Iterator(DT *p) : ptr(p) {}
-    bool operator==(const Iterator &rhs) const { return ptr == rhs.ptr; }
-    bool operator!=(const Iterator &rhs) const { return !(*this == rhs); }
-    DT& operator*() const { return *ptr; }
-    Iterator &operator++() {
-      ++ptr;
-      return *this;
-    }
-    Iterator operator++(int) {
-      Iterator temp(*this);
-      ++*this;
-      return temp;
-    }
-  };
-
-  Iterator begin() const;
-
-  Iterator end() const;
-};
-
-template <typename DT>
-DBData<DT>::DBData(ll n)
-    : capacity(n), arr(new DT[n]), length(0) {}
-
-template <typename DT> ll DBData<DT>::push_back(DT data) {
-  if (length == capacity) {
-    DT *old = arr;
-    arr = new DT[capacity = capacity * 2];
-    copy(old, old + length, arr);
-    delete[] old;
-  }
-  arr[length++] = data;
-  return length;
-}
-
-template <typename DT> DT DBData<DT>::pop_back() {
-  return arr[length-- - 1];
-}
-
-template <typename DT> ll DBData<DT>::size() const { return length; }
-
-template <typename DT> DT &DBData<DT>::operator[](ll index) {
-  if (index >= length) {
-    cout << "Error: Array index out of bound";
-    exit(0);
-  }
-
-  return *(arr + index);
-}
-
-template <typename DT>
-typename DBData<DT>::Iterator DBData<DT>::begin() const {
-  return Iterator(arr);
-}
-
-template <typename DT>
-typename DBData<DT>::Iterator DBData<DT>::end() const {
-  return Iterator(arr + length);
-}
-
-template <typename V> void display_vector(V &v) {
-  typename V::iterator ptr;
-  for (ptr = v.begin(); ptr != v.end(); ptr++) {
-    cout << *ptr << ' ';
-  }
-  cout << '\n';
-}
 
 static std::random_device rd;
 static std::mt19937 gen(rd());
@@ -202,7 +117,7 @@ private:
 public:
   explicit Storage(const char *name) : name(name) {}
 
-  void get(DBData<AFieldORM *> fields, int &position) {
+  void get(vector<AFieldORM *> fields, int &position) {
     if (position < 0) {
       return;
     }
@@ -455,28 +370,69 @@ protected:
   vector<AFieldORM *> fields;
   Schema *schema;
   Storage *storage;
+  int iterator = 0;
 
 public:
   class Iterator {
   private:
-    vector<AFieldORM *> *ptr;
+    BaseORM &parent;
+    int iterator;
 
   public:
-    explicit Iterator(vector<AFieldORM *> *p) : ptr(p) {}
+    explicit Iterator(BaseORM &ptr) : parent(ptr), iterator(parent.iterator){};
 
-    vector<AFieldORM *> operator*() const { return *ptr; }
+    vector<AFieldORM *> operator*() {
+      return this->parent.getByPointer(this->iterator);
+    }
 
     Iterator &operator++() {
-      ++ptr;
+      this->iterator++;
       return *this;
     }
 
     Iterator operator++(int) {
-      Iterator temp(*this);
-      ++*this;
-      return temp;
+      Iterator tmp = *this;
+      ++(*this);
+      return tmp;
+    }
+
+    bool operator==(const Iterator &rhs) {
+      return this->iterator == rhs.iterator;
+    }
+
+    bool operator!=(const Iterator &rhs) {
+      return !(this->iterator == rhs.iterator);
     }
   };
+
+  Iterator begin() {
+    return Iterator(*this);
+  }
+
+  Iterator end() {
+    this->iterator = -1;
+    return Iterator(*this);
+  }
+
+  vector<AFieldORM *> operator[](int index) {
+    return this->getByPointer(index);
+  }
+
+  vector<AFieldORM *> getByPointer(int &index) {
+    int realPosition = index * this->schema->getSize();
+    vector<AFieldORM *> list{};
+    for (auto &schemaFeild : this->schema->getSchemaFields()) {
+      list.push_back(schemaFeild->getPureField());
+    }
+    this->storage->get(list, realPosition);
+    if (realPosition == -1) {
+      index = -2;
+    }
+    if (index == -2) {
+      list.clear();
+    }
+    return list;
+  }
 
 private:
   int cursor = 0;
@@ -545,6 +501,8 @@ private:
   }
 
 public:
+  explicit BaseORM(int cursor) : cursor(cursor) {}
+
   BaseORM(Schema *schema, const char *DBName)
       : schema(schema), storage(new Storage(DBName)) {}
 
@@ -557,7 +515,7 @@ public:
     delete this->schema;
   }
 
-  void create(initializer_list<AFieldORM *> list, vector<Error> &errors) {
+  vector<AFieldORM*> create(initializer_list<AFieldORM *> list, vector<Error> &errors) {
     this->fields = {};
     for (auto &schemaField : this->schema->getSchemaFields()) {
       if (schemaField->getIsAutoGenerate()) {
@@ -573,6 +531,7 @@ public:
     if (errors.size() == 0) {
       this->save();
     }
+    return this->fields;
   }
 
   template <class T>
@@ -697,13 +656,13 @@ public:
     return models;
   }
 
-  template <class T> DBData<AFieldORM *> findOne(AFieldORM *model) {
+  template <class T> vector<AFieldORM *> findOne(AFieldORM *model) {
     auto castedModel = dynamic_cast<T *>(model);
     if (!castedModel) {
       return {};
     }
 
-    DBData<AFieldORM *> iterableFields{};
+    vector<AFieldORM *> iterableFields{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
       iterableFields.push_back(schemaFeild->getPureField());
     }

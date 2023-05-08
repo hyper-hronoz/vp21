@@ -74,33 +74,23 @@ void AuthenticationController::signUpProvider() {
   vector<Error> errors;
 
   StringFieldORM *email = new StringFieldORM("email");
-  StringFieldORM *type = new StringFieldORM("type");
   StringFieldORM *name = new StringFieldORM("name");
   StringFieldORM *password = new StringFieldORM("password");
+  StringFieldORM *productID = new StringFieldORM("productID", "");
   IntFieldORM *age = new IntFieldORM("age");
-  IntFieldORM *amount = new IntFieldORM("amount");
+  IntFieldORM *amount = new IntFieldORM("amount", 0);
 
   cout << "Email: ";
   cin >> email;
-  cout << "Product type: ";
-  cin >> type;
   cout << "Name: ";
   cin >> name;
   cout << "Password: ";
   cin >> password;
   cout << "Age: ";
   cin >> age;
-  cout << "Amount: ";
-  cin >> amount;
 
-  ProductType _productType = this->productType.findOne<StringFieldORM>(type);
 
-  if (_productType.getType() != type->getValue()) {
-    errors.push_back(Error(ERROR_TYPES::NOT_FOUND,
-                           "Такой тип продукта не может быть задан"));
-  }
-
-  provider.create({email, type, name, password, amount, age}, errors);
+  provider.create({email, name, password, amount, age, productID}, errors);
 
   if (errors.size() > 0) {
     cout << "Ошибка регистрации" << endl;

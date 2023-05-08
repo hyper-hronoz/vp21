@@ -27,13 +27,22 @@ public:
   public:
     explicit Iterator() : ptr(nullptr) {}
     explicit Iterator(DT *p) : ptr(p) {}
-    bool operator==(const Iterator &rhs) const { return ptr == rhs.ptr; }
-    bool operator!=(const Iterator &rhs) const { return !(*this == rhs); }
+
+    bool operator==(const Iterator &rhs) const { 
+      cout << *ptr << " == " << *rhs << endl;
+      return ptr == rhs.ptr; 
+    }
+    bool operator!=(const Iterator &rhs) const { 
+      return !(*this == rhs); 
+    }
+
     DT& operator*() const { return *ptr; }
+
     Iterator &operator++() {
       ++ptr;
       return *this;
     }
+
     Iterator operator++(int) {
       Iterator temp(*this);
       ++*this;
@@ -105,7 +114,7 @@ int main() {
   c.push_back('g');
   c.push_back('h');
 
-  for (auto item : c) {
+  for (auto &item : c) {
     cout << "That is item: " << item << endl;
   }
   return 0;

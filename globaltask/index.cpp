@@ -8,10 +8,6 @@
 
 int main() {
   ProductTypeInitilizer().initilizeProductTypes();
-  ProductType pt;
-  for (auto item : pt) {
-    cout << item << endl;
-  }
   StartController _;
   return 0;
 }

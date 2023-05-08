@@ -6,9 +6,9 @@ class StartController {
  private:
   StartView *view = new StartView();
 
-  void onSelectFirstLab();
+  void onSelectIntro();
 
-  void onSelectSecondLab();
+  void onSelectAuth();
 
   void onSelectThirdLab();
 
@@ -17,11 +17,11 @@ class StartController {
     MenuItemFactory menuItemFactory{};
 
     view->getMenu()->append(menuItemFactory.create("Узнать о заводе", [this] () {
-      this->onSelectFirstLab();
+      this->onSelectIntro();
     }));
 
     view->getMenu()->append(menuItemFactory.create("Авторизироваться", [this] () {
-      this->onSelectSecondLab();
+      this->onSelectAuth();
     }));
 
     view->display();

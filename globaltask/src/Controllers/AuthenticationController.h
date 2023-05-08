@@ -11,7 +11,6 @@ private:
   AuthenticationView *view = new AuthenticationView();
   Employer employer;
   Provider provider;
-  ProductType productType;
 
   void signUpEmployer();
 

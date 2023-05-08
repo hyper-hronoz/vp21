@@ -2,12 +2,16 @@
 
 #include "../Models/ProductType.h"
 #include "../Models/Provider.h"
+#include "../Models/ProductTransaction.h"
+#include "../Models/Product.h"
+
 #include "../Views/ProviderView.h"
 
 class ProviderController {
 private:
   ProviderView *view = new ProviderView();
-  ProductType productModel;
+  ProductType productTypeModel;
+  Product product;
   Provider *providerModel;
 
   void getAllProductTypes();

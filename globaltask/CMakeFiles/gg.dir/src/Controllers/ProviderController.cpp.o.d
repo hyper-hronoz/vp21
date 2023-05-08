@@ -182,6 +182,8 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: \
  /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/Provider.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/User.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductTransaction.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/Product.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/ProviderView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/BaseView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/Menu.h \

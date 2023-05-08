@@ -269,6 +269,8 @@ CMakeFiles/gg.dir/index.cpp.o: index.cpp \
   src/Models/ProductType.h \
   src/Views/AuthenticationView.h \
   src/Controllers/ProviderController.h \
+  src/Models/ProductTransaction.h \
+  src/Models/Product.h \
   src/Views/ProviderView.h \
   src/initializers/ProductTypeInitilizer.h
 
@@ -538,6 +540,8 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o: src/Controller
   /usr/include/c++/12.2.1/compare \
   src/Views/Menu/MenuItemFactory.h \
   src/Controllers/ProviderController.h \
+  src/Models/ProductTransaction.h \
+  src/Models/Product.h \
   src/Views/ProviderView.h \
   src/Controllers/StartController.h \
   src/Views/StartView.h \
@@ -1034,6 +1038,8 @@ CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o: src/Controllers/Prov
   /usr/include/c++/12.2.1/bits/sstream.tcc \
   src/Models/Provider.h \
   src/Models/User.h \
+  src/Models/ProductTransaction.h \
+  src/Models/Product.h \
   src/Views/ProviderView.h \
   src/Views/BaseView.h \
   src/Views/Menu/Menu.h \
@@ -1269,8 +1275,23 @@ CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o: src/Controllers/StartCo
   /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
   src/Views/Menu/MenuItemFactory.h \
-  src/Controllers/IntroController.h \
-  src/Views/IntoView.h \
+  src/Controllers/AuthenticationController.h \
+  src/Models/Employer.h \
+  src/Models/User.h \
+  src/utils/Observer.h \
+  src/Models/database/db.h \
+  /usr/include/c++/12.2.1/algorithm \
+  /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
+  /usr/include/c++/12.2.1/pstl/execution_defs.h \
+  /usr/include/c++/12.2.1/cstring \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  /usr/include/c++/12.2.1/fstream \
+  /usr/include/c++/12.2.1/bits/codecvt.h \
+  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
+  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
+  /usr/include/c++/12.2.1/bits/fstream.tcc \
+  /usr/include/c++/12.2.1/random \
   /usr/include/c++/12.2.1/cmath \
   /usr/include/math.h \
   /usr/include/bits/math-vector.h \
@@ -1296,23 +1317,6 @@ CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o: src/Controllers/StartCo
   /usr/include/c++/12.2.1/tr1/poly_hermite.tcc \
   /usr/include/c++/12.2.1/tr1/poly_laguerre.tcc \
   /usr/include/c++/12.2.1/tr1/riemann_zeta.tcc \
-  src/Controllers/AuthenticationController.h \
-  src/Models/Employer.h \
-  src/Models/User.h \
-  src/utils/Observer.h \
-  src/Models/database/db.h \
-  /usr/include/c++/12.2.1/algorithm \
-  /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
-  /usr/include/c++/12.2.1/pstl/execution_defs.h \
-  /usr/include/c++/12.2.1/cstring \
-  /usr/include/string.h \
-  /usr/include/strings.h \
-  /usr/include/c++/12.2.1/fstream \
-  /usr/include/c++/12.2.1/bits/codecvt.h \
-  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
-  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
-  /usr/include/c++/12.2.1/bits/fstream.tcc \
-  /usr/include/c++/12.2.1/random \
   /usr/include/c++/12.2.1/bits/random.h \
   /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/opt_random.h \
   /usr/include/c++/12.2.1/bits/random.tcc \
@@ -1324,7 +1328,9 @@ CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o: src/Controllers/StartCo
   /usr/include/c++/12.2.1/bits/sstream.tcc \
   src/Models/Provider.h \
   src/Models/ProductType.h \
-  src/Views/AuthenticationView.h
+  src/Views/AuthenticationView.h \
+  src/Controllers/IntroController.h \
+  src/Views/IntoView.h
 
 CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o: src/Views/AuthEmployerLoginView.cpp \
   /usr/include/stdc-predef.h \
@@ -3772,6 +3778,10 @@ src/Views/AuthEmployerLoginView.h:
 src/Controllers/AuthenticationController.cpp:
 
 src/Views/ProviderView.h:
+
+src/Models/Product.h:
+
+src/Models/ProductTransaction.h:
 
 src/Controllers/ProviderController.h:
 
