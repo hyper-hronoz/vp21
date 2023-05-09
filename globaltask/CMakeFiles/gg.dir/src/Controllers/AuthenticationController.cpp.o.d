@@ -182,6 +182,7 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o: \
  /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
  /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/Provider.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/Director.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductType.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthenticationView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/BaseView.h \
@@ -200,15 +201,19 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o: \
  /usr/include/c++/12.2.1/bits/erase_if.h /usr/include/c++/12.2.1/array \
  /usr/include/c++/12.2.1/compare \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItemFactory.h \
- /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductTransaction.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/DirectorController.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/DirectorView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/Product.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductTransaction.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/ProviderView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/StartController.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/StartView.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthEmployerLoginView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthDirectorLoginView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthBaseView.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthEmployerSignUpView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthDirectorSignUpView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthBaseViewSignUp.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthEmployerLoginView.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthEmployerSignUpView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthProviderLoginView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/AuthProviderSignUpView.h

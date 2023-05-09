@@ -11,6 +11,7 @@ private:
   std::string id;
   std::string productID;
   std::string providerID;
+  int amount;
 
   void update(vector<AFieldORM *> fields) {
     try {
@@ -22,6 +23,7 @@ private:
           HardCast<StringFieldORM>(fields, "productID")->getValue();
       this->providerID =
           HardCast<StringFieldORM>(fields, "providerID")->getValue();
+      this->amount = HardCast<IntFieldORM>(fields, "amount")->getValue();
     } catch (std::exception &e) {
       std::cout << "Bad cast no enought data in product transaction "
                 << std::endl;
@@ -54,10 +56,11 @@ public:
     output << "_id: " << product.id << endl;
     output << "Product id: " << product.productID << endl;
     output << "Provider id: " << product.providerID << endl;
+    output << "amount: " << product.amount << endl;
     return output;
   }
 
-  std::string getProductId() { return this->providerID; }
+  std::string getProductId() { return this->productID; }
 
   std::string getProviderId() { return this->providerID; }
 };

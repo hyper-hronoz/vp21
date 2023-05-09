@@ -56,6 +56,8 @@ void ProviderController::provideProduct() {
       return;
     }
 
+    cout << "IDs: " << this->providerModel->getProductId() << " "
+         << this->providerModel->getId() << endl;
     StringFieldORM *productID =
         new StringFieldORM("productID", this->providerModel->getProductId());
     StringFieldORM *providerID =

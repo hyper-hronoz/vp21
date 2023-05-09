@@ -14,6 +14,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hronoz/vp21/globaltask/src/Controllers/IntroController.cpp" "CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Controllers/IntroController.cpp.o.d"
   "/home/hronoz/vp21/globaltask/src/Controllers/ProviderController.cpp" "CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Controllers/ProviderController.cpp.o.d"
   "/home/hronoz/vp21/globaltask/src/Controllers/StartController.cpp" "CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Controllers/StartController.cpp.o.d"
+  "/home/hronoz/vp21/globaltask/src/Views/AuthDirectorLoginView.cpp" "CMakeFiles/gg.dir/src/Views/AuthDirectorLoginView.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Views/AuthDirectorLoginView.cpp.o.d"
+  "/home/hronoz/vp21/globaltask/src/Views/AuthDirectorSignUpView.cpp" "CMakeFiles/gg.dir/src/Views/AuthDirectorSignUpView.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Views/AuthDirectorSignUpView.cpp.o.d"
   "/home/hronoz/vp21/globaltask/src/Views/AuthEmployerLoginView.cpp" "CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Views/AuthEmployerLoginView.cpp.o.d"
   "/home/hronoz/vp21/globaltask/src/Views/AuthEmployerSignUpView.cpp" "CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Views/AuthEmployerSignUpView.cpp.o.d"
   "/home/hronoz/vp21/globaltask/src/Views/AuthProviderLoginView.cpp" "CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o" "gcc" "CMakeFiles/gg.dir/src/Views/AuthProviderLoginView.cpp.o.d"

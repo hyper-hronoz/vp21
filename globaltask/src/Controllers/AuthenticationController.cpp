@@ -1,22 +1,25 @@
 #include "AuthenticationController.h"
+#include "DirectorController.h"
 #include "ProviderController.h"
 #include "StartController.h"
 
+#include "../Views/AuthDirectorLoginView.h"
+#include "../Views/AuthDirectorSignUpView.h"
 #include "../Views/AuthEmployerLoginView.h"
 #include "../Views/AuthEmployerSignUpView.h"
 #include "../Views/AuthProviderLoginView.h"
 #include "../Views/AuthProviderSignUpView.h"
-#include "../Views/AuthDirectorLoginView.h"
-#include "../Views/AuthDirectorSignUpView.h"
 
 void AuthenticationController::loginDirector() {
   AuthDirectorLoginView view;
   StringFieldORM password("password", view.getPassword());
   StringFieldORM *login = new StringFieldORM("email", view.getLogin());
-  Director newDirector = this->director.findOne<StringFieldORM>(login);
-  if (newDirector.getEmail() == login->getValue() &&
-      password.getValue() == newDirector.getPassword()) {
+  Director *newDirector =
+      new Director(this->directorModel.findOne<StringFieldORM>(login));
+  if (newDirector->getEmail() == login->getValue() &&
+      password.getValue() == newDirector->getPassword()) {
     cout << "Login successfull" << endl;
+    DirectorController _(newDirector);
   } else {
     cout << "Login is not successfull" << endl;
     cout << "Wrong login or password" << endl;
@@ -24,7 +27,37 @@ void AuthenticationController::loginDirector() {
 }
 
 void AuthenticationController::signUpDirector() {
-  AuthDirectorSignUpView view;
+  vector<Error> errors;
+
+  StringFieldORM *email = new StringFieldORM("email");
+  StringFieldORM *name = new StringFieldORM("name");
+  StringFieldORM *password = new StringFieldORM("password");
+  IntFieldORM *age = new IntFieldORM("age");
+
+  cout << "Email: ";
+  cin >> email;
+  cout << "Name: ";
+  cin >> name;
+  cout << "Password: ";
+  cin >> password;
+  cout << "Age: ";
+  cin >> age;
+
+  directorModel.create({email, name, password, age}, errors);
+
+  if (errors.size() > 0) {
+    cout << "Ошибка регистрации" << endl;
+    for (auto &errors : errors) {
+      cout << errors.getMessage() << endl;
+    }
+    return; }
+
+  cout << "Директор успешно зарегистрирован" << endl;
+
+  delete email;
+  delete name;
+  delete password;
+  delete age;
 }
 
 void AuthenticationController::loginEmployer() {
@@ -96,7 +129,7 @@ void AuthenticationController::signUpProvider() {
   StringFieldORM *email = new StringFieldORM("email");
   StringFieldORM *name = new StringFieldORM("name");
   StringFieldORM *password = new StringFieldORM("password");
-  StringFieldORM *productID = new StringFieldORM("productID", "");
+  StringFieldORM *productID = new StringFieldORM("productID");
   IntFieldORM *age = new IntFieldORM("age");
   IntFieldORM *amount = new IntFieldORM("amount", 0);
 
@@ -109,8 +142,7 @@ void AuthenticationController::signUpProvider() {
   cout << "Age: ";
   cin >> age;
 
-
-  providerModel.create({email, name, password, amount, age, productID}, errors);
+  this->providerModel.create({email, name, password, age, productID, amount}, errors);
 
   if (errors.size() > 0) {
     cout << "Ошибка регистрации" << endl;
@@ -120,7 +152,7 @@ void AuthenticationController::signUpProvider() {
     return;
   }
 
-  cout << "Поставщиек успешно зарегистрирован" << endl;
+  cout << "Поставщик успешно зарегистрирован" << endl;
 }
 
 void AuthenticationController::goBack() { StartController(); }
