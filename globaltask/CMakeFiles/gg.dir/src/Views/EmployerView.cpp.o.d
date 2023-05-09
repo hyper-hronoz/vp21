@@ -1,11 +1,10 @@
-CMakeFiles/gg.dir/src/Controllers/DirectorController.cpp.o: \
- /home/hronoz/vp21/globaltask/src/Controllers/DirectorController.cpp \
+CMakeFiles/gg.dir/src/Views/EmployerView.cpp.o: \
+ /home/hronoz/vp21/globaltask/src/Views/EmployerView.cpp \
  /usr/include/stdc-predef.h \
- /home/hronoz/vp21/globaltask/src/Controllers/DirectorController.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/DirectorView.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/BaseView.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/Menu.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItem.h \
+ /home/hronoz/vp21/globaltask/src/Views/EmployerView.h \
+ /home/hronoz/vp21/globaltask/src/Views/BaseView.h \
+ /home/hronoz/vp21/globaltask/src/Views/./Menu/Menu.h \
+ /home/hronoz/vp21/globaltask/src/Views/./Menu/MenuItem.h \
  /usr/include/c++/12.2.1/iostream \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/12.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -158,11 +157,11 @@ CMakeFiles/gg.dir/src/Controllers/DirectorController.cpp.o: \
  /usr/include/c++/12.2.1/bits/stl_heap.h \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/./Menu/MenuItemFactory.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/Director.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/User.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/../utils/Observer.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/./database/db.h \
+ /home/hronoz/vp21/globaltask/src/Views/./Menu/MenuItemFactory.h \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/Employer.h \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/User.h \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/../utils/Observer.h \
+ /home/hronoz/vp21/globaltask/src/Views/../Models/./database/db.h \
  /usr/include/c++/12.2.1/algorithm \
  /usr/include/c++/12.2.1/pstl/glue_algorithm_defs.h \
  /usr/include/c++/12.2.1/pstl/execution_defs.h \
@@ -196,10 +195,4 @@ CMakeFiles/gg.dir/src/Controllers/DirectorController.cpp.o: \
  /usr/include/c++/12.2.1/bits/random.tcc /usr/include/c++/12.2.1/numeric \
  /usr/include/c++/12.2.1/bits/stl_numeric.h /usr/include/c++/12.2.1/bit \
  /usr/include/c++/12.2.1/pstl/glue_numeric_defs.h \
- /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/Product.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductTransaction.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductionTransaction.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Models/Provider.h \
- /home/hronoz/vp21/globaltask/src/Controllers/StartController.h \
- /home/hronoz/vp21/globaltask/src/Controllers/../Views/StartView.h
+ /usr/include/c++/12.2.1/sstream /usr/include/c++/12.2.1/bits/sstream.tcc

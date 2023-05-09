@@ -201,6 +201,30 @@ src/Controllers/DirectorController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/DirectorController.cpp.s
 .PHONY : src/Controllers/DirectorController.cpp.s
 
+src/Controllers/EmployerController.o: src/Controllers/EmployerController.cpp.o
+.PHONY : src/Controllers/EmployerController.o
+
+# target to build an object file
+src/Controllers/EmployerController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/EmployerController.cpp.o
+.PHONY : src/Controllers/EmployerController.cpp.o
+
+src/Controllers/EmployerController.i: src/Controllers/EmployerController.cpp.i
+.PHONY : src/Controllers/EmployerController.i
+
+# target to preprocess a source file
+src/Controllers/EmployerController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/EmployerController.cpp.i
+.PHONY : src/Controllers/EmployerController.cpp.i
+
+src/Controllers/EmployerController.s: src/Controllers/EmployerController.cpp.s
+.PHONY : src/Controllers/EmployerController.s
+
+# target to generate assembly for a file
+src/Controllers/EmployerController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/EmployerController.cpp.s
+.PHONY : src/Controllers/EmployerController.cpp.s
+
 src/Controllers/IntroController.o: src/Controllers/IntroController.cpp.o
 .PHONY : src/Controllers/IntroController.o
 
@@ -465,6 +489,30 @@ src/Views/DirectorView.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/DirectorView.cpp.s
 .PHONY : src/Views/DirectorView.cpp.s
 
+src/Views/EmployerView.o: src/Views/EmployerView.cpp.o
+.PHONY : src/Views/EmployerView.o
+
+# target to build an object file
+src/Views/EmployerView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/EmployerView.cpp.o
+.PHONY : src/Views/EmployerView.cpp.o
+
+src/Views/EmployerView.i: src/Views/EmployerView.cpp.i
+.PHONY : src/Views/EmployerView.i
+
+# target to preprocess a source file
+src/Views/EmployerView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/EmployerView.cpp.i
+.PHONY : src/Views/EmployerView.cpp.i
+
+src/Views/EmployerView.s: src/Views/EmployerView.cpp.s
+.PHONY : src/Views/EmployerView.s
+
+# target to generate assembly for a file
+src/Views/EmployerView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/EmployerView.cpp.s
+.PHONY : src/Views/EmployerView.cpp.s
+
 src/Views/IntoView.o: src/Views/IntoView.cpp.o
 .PHONY : src/Views/IntoView.o
 
@@ -627,6 +675,9 @@ help:
 	@echo "... src/Controllers/DirectorController.o"
 	@echo "... src/Controllers/DirectorController.i"
 	@echo "... src/Controllers/DirectorController.s"
+	@echo "... src/Controllers/EmployerController.o"
+	@echo "... src/Controllers/EmployerController.i"
+	@echo "... src/Controllers/EmployerController.s"
 	@echo "... src/Controllers/IntroController.o"
 	@echo "... src/Controllers/IntroController.i"
 	@echo "... src/Controllers/IntroController.s"
@@ -660,6 +711,9 @@ help:
 	@echo "... src/Views/DirectorView.o"
 	@echo "... src/Views/DirectorView.i"
 	@echo "... src/Views/DirectorView.s"
+	@echo "... src/Views/EmployerView.o"
+	@echo "... src/Views/EmployerView.i"
+	@echo "... src/Views/EmployerView.s"
 	@echo "... src/Views/IntoView.o"
 	@echo "... src/Views/IntoView.i"
 	@echo "... src/Views/IntoView.s"

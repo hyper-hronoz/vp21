@@ -155,4 +155,5 @@ CMakeFiles/gg.dir/src/Views/Menu/Menu.cpp.o: \
  /usr/include/c++/12.2.1/bits/stl_heap.h \
  /usr/include/c++/12.2.1/bits/stl_tempbuf.h \
  /usr/include/c++/12.2.1/bits/uniform_int_dist.h \
- /home/hronoz/vp21/globaltask/src/Views/Menu/MenuItemFactory.h
+ /home/hronoz/vp21/globaltask/src/Views/Menu/MenuItemFactory.h \
+ /usr/include/c++/12.2.1/limits

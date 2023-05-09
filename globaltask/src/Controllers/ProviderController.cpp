@@ -34,17 +34,18 @@ void ProviderController::getAllProductTypes() {
 }
 
 void ProviderController::provideProduct() {
-  int supplyAmount = 1;
+  IntFieldORM *amount = new IntFieldORM("amount", 1);
 
   cout << "Введите количество поставляемого товара: ";
-  cin >> supplyAmount;
+  cin >> amount;
 
   StringFieldORM *searchField =
       new StringFieldORM("email", this->providerModel->getEmail());
 
-  if (this->providerModel->getProductsAmount() - supplyAmount >= 0) {
-    IntFieldORM *replaceField = new IntFieldORM(
-        "amount", this->providerModel->getProductsAmount() - supplyAmount);
+  if (this->providerModel->getProductsAmount() - amount->getValue() >= 0) {
+    IntFieldORM *replaceField =
+        new IntFieldORM("amount", this->providerModel->getProductsAmount() -
+                                      amount->getValue());
     this->providerModel =
         new Provider(this->providerModel->updateOne<StringFieldORM>(
             searchField, {replaceField}));
@@ -62,7 +63,6 @@ void ProviderController::provideProduct() {
         new StringFieldORM("productID", this->providerModel->getProductId());
     StringFieldORM *providerID =
         new StringFieldORM("providerID", this->providerModel->getId());
-    IntFieldORM *amount = new IntFieldORM("amount", supplyAmount);
 
     vector<Error> errors;
     this->productTransaction.create({productID, providerID, amount}, errors);

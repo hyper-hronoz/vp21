@@ -57,5 +57,9 @@ public:
     return output;
   }
 
+  std::string getName() {
+    return this->name;
+  }
+  
   std::string getId() { return this->id; }
 };

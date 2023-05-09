@@ -9,7 +9,9 @@ add_executable(gg
 	./src/Controllers/IntroController.cpp
 	./src/Controllers/ProviderController.cpp
 	./src/Controllers/DirectorController.cpp
+	./src/Controllers/EmployerController.cpp
 	./src/Views/StartView.cpp            
+	./src/Views/EmployerView.cpp           
 	./src/Views/AuthEmployerSignUpView.cpp            
 	./src/Views/AuthEmployerLoginView.cpp            
 	./src/Views/AuthProviderSignUpView.cpp            

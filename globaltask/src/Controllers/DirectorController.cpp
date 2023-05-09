@@ -2,15 +2,28 @@
 #include "StartController.h"
 
 
+void DirectorController::onSelectSuppliedProductsEmployer() {
+  cout << "Полный список как производят на заводе" << endl;
+  for (auto item : this->productionTransactionModel) {
+    if (item.size() != 0) {
+      ProductionTransaction transaction = item;
+      cout << transaction << endl;
+    }
+  }
+}
+
 void DirectorController::onSelectSuppliedProducts() {
   cout << "Список всез поставок: " << endl;
   int i = 0;
-  for (ProductTransaction pt : this->productTransactionModel) {
-    cout << pt << endl;
-    StringFieldORM *searchProduct = new StringFieldORM(pt.getProductId());
-    StringFieldORM *searchProvider = new StringFieldORM(pt.getProviderId());
+  for (auto item : this->productTransactionModel) {
+    if (item.size() == 0) {
+      continue;
+    }
 
-    cout << "Ids: " << pt.getProviderId() << " " << pt.getProductId() << endl;
+    ProductTransaction pt = item;
+    cout << pt << endl;
+    StringFieldORM *searchProduct = new StringFieldORM("_id", pt.getProductId());
+    StringFieldORM *searchProvider = new StringFieldORM("_id", pt.getProviderId());
 
     Product product = this->productModel.findOne<StringFieldORM>(searchProduct);
     Provider provider =

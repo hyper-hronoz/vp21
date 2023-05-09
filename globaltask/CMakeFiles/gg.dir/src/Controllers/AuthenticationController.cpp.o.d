@@ -205,6 +205,9 @@ CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.o: \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/DirectorView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/Product.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductTransaction.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Models/ProductionTransaction.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/EmployerController.h \
+ /home/hronoz/vp21/globaltask/src/Controllers/../Views/EmployerView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/ProviderController.h \
  /home/hronoz/vp21/globaltask/src/Controllers/../Views/ProviderView.h \
  /home/hronoz/vp21/globaltask/src/Controllers/StartController.h \

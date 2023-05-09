@@ -1,5 +1,6 @@
 #include "AuthenticationController.h"
 #include "DirectorController.h"
+#include "EmployerController.h"
 #include "ProviderController.h"
 #include "StartController.h"
 
@@ -50,7 +51,8 @@ void AuthenticationController::signUpDirector() {
     for (auto &errors : errors) {
       cout << errors.getMessage() << endl;
     }
-    return; }
+    return;
+  }
 
   cout << "Директор успешно зарегистрирован" << endl;
 
@@ -64,10 +66,12 @@ void AuthenticationController::loginEmployer() {
   AuthEmployerLoginView view;
   StringFieldORM password("password", view.getPassword());
   StringFieldORM *login = new StringFieldORM("email", view.getLogin());
-  Employer newEmployer = this->employerModel.findOne<StringFieldORM>(login);
-  if (newEmployer.getEmail() == login->getValue() &&
-      password.getValue() == newEmployer.getPassword()) {
+  Employer *newEmployer =
+      new Employer(this->employerModel.findOne<StringFieldORM>(login));
+  if (newEmployer->getEmail() == login->getValue() &&
+      password.getValue() == newEmployer->getPassword()) {
     cout << "Login successfull" << endl;
+    EmployerController _(newEmployer);
   } else {
     cout << "Login is not successfull" << endl;
     cout << "Wrong login or password" << endl;
@@ -98,6 +102,7 @@ void AuthenticationController::signUpEmployer() {
   StringFieldORM *name = new StringFieldORM("name");
   StringFieldORM *password = new StringFieldORM("password");
   IntFieldORM *age = new IntFieldORM("age");
+  IntFieldORM *amount = new IntFieldORM("amount", 0);
 
   cout << "Email: ";
   cin >> email;
@@ -110,7 +115,7 @@ void AuthenticationController::signUpEmployer() {
   cout << "Age: ";
   cin >> age;
 
-  employerModel.create({email, title, name, password, age}, errors);
+  employerModel.create({email, title, name, password, age, amount}, errors);
 
   for (auto &errors : errors) {
     cout << errors.getMessage() << endl;
@@ -142,7 +147,8 @@ void AuthenticationController::signUpProvider() {
   cout << "Age: ";
   cin >> age;
 
-  this->providerModel.create({email, name, password, age, productID, amount}, errors);
+  this->providerModel.create({email, name, password, age, productID, amount},
+                             errors);
 
   if (errors.size() > 0) {
     cout << "Ошибка регистрации" << endl;

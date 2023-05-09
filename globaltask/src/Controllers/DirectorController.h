@@ -5,6 +5,7 @@
 #include "../Models/Director.h"
 #include "../Models/Product.h"
 #include "../Models/ProductTransaction.h"
+#include "../Models/ProductionTransaction.h"
 #include "../Models/Provider.h"
 
 class DirectorController {
@@ -13,9 +14,12 @@ private:
   ProductTransaction productTransactionModel;
   Product productModel;
   Provider providerModel;
+  ProductionTransaction productionTransactionModel;
   Director *directorModel;
 
   void onSelectSuppliedProducts();
+
+  void onSelectSuppliedProductsEmployer();
 
   void deleteAccount();
 
@@ -26,8 +30,10 @@ public:
     MenuItemFactory factory{};
 
     this->view->getMenu()->append(
-        factory.create("Вывести историю транзакций", [=]() { this->onSelectSuppliedProducts(); }));
+        factory.create("Вывести историю транзакций поставщика", [=]() { this->onSelectSuppliedProducts(); }));
 
+    this->view->getMenu()->append(
+        factory.create("Вывести историю транзакций сотрудника", [=]() { this->onSelectSuppliedProductsEmployer(); }));
 
     this->view->getMenu()->append(factory.create("Удалить аккаунт", [=]() {
       char y;

@@ -9,24 +9,8 @@
 
 int main() {
   ProductTypeInitilizer().initilizeProductTypes();
-  Provider p;
 
-  for (Provider pt : p) {
-    cout << pt << endl;
-  }
+  StartController _;
 
-
-  // for (auto pt : model) {
-  //   if (pt.size() != 0) {
-  //     ProductTransaction transaction = pt;
-  //     cout << transaction << endl;
-  //   }
-  // }
-  //
-  // for (ProductTransaction pt : model.find()) {
-  //   cout << pt << endl;
-  // }
-
-  // StartController _;
   return 0;
 }

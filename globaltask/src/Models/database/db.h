@@ -102,7 +102,7 @@ public:
 
   void setSize(int size) { this->size = size; }
 
-  virtual int getSize() { return this->size; }
+  virtual int getSize() = 0;
 
   void setIsAutoGenerate(bool value = false) { this->isAutoGenerate = value; }
 
@@ -251,6 +251,8 @@ public:
 
   virtual void save(fstream &stream) = 0;
   virtual void get(ifstream &stream) = 0;
+
+  virtual int getSize() = 0;
 
   virtual string isEntryExists(ifstream &stream) {
     T currentValue = this->value;
@@ -421,7 +423,7 @@ public:
     // cout << "Index: " << index << endl;
     // cout << "Size: " << this->schema->getSize() << endl;
     int realPosition = index * this->schema->getSize();
-    cout << "Real position: " << realPosition << endl;
+    // cout << "Real position: " << realPosition << endl;
     vector<AFieldORM *> list{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
       list.push_back(schemaFeild->getPureField());
@@ -769,6 +771,10 @@ public:
     stream.read(reinterpret_cast<char *>(&this->value), this->size);
   };
 
+  int getSize() override {
+    return sizeof(int);
+  }
+
   explicit IntFieldORM(const string &key)
       : BaseField(key, typeid(*this).name()) {}
 };
@@ -790,6 +796,10 @@ public:
 
   explicit BoolFieldORM(const string &key)
       : BaseField(key, typeid(*this).name()) {}
+
+  int getSize() override {
+    return sizeof(bool);
+  }
 };
 
 template <class T> class SchemaField : public ASchemaField {
