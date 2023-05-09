@@ -1,7 +1,7 @@
-// данный продукт помимо санкционированных с преподавателем 
+// данный продукт помимо санкционированных с преподавателем
 // решений может содержить побочные продукты переработки:
-// костыли, плохой нейминг и неотловленные исключения, 
-// которые могут вызывать опатию, головокружение и 
+// костыли, плохой нейминг и неотловленные исключения,
+// которые могут вызывать опатию, головокружение и
 // тошноту от программирования
 
 #pragma once
@@ -85,7 +85,7 @@ class AFieldORM {
 protected:
   string key;
   const char *type;
-  int size;
+  int size = 0;
   bool isAutoGenerate;
 
 public:
@@ -342,6 +342,7 @@ public:
       }
       this->schemaFields.push_back(extendedItem);
     }
+    // cout << "Getting size: " << endl;
     for (auto item : this->schemaFields) {
       this->size += item->getSize();
     }
@@ -405,9 +406,7 @@ public:
     }
   };
 
-  Iterator begin() {
-    return Iterator(*this);
-  }
+  Iterator begin() { return Iterator(*this); }
 
   Iterator end() {
     this->iterator = -1;
@@ -419,7 +418,10 @@ public:
   }
 
   vector<AFieldORM *> getByPointer(int &index) {
+    // cout << "Index: " << index << endl;
+    // cout << "Size: " << this->schema->getSize() << endl;
     int realPosition = index * this->schema->getSize();
+    cout << "Real position: " << realPosition << endl;
     vector<AFieldORM *> list{};
     for (auto &schemaFeild : this->schema->getSchemaFields()) {
       list.push_back(schemaFeild->getPureField());
@@ -515,7 +517,8 @@ public:
     delete this->schema;
   }
 
-  vector<AFieldORM*> create(initializer_list<AFieldORM *> list, vector<Error> &errors) {
+  vector<AFieldORM *> create(initializer_list<AFieldORM *> list,
+                             vector<Error> &errors) {
     this->fields = {};
     for (auto &schemaField : this->schema->getSchemaFields()) {
       if (schemaField->getIsAutoGenerate()) {
@@ -790,9 +793,13 @@ public:
 };
 
 template <class T> class SchemaField : public ASchemaField {
+private:
+  int size = 0;
+
 public:
   explicit SchemaField(string name) : ASchemaField(name, typeid(T).name()) {
     this->size = T("stumb").getSize();
+    // cout << this->size << endl;
   }
 
   int getSize() override { return this->size; }
