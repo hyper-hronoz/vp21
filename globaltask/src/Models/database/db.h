@@ -537,7 +537,7 @@ public:
   template <class T>
   vector<AFieldORM *> updateOne(AFieldORM *searchField,
                                 initializer_list<AFieldORM *> newFields) {
-    cout << "Finding one" << endl;
+    // cout << "Finding one" << endl;
     vector<AFieldORM *> currentFields = findOne<T>(searchField);
     int position = this->cursor;
 
@@ -551,7 +551,7 @@ public:
       }
     }
 
-    cout << "Errors checking " << endl;
+    // cout << "Errors checking " << endl;
     vector<Error> errors{};
     this->checkUnique(currentFields, errors);
     if (errors.size() != 0) {

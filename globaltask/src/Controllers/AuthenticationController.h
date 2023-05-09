@@ -22,6 +22,8 @@ private:
 
   void goBack();
 
+  void loginDirector();
+
 public:
   AuthenticationController() {
     MenuItemFactory menuItemFactory{};
@@ -37,6 +39,9 @@ public:
 
     this->view->getMenu()->append(menuItemFactory.create(
         "Войти как поставщик", [=]() { this->loginProvider(); }));
+
+    this->view->getMenu()->append(menuItemFactory.create(
+        "Войти как крыша", [=]() { this->loginDirector(); }));
 
     this->view->getMenu()->append(menuItemFactory.create(
         "Вернуться", [=]() { this->goBack(); }));

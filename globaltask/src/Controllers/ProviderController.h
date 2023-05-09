@@ -11,8 +11,9 @@ class ProviderController {
 private:
   ProviderView *view = new ProviderView();
   ProductType productTypeModel;
-  Product product;
+  Product productModel;
   Provider *providerModel;
+  ProductTransaction productTransaction;
 
   void getAllProductTypes();
 
@@ -27,6 +28,8 @@ private:
   void updateAccount();
 
   void refillProduct();
+
+  void printProductInfo();
 
 public:
   explicit ProviderController(Provider *provider) {
@@ -44,6 +47,9 @@ public:
 
     this->view->getMenu()->append(factory.create("Инофрмация о поставщике",
                                                  [=]() { this->printInfo(); }));
+
+    this->view->getMenu()->append(factory.create("Информация о поставляемом продукте",
+                                                 [=]() { this->printProductInfo(); }));
 
     this->view->getMenu()->append(factory.create(
         "Обновить все данные", [=]() { this->updateAccount(); }));

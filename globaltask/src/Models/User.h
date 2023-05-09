@@ -49,5 +49,7 @@ public:
 
   string getPassword() { return this->password; }
 
+  string getId() { return this->id; }
+
   virtual void sayHello() = 0;
 };

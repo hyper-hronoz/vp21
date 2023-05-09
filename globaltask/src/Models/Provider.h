@@ -39,6 +39,8 @@ public:
 
   int getProductsAmount() { return this->amount; }
 
+  std::string getProductId() { return this->productID; }
+
   friend ostream &operator<<(ostream &output, const Provider &provider) {
     output << "_id: " << provider.id << endl;
     output << "email: " << provider.email << endl;

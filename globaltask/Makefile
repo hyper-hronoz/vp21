@@ -177,6 +177,30 @@ src/Controllers/AuthenticationController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/AuthenticationController.cpp.s
 .PHONY : src/Controllers/AuthenticationController.cpp.s
 
+src/Controllers/DirectorController.o: src/Controllers/DirectorController.cpp.o
+.PHONY : src/Controllers/DirectorController.o
+
+# target to build an object file
+src/Controllers/DirectorController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/DirectorController.cpp.o
+.PHONY : src/Controllers/DirectorController.cpp.o
+
+src/Controllers/DirectorController.i: src/Controllers/DirectorController.cpp.i
+.PHONY : src/Controllers/DirectorController.i
+
+# target to preprocess a source file
+src/Controllers/DirectorController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/DirectorController.cpp.i
+.PHONY : src/Controllers/DirectorController.cpp.i
+
+src/Controllers/DirectorController.s: src/Controllers/DirectorController.cpp.s
+.PHONY : src/Controllers/DirectorController.s
+
+# target to generate assembly for a file
+src/Controllers/DirectorController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Controllers/DirectorController.cpp.s
+.PHONY : src/Controllers/DirectorController.cpp.s
+
 src/Controllers/IntroController.o: src/Controllers/IntroController.cpp.o
 .PHONY : src/Controllers/IntroController.o
 
@@ -369,6 +393,30 @@ src/Views/AuthenticationView.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/AuthenticationView.cpp.s
 .PHONY : src/Views/AuthenticationView.cpp.s
 
+src/Views/DirectorView.o: src/Views/DirectorView.cpp.o
+.PHONY : src/Views/DirectorView.o
+
+# target to build an object file
+src/Views/DirectorView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/DirectorView.cpp.o
+.PHONY : src/Views/DirectorView.cpp.o
+
+src/Views/DirectorView.i: src/Views/DirectorView.cpp.i
+.PHONY : src/Views/DirectorView.i
+
+# target to preprocess a source file
+src/Views/DirectorView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/DirectorView.cpp.i
+.PHONY : src/Views/DirectorView.cpp.i
+
+src/Views/DirectorView.s: src/Views/DirectorView.cpp.s
+.PHONY : src/Views/DirectorView.s
+
+# target to generate assembly for a file
+src/Views/DirectorView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gg.dir/build.make CMakeFiles/gg.dir/src/Views/DirectorView.cpp.s
+.PHONY : src/Views/DirectorView.cpp.s
+
 src/Views/IntoView.o: src/Views/IntoView.cpp.o
 .PHONY : src/Views/IntoView.o
 
@@ -528,6 +576,9 @@ help:
 	@echo "... src/Controllers/AuthenticationController.o"
 	@echo "... src/Controllers/AuthenticationController.i"
 	@echo "... src/Controllers/AuthenticationController.s"
+	@echo "... src/Controllers/DirectorController.o"
+	@echo "... src/Controllers/DirectorController.i"
+	@echo "... src/Controllers/DirectorController.s"
 	@echo "... src/Controllers/IntroController.o"
 	@echo "... src/Controllers/IntroController.i"
 	@echo "... src/Controllers/IntroController.s"
@@ -552,6 +603,9 @@ help:
 	@echo "... src/Views/AuthenticationView.o"
 	@echo "... src/Views/AuthenticationView.i"
 	@echo "... src/Views/AuthenticationView.s"
+	@echo "... src/Views/DirectorView.o"
+	@echo "... src/Views/DirectorView.i"
+	@echo "... src/Views/DirectorView.s"
 	@echo "... src/Views/IntoView.o"
 	@echo "... src/Views/IntoView.i"
 	@echo "... src/Views/IntoView.s"

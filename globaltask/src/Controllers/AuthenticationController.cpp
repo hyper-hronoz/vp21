@@ -6,6 +6,11 @@
 #include "../Views/AuthEmployerSignUpView.h"
 #include "../Views/AuthProviderLoginView.h"
 #include "../Views/AuthProviderSignUpView.h"
+#include "../Views/AuthDirectorLoginView.h"
+
+void AuthenticationController::loginDirector() {
+
+}
 
 void AuthenticationController::loginEmployer() {
   AuthEmployerLoginView view;

@@ -2,11 +2,24 @@
 #include "algorithm"
 #include "vector"
 
+#include "../Exceptions/NegativeIndexException.h"
 #include "StartController.h"
 
 void ProviderController::goBack() { StartController(); }
 
 bool comparator(ProductType *pt1, ProductType *pt2) { return *pt1 < *pt2; }
+
+void ProviderController::printProductInfo() {
+  if (this->providerModel->getProductId() == "") {
+    cout << "Нет у него поставляемого продукта" << endl;
+    return;
+  }
+  StringFieldORM *search =
+      new StringFieldORM("_id", this->providerModel->getProductId());
+  Product product = this->productModel.findOne<StringFieldORM>(search);
+  cout << product << endl;
+  delete search;
+}
 
 void ProviderController::getAllProductTypes() {
   vector<ProductType *> pts;
@@ -21,21 +34,49 @@ void ProviderController::getAllProductTypes() {
 }
 
 void ProviderController::provideProduct() {
+  int supplyAmount = 1;
+
+  cout << "Введите количество поставляемого товара: ";
+  cin >> supplyAmount;
+
   StringFieldORM *searchField =
       new StringFieldORM("email", this->providerModel->getEmail());
 
-  cout << searchField->getValue() << endl;
-  cout << this->providerModel->getProductsAmount() << endl;
-
-  if (this->providerModel->getProductsAmount() > 0) {
-    IntFieldORM *replaceField =
-        new IntFieldORM("amount", this->providerModel->getProductsAmount() - 1);
+  if (this->providerModel->getProductsAmount() - supplyAmount >= 0) {
+    IntFieldORM *replaceField = new IntFieldORM(
+        "amount", this->providerModel->getProductsAmount() - supplyAmount);
     this->providerModel =
         new Provider(this->providerModel->updateOne<StringFieldORM>(
             searchField, {replaceField}));
-    cout << *this->providerModel << endl;
+
+    if (this->providerModel->getProductId() == "") {
+      cout << "Операция не может быть выпослнена тк поставщик пустой. Нет поля "
+              "productID"
+           << endl;
+      return;
+    }
+
+    StringFieldORM *productID =
+        new StringFieldORM("productID", this->providerModel->getProductId());
+    StringFieldORM *providerID =
+        new StringFieldORM("providerID", this->providerModel->getId());
+    IntFieldORM *amount = new IntFieldORM("amount", supplyAmount);
+
+    vector<Error> errors;
+    this->productTransaction.create({productID, providerID, amount}, errors);
+
+    if (errors.size() == 0) {
+      cout << "Транзакция совершена успешно!" << endl;
+    } else {
+      for (Error error : errors) {
+        cout << "Provider product error: " << error.getMessage() << endl;
+      }
+    }
 
     delete replaceField;
+    delete providerID;
+    delete productID;
+    delete amount;
   }
 
   delete searchField;
@@ -53,7 +94,76 @@ void ProviderController::deleteAccount() {
   delete query;
 }
 
-void ProviderController::updateAccount() {}
+void ProviderController::updateAccount() {
+  try {
+    char y = 'n';
+    cout << "Хотите обновить поставщика(y/n)?: ";
+    cin >> y;
+    if (y == 'y') {
+      cout << "Обновляем строковое поле..." << endl;
+      vector<AFieldORM *> fields = {};
+      for (auto item : *this->providerModel) {
+        for (auto inner : item) {
+          fields.push_back(inner);
+        }
+        break;
+      }
+
+      for (int i = 0; i < fields.size(); i++) {
+        if (fields[i]->getKey() == "_id") {
+          continue;
+        }
+        cout << i << ") " << fields[i]->getKey() << endl;
+      }
+
+      int fieldIndex;
+      cout << "Введите поле, которое хотитете обновить: ";
+      cin >> fieldIndex;
+
+      if (fieldIndex < 0) {
+        throw new NegativeIndexException();
+      }
+
+      if (fieldIndex > fields.size() - 1 || fieldIndex == 0) {
+        throw new out_of_range("Index in allowed fields out of range");
+      }
+
+      StringFieldORM *searchField =
+          new StringFieldORM("_id", this->providerModel->getId());
+      AFieldORM *replaceField;
+      if (fields[fieldIndex]->getType() == typeid(StringFieldORM).name()) {
+        std::string replaceString{};
+        cout << "Input replace string: ";
+        cin >> replaceString;
+        replaceField =
+            new StringFieldORM(fields[fieldIndex]->getKey(), replaceString);
+      } else if (fields[fieldIndex]->getType() == typeid(IntFieldORM).name()) {
+        int replaceInt;
+        cout << "Input replace integer: ";
+        cin >> replaceInt;
+        replaceField =
+            new IntFieldORM(fields[fieldIndex]->getKey(), replaceInt);
+      } else {
+        cout << "my custom undefined begavior" << endl;
+        return;
+      }
+
+      this->providerModel =
+          new Provider(this->providerModel->updateOne<StringFieldORM>(
+              searchField, {replaceField}));
+
+      delete searchField;
+      delete replaceField;
+    } else {
+      this->view->display();
+    }
+  } catch (std::out_of_range &e) {
+    cout << "Index out of range in updateAccount: " << e.what() << endl;
+  } catch (NegativeIndexException &e) {
+    cout << e.what() << endl;
+  }
+  // this->providerModel->updateOne
+}
 
 void ProviderController::refillProduct() {
   vector<Error> errors;
@@ -62,12 +172,16 @@ void ProviderController::refillProduct() {
   IntFieldORM *price = new IntFieldORM("price");
   StringFieldORM *name = new StringFieldORM("name");
 
+  int productAmount = 1;
+
   cout << "Enter product type: ";
   cin >> type;
   cout << "Enter product price: ";
   cin >> price;
   cout << "Enter product name: ";
   cin >> name;
+  cout << "Enter product amount: ";
+  cin >> productAmount;
 
   cout << *this->providerModel << endl;
 
@@ -80,8 +194,7 @@ void ProviderController::refillProduct() {
     return;
   }
 
-  cout << "Creating new product" << endl;
-  Product newProduct = product.create(
+  Product newProduct = this->productModel.create(
       {
           type,
           price,
@@ -90,18 +203,23 @@ void ProviderController::refillProduct() {
       errors);
 
   cout << newProduct << endl;
-  cout << "Updating provider" << endl;
+
+  StringFieldORM *searchField = new StringFieldORM("productID");
+  StringFieldORM *replaceField =
+      new StringFieldORM("productID", newProduct.getId());
+  IntFieldORM *amount = new IntFieldORM(
+      "amount", this->providerModel->getProductsAmount() + productAmount);
+
   this->providerModel =
       new Provider(this->providerModel->updateOne<StringFieldORM>(
-          new StringFieldORM("productID"),
-          {
-              new StringFieldORM("productID", newProduct.getId()),
-              new IntFieldORM("amount",
-                              this->providerModel->getProductsAmount() + 1),
-          }));
+          searchField, {
+                           replaceField,
+                           amount,
+                       }));
 
-  cout << *this->providerModel << endl;
+  delete searchField;
+  delete replaceField;
+  delete amount;
 
-  cout << endl;
-
+  cout << "Пополнение на складе успешно!" << endl;
 }

@@ -3,7 +3,6 @@
 #include "AuthBaseViewSignUp.h"
 
 class AuthProviderSignUpView : public AuthBaseViewSignUp {
-
  private:
   void doSignUp();
 

@@ -1,7 +1,10 @@
 #pragma once
+
+#include "iostream"
+#include "string"
+
 #include "../utils/Observer.h"
 #include "./database/db.h"
-#include <iostream>
 
 class ProductTransaction : public BaseORM, public Observable {
 private:
@@ -29,20 +32,18 @@ public:
   ProductTransaction(vector<AFieldORM *> fields = {},
                      initializer_list<ASchemaField *> extendedFields = {},
                      const char *type = typeid(ProductTransaction).name())
-      : BaseORM(new Schema(
-                    {
-                        (new SchemaField<StringFieldORM>("_id"))
-                            ->required(true)
-                            ->autoGenerate(true)
-                            ->unique(true),
-                        (new SchemaField<StringFieldORM>("productID"))
-                            ->required(true),
-                        (new SchemaField<StringFieldORM>("providerID"))
-                            ->required(true)
-                            ->unique(true),
-                    },
-                    extendedFields),
-                type) {
+      : BaseORM(
+            new Schema(
+                {(new SchemaField<StringFieldORM>("_id"))
+                     ->required(true)
+                     ->autoGenerate(true)
+                     ->unique(true),
+                 (new SchemaField<StringFieldORM>("productID"))->required(true),
+                 (new SchemaField<StringFieldORM>("providerID"))
+                     ->required(true),
+                 (new SchemaField<IntFieldORM>("amount"))->required(true)},
+                extendedFields),
+            type) {
     this->update(fields);
   }
 
@@ -55,4 +56,8 @@ public:
     output << "Provider id: " << product.providerID << endl;
     return output;
   }
+
+  std::string getProductId() { return this->providerID; }
+
+  std::string getProviderId() { return this->providerID; }
 };
