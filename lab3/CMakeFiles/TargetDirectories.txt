@@ -1,0 +1,3 @@
+/home/hronoz/vp21/lab3/CMakeFiles/ebane.dir
+/home/hronoz/vp21/lab3/CMakeFiles/edit_cache.dir
+/home/hronoz/vp21/lab3/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+g++ src/Views/StartView.cpp src/Views/Menu/Menu.cpp src/Models/Observable.cpp src/Views/Menu/MenuItem.cpp src/Views/AuthenticationView.cpp src/Views/Menu/MenuItemFactory.cpp src/Controllers/StartController.cpp ./src/Controllers/AuthenticationController.cpp && ./a.out
