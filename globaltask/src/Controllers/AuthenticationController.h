@@ -2,6 +2,8 @@
 
 #include "../Models/Employer.h"
 #include "../Models/Provider.h"
+#include "../Models/Director.h"
+
 #include "../Models/ProductType.h"
 
 #include "../Views/AuthenticationView.h"
@@ -9,8 +11,9 @@
 class AuthenticationController {
 private:
   AuthenticationView *view = new AuthenticationView();
-  Employer employer;
-  Provider provider;
+  Employer employerModel;
+  Provider providerModel;
+  Director directorModel;
 
   void signUpEmployer();
 
@@ -23,6 +26,8 @@ private:
   void goBack();
 
   void loginDirector();
+
+  void signUpDirector();
 
 public:
   AuthenticationController() {
@@ -42,6 +47,9 @@ public:
 
     this->view->getMenu()->append(menuItemFactory.create(
         "Войти как крыша", [=]() { this->loginDirector(); }));
+
+    this->view->getMenu()->append(menuItemFactory.create(
+        "Зарегестрировать крышу", [=]() { this->signUpDirector(); }));
 
     this->view->getMenu()->append(menuItemFactory.create(
         "Вернуться", [=]() { this->goBack(); }));

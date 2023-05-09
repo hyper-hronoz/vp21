@@ -7,16 +7,31 @@
 #include "../Views/AuthProviderLoginView.h"
 #include "../Views/AuthProviderSignUpView.h"
 #include "../Views/AuthDirectorLoginView.h"
+#include "../Views/AuthDirectorSignUpView.h"
 
 void AuthenticationController::loginDirector() {
+  AuthDirectorLoginView view;
+  StringFieldORM password("password", view.getPassword());
+  StringFieldORM *login = new StringFieldORM("email", view.getLogin());
+  Director newDirector = this->director.findOne<StringFieldORM>(login);
+  if (newDirector.getEmail() == login->getValue() &&
+      password.getValue() == newDirector.getPassword()) {
+    cout << "Login successfull" << endl;
+  } else {
+    cout << "Login is not successfull" << endl;
+    cout << "Wrong login or password" << endl;
+  }
+}
 
+void AuthenticationController::signUpDirector() {
+  AuthDirectorSignUpView view;
 }
 
 void AuthenticationController::loginEmployer() {
   AuthEmployerLoginView view;
   StringFieldORM password("password", view.getPassword());
   StringFieldORM *login = new StringFieldORM("email", view.getLogin());
-  Employer newEmployer = this->employer.findOne<StringFieldORM>(login);
+  Employer newEmployer = this->employerModel.findOne<StringFieldORM>(login);
   if (newEmployer.getEmail() == login->getValue() &&
       password.getValue() == newEmployer.getPassword()) {
     cout << "Login successfull" << endl;
@@ -31,7 +46,7 @@ void AuthenticationController::loginProvider() {
   StringFieldORM password("password", view.getPassword());
   StringFieldORM *login = new StringFieldORM("email", view.getLogin());
   Provider *newProvider =
-      new Provider(this->provider.findOne<StringFieldORM>(login));
+      new Provider(this->providerModel.findOne<StringFieldORM>(login));
   if (newProvider->getEmail() == login->getValue() &&
       password.getValue() == newProvider->getPassword()) {
     cout << "Login successfull" << endl;
@@ -62,7 +77,7 @@ void AuthenticationController::signUpEmployer() {
   cout << "Age: ";
   cin >> age;
 
-  employer.create({email, title, name, password, age}, errors);
+  employerModel.create({email, title, name, password, age}, errors);
 
   for (auto &errors : errors) {
     cout << errors.getMessage() << endl;
@@ -95,7 +110,7 @@ void AuthenticationController::signUpProvider() {
   cin >> age;
 
 
-  provider.create({email, name, password, amount, age, productID}, errors);
+  providerModel.create({email, name, password, amount, age, productID}, errors);
 
   if (errors.size() > 0) {
     cout << "Ошибка регистрации" << endl;
