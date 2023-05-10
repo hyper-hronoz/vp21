@@ -207,7 +207,7 @@ void ProviderController::refillProduct() {
   cout << "Before couting new product" << endl;
   cout << newProduct << endl;
 
-  StringFieldORM *searchField = new StringFieldORM("productID");
+  StringFieldORM *searchField = new StringFieldORM("_id", this->providerModel->getId());
   StringFieldORM *replaceField =
       new StringFieldORM("productID", newProduct.getId());
 

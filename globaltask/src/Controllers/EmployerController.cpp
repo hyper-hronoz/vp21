@@ -14,7 +14,7 @@ void EmployerController::produceProduct() {
   for (auto item : this->productModel) {
     if (item.size() != 0) {
       Product *pt = new Product(item);
-      cout << pt << endl;
+      cout << *pt << endl;
       products.push_back(pt);
     }
   }

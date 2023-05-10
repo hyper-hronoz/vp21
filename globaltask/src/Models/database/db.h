@@ -408,7 +408,10 @@ public:
     }
   };
 
-  Iterator begin() { return Iterator(*this); }
+  Iterator begin() { 
+    this->iterator = 0;
+    return Iterator(*this); 
+  }
 
   Iterator end() {
     this->iterator = -1;
