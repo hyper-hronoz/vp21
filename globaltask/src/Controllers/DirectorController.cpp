@@ -6,8 +6,8 @@ void DirectorController::onSelectSuppliedProductsEmployer() {
   cout << "Полный список как производят на заводе" << endl;
   for (auto item : this->productionTransactionModel) {
     if (item.size() != 0) {
-      ProductionTransaction transaction = item;
-      cout << transaction << endl;
+      ProductionTransaction *transaction = new ProductionTransaction(item);
+      cout << *transaction << endl;
     }
   }
 }

@@ -204,13 +204,18 @@ void ProviderController::refillProduct() {
       },
       errors);
 
+  cout << "Before couting new product" << endl;
   cout << newProduct << endl;
 
   StringFieldORM *searchField = new StringFieldORM("productID");
   StringFieldORM *replaceField =
       new StringFieldORM("productID", newProduct.getId());
+
   IntFieldORM *amount = new IntFieldORM(
       "amount", this->providerModel->getProductsAmount() + productAmount);
+  cout << "Amount: " << amount->getValue() << endl;
+  cout << "Search field: " << searchField->getValue() << endl;
+  cout << "Repalce field: " << replaceField->getValue() << endl;
 
   this->providerModel =
       new Provider(this->providerModel->updateOne<StringFieldORM>(
@@ -218,6 +223,8 @@ void ProviderController::refillProduct() {
                            replaceField,
                            amount,
                        }));
+
+  cout << "After changing provider model" << endl;
 
   delete searchField;
   delete replaceField;
