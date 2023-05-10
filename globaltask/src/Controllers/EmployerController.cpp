@@ -87,8 +87,8 @@ void EmployerController::produceProduct() {
 
   this->employerModel = new Employer(status);
 
-  StringFieldORM *newProductType = new StringFieldORM("name");
-  StringFieldORM *newProductName = new StringFieldORM("type");
+  StringFieldORM *newProductType = new StringFieldORM("type");
+  StringFieldORM *newProductName = new StringFieldORM("name");
   IntFieldORM *newProductPrice = new IntFieldORM("price");
 
   cout << "Имя нового продукта: ";

@@ -26,6 +26,8 @@ private:
 
   void goBack();
 
+  void printProducts();
+
 public:
   DirectorController(Director *directorModel) : directorModel(directorModel) {
     MenuItemFactory factory{};
@@ -35,6 +37,10 @@ public:
 
     this->view->getMenu()->append(
         factory.create("Вывести историю транзакций сотрудника", [=]() { this->onSelectSuppliedProductsEmployer(); }));
+
+    this->view->getMenu()->append(
+        factory.create("Все продукты", [=]() { this->printProducts(); }));
+
 
     this->view->getMenu()->append(factory.create("Удалить аккаунт", [=]() {
       char y;

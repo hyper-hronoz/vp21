@@ -12,6 +12,16 @@ void DirectorController::onSelectSuppliedProductsEmployer() {
   }
 }
 
+void DirectorController::printProducts() {
+  cout << "Все продукты"  << endl;
+  for (auto item : this->productModel) {
+    if (item.size() != 0) {
+      Product newProduct = item;
+      cout << newProduct << endl;
+    }
+  }
+}
+
 void DirectorController::onSelectSuppliedProducts() {
   cout << "Список всез поставок: " << endl;
   int i = 0;
